@@ -76,3 +76,5 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T09:44:21Z,2026-09-07-PM-20260907T094201Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS
 2026-09-07T09:56:00Z,test-duration-fix,stage5_visual_generation,mock,mock,4,assets,0.000000,mock mode
 2026-09-07T09:56:02Z,test-duration-fix,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS
+2026-09-07T10:03:55Z,test-subscribe-card,stage5_visual_generation,mock,mock,2,assets,0.000000,mock mode
+2026-09-07T10:03:55Z,test-subscribe-card,stage3_voiceover,none,silence,0,characters,0.000000,minimal-narration video - no TTS call made

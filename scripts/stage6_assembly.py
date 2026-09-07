@@ -44,6 +44,14 @@ logger = logging.getLogger(__name__)
 
 MUSIC_VOLUME = 0.12
 
+# Per explicit user decision: videos are silent by default (see stage1's
+# docstring) with no spoken subscribe line, so a short visual note + a
+# chime replaces it instead - appended after the main content, not
+# counted against the script's own estimated_duration_sec.
+SUBSCRIBE_CARD_DURATION_SEC = 2.5
+SUBSCRIBE_CARD_TEXT = ["SUBSCRIBE", "for more recipes!"]
+SUBSCRIBE_CARD_BG = (30, 90, 55)
+
 
 def _run(cmd):
     logger.debug("ffmpeg cmd: %s", " ".join(cmd))
@@ -116,6 +124,73 @@ def _concat_segments(segment_paths: list, out_path: Path, work_dir: Path):
     _run([
         "ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(filelist),
         "-c:v", "libx264", "-pix_fmt", "yuv420p", str(out_path),
+    ])
+
+
+def _build_subscribe_card_segment(duration: float, out_path: Path, work_dir: Path):
+    """A short branded still (not spoken narration) asking viewers to
+    subscribe - generated programmatically, no external asset needed."""
+    from PIL import Image, ImageDraw, ImageFont
+
+    img = Image.new("RGB", (VIDEO_WIDTH, VIDEO_HEIGHT), color=SUBSCRIBE_CARD_BG)
+    draw = ImageDraw.Draw(img)
+
+    fonts = []
+    for size in (100, 60):
+        try:
+            fonts.append(ImageFont.truetype(
+                "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size))
+        except OSError:
+            fonts.append(ImageFont.load_default())
+
+    line_heights = []
+    for line, font in zip(SUBSCRIBE_CARD_TEXT, fonts):
+        bbox = draw.textbbox((0, 0), line, font=font)
+        line_heights.append(bbox[3] - bbox[1])
+    total_h = sum(line_heights) + 30 * (len(SUBSCRIBE_CARD_TEXT) - 1)
+    y = (VIDEO_HEIGHT - total_h) // 2
+
+    for line, font, h in zip(SUBSCRIBE_CARD_TEXT, fonts, line_heights):
+        bbox = draw.textbbox((0, 0), line, font=font)
+        w = bbox[2] - bbox[0]
+        draw.text(((VIDEO_WIDTH - w) // 2, y), line, fill=(255, 255, 255), font=font)
+        y += h + 30
+
+    card_png = work_dir / "subscribe_card.png"
+    img.save(card_png)
+
+    _run([
+        "ffmpeg", "-y", "-loop", "1", "-i", str(card_png),
+        "-t", str(duration), "-r", str(VIDEO_FPS),
+        "-vf", f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},format=yuv420p",
+        "-c:v", "libx264", "-pix_fmt", "yuv420p", str(out_path),
+    ])
+
+
+def _build_bell_sound(out_path: Path):
+    """A short two-tone chime, fully synthesized with ffmpeg - no
+    external sound asset needed, per explicit user request for a simple
+    'note and bell sound' instead of a spoken subscribe line."""
+    _run([
+        "ffmpeg", "-y",
+        "-f", "lavfi", "-i", "sine=frequency=880:duration=0.35",
+        "-f", "lavfi", "-i", "sine=frequency=1320:duration=0.5",
+        "-filter_complex",
+        "[0:a]afade=t=out:st=0.2:d=0.15[a0];"
+        "[1:a]afade=t=out:st=0.3:d=0.2[a1];"
+        "[a0][a1]concat=n=2:v=0:a=1[out]",
+        "-map", "[out]", str(out_path),
+    ])
+
+
+def _add_bell_at(main_audio: Path, bell_audio: Path, start_sec: float, out_path: Path):
+    delay_ms = int(start_sec * 1000)
+    _run([
+        "ffmpeg", "-y", "-i", str(main_audio), "-i", str(bell_audio),
+        "-filter_complex",
+        f"[1:a]adelay={delay_ms}|{delay_ms}[bell_delayed];"
+        "[0:a][bell_delayed]amix=inputs=2:duration=first:dropout_transition=0[aout]",
+        "-map", "[aout]", str(out_path),
     ])
 
 
@@ -204,11 +279,26 @@ def assemble(output_dir: str, run_id: str) -> dict:
     silent_video = work_dir / "silent.mp4"
     _concat_segments(segment_paths, silent_video, work_dir)
 
+    # Append the subscribe end-card - on top of the script's own duration,
+    # not counted against its 30-40s budget.
+    card_segment = work_dir / "subscribe_card_seg.mp4"
+    _build_subscribe_card_segment(SUBSCRIBE_CARD_DURATION_SEC, card_segment, work_dir)
+    with_card_video = work_dir / "with_card.mp4"
+    _concat_segments([silent_video, card_segment], with_card_video, work_dir)
+
     branded_video = work_dir / "branded.mp4"
-    _overlay_branding(silent_video, BRANDING_LOGO_PATH, branded_video)
+    _overlay_branding(with_card_video, BRANDING_LOGO_PATH, branded_video)
+
+    total_duration = duration + SUBSCRIBE_CARD_DURATION_SEC
+
+    base_audio = work_dir / "base_audio.mp3"
+    _mix_audio(out_dir / "voiceover.mp3", total_duration, base_audio)
+
+    bell_audio = work_dir / "bell.mp3"
+    _build_bell_sound(bell_audio)
 
     mixed_audio = work_dir / "mixed_audio.mp3"
-    _mix_audio(out_dir / "voiceover.mp3", duration, mixed_audio)
+    _add_bell_at(base_audio, bell_audio, duration + 0.3, mixed_audio)
 
     final_path = out_dir / "final.mp4"
     _mux(branded_video, mixed_audio, final_path)
@@ -216,7 +306,7 @@ def assemble(output_dir: str, run_id: str) -> dict:
     meta = {
         "run_id": run_id,
         "final_path": "final.mp4",
-        "duration_sec": duration,
+        "duration_sec": total_duration,
         "resolution": f"{VIDEO_WIDTH}x{VIDEO_HEIGHT}",
         "beats_used": beats,
     }

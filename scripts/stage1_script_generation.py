@@ -163,16 +163,17 @@ items, spices, aromatics like ginger/garlic, everything). Before finalizing, \
 re-read the entire narration and every visual beat prompt and add any \
 ingredient you referenced but left out of the list.
 
-Hard requirement for voiceover_script - minimal narration, non-negotiable:
-- Short-form cooking videos with little or no spoken narration consistently \
-outperform heavily-narrated ones - the visuals and on-screen action should \
-carry the story, not a running commentary. Default to VERY LITTLE narration: \
-"voiceover_script" should normally be 0 to 20 words total - a single punchy \
-hook line, a single call-to-action, or both. It is correct and expected for \
-"voiceover_script" to be an empty string "" when the visual_beats and \
-key_visual_moments already make the process self-explanatory (e.g. a \
-satisfying close-up cooking process needs no narration at all) - do not \
-force narration onto every video just to fill time.
+Hard requirement for voiceover_script - SILENT by default, non-negotiable:
+- "voiceover_script" MUST be an empty string "" by default. This channel's \
+videos are silent, visuals-only - no spoken words at all. There is a \
+separate, non-narration subscribe note (a visual card + a chime sound) \
+added automatically after your script - you never need to write a spoken \
+hook, call-to-action, or "subscribe" line yourself.
+- Do NOT write any narration unless a single specific moment is truly \
+impossible to convey visually (this should be rare - most dishes need \
+zero words). If that rare case genuinely applies, the absolute maximum is \
+one short line, 10 words or fewer - never more, and never a step-by-step \
+walkthrough.
 - Never write a full step-by-step spoken walkthrough of the recipe - that \
 is the single biggest mistake. If you do include narration, it is read \
 aloud at roughly 125-135 words per minute, so even 20 words only takes \
