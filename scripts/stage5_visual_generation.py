@@ -45,10 +45,10 @@ generating hero clips in Flow.
 
 Input: script.json (Stage 1 output), specifically the "segments" list:
     [{"id": int, "type": "image"|"video", "moment_description": str,
-      "text_card_copy": str, "start_sec": float, "end_sec": float}, ...]
+      "start_sec": float, "end_sec": float}, ...]
     Each segment's moment_description is the image/clip prompt. Stage 2's
     review gate enforces the shape (exactly HERO_CLIPS_PER_SHORT video
-    segments <=8s each, plus 1-3 image segments) before this stage runs.
+    segments <=10s each, plus 1-2 image segments) before this stage runs.
 
 Output (<output_dir>/):
     visuals/beat_<id>.png   (for type == "image")
@@ -59,7 +59,7 @@ Output (<output_dir>/):
             "mock_mode": bool,
             "hero_clip_sources": [str, ...],
             "beats": [{"beat_id": int, "type": str, "path": str,
-                       "text_card_copy": str, "start_sec": float, "end_sec": float}]
+                       "start_sec": float, "end_sec": float}]
         }
 """
 import argparse
@@ -152,7 +152,6 @@ def generate_visuals(script_path: str, output_dir: str, run_id: str, hero_clip_p
         beat_id = seg["id"]
         beat_type = seg["type"]
         prompt = seg.get("moment_description", "")
-        text_card = seg.get("text_card_copy", "")
         duration = seg["end_sec"] - seg["start_sec"]
 
         if beat_type == "image":
@@ -186,7 +185,6 @@ def generate_visuals(script_path: str, output_dir: str, run_id: str, hero_clip_p
             "beat_id": beat_id,
             "type": beat_type,
             "path": str(out_path.relative_to(out_dir)),
-            "text_card_copy": text_card,
             "start_sec": seg["start_sec"],
             "end_sec": seg["end_sec"],
         })

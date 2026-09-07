@@ -55,9 +55,6 @@ REQUIRED_SCRIPT_FIELDS = (
     "dish_name", "region", "ingredients", "dish_fact",
     "subscribe_cta_text", "segments", "estimated_duration_sec",
 )
-# A text card must read in 2-3 seconds - anything longer is narration
-# creeping back in, which this format does not use.
-MAX_TEXT_CARD_CHARS = 60
 MAX_SUBSCRIBE_CTA_CHARS = 40
 
 
@@ -66,17 +63,20 @@ class ReviewFailure(Exception):
 
 
 REVIEW_PROMPT_TEMPLATE = """You are a strict quality-control reviewer for an \
-Indian home-cooking YouTube Shorts channel. The video is a ~60-second, \
-NO-NARRATION piece: short hero clips and stills with brief on-screen text \
-cards, no voiceover. Review the script JSON below against EXACTLY these four \
+Indian home-cooking YouTube Shorts channel. The video is a clean ~50-second, \
+NO-NARRATION, NO-ON-SCREEN-TEXT piece: a continuous Studio-Ghibli-style cooking \
+story told entirely through short hero clips and a couple of stills with their \
+own natural sound - no voiceover and no captions. The "ingredients" and \
+"dish_fact" fields are metadata for the YouTube listing only; they are never \
+shown on screen. Review the script JSON below against EXACTLY these four \
 criteria, and nothing else:
 
 1. Culinary plausibility - is the technique, timing, and sequence of steps \
 across the "segments" realistic and physically correct?
 2. Ingredient completeness & sanity - are the ingredients real and compatible \
 with the dish, AND does the "ingredients" list include EVERY ingredient named \
-anywhere in any moment_description, text_card_copy, or dish_fact? Reject if an \
-ingredient is referenced but missing from the list, or vice versa.
+anywhere in any moment_description or dish_fact? Reject if an ingredient is \
+referenced but missing from the list, or vice versa.
 3. Regional accuracy - does this match how the dish is actually made in Indian \
 home cooking (not a generic/foreign approximation)?
 4. Moment specificity & fact soundness - is EACH "moment_description" specific \
@@ -88,9 +88,9 @@ invented history)?
 If you are not fully confident on all four, reject it. When in doubt, reject.
 
 Do NOT reject for anything outside these four criteria. In particular this \
-channel intentionally has NO spoken narration - do not treat the absence of a \
-voiceover as a defect. Text cards are meant to be short fragments, not \
-sentences; that is correct. Judge only the four criteria above.
+channel intentionally has NO spoken narration and NO on-screen text - do not \
+treat their absence as a defect, and do not expect an ingredient-list moment. \
+Judge only the four criteria above.
 
 Script JSON:
 {script_json}
@@ -142,8 +142,9 @@ def _basic_shape_check(script: dict) -> list:
     "image" stills. A script asking for a different clip count is rejected
     here rather than causing a mismatch between what's requested and the
     Flow credits actually spent. Also verifies every segment carries a
-    non-empty, suitably-short moment_description and text_card_copy, and
-    that the timeline is contiguous over the target duration.
+    non-empty moment_description and a valid type, and that the timeline is
+    contiguous over the target duration. (No text cards - this format burns
+    in no on-screen text.)
     """
     problems = []
     for field in REQUIRED_SCRIPT_FIELDS:
@@ -201,14 +202,6 @@ def _basic_shape_check(script: dict) -> list:
             problems.append(f"segment {sid}: missing/empty moment_description")
         if seg.get("type") not in ("video", "image"):
             problems.append(f"segment {sid}: type must be 'video' or 'image', got {seg.get('type')!r}")
-        card = seg.get("text_card_copy") or ""
-        if not card:
-            problems.append(f"segment {sid}: missing/empty text_card_copy")
-        elif len(card) > MAX_TEXT_CARD_CHARS:
-            problems.append(
-                f"segment {sid}: text_card_copy too long ({len(card)} chars, "
-                f"max {MAX_TEXT_CARD_CHARS}) - cards must read in 2-3s, not be sentences"
-            )
 
     # Timeline must be contiguous and cover the duration (no gaps/overlaps).
     ordered = sorted(

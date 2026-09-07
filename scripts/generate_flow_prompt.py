@@ -50,8 +50,13 @@ has its OWN duration cap, not a shared one - see per-clip below.
 
 Common requirements for every clip:
 - Attach the Spice Garden character reference image for consistency
-  (image-to-video / reference-frame mode, not text description alone).
-- Aspect ratio: 9:16 vertical (1080x1920 target).
+  (image-to-video / reference-frame mode, not text description alone) -
+  the same character must appear across all clips.
+- Aspect ratio: 9:16 vertical. Generate at your model's setting (e.g. Omni
+  1.1 Flash 360p / 10s); assembly upscales to 1080x1920 and trims the first
+  ~0.5s of lag off each clip, so lead with the real motion.
+- NO text, captions, letters, logos or watermarks in frame - this video is
+  fully text-free.
 - Style: {style} - vary only the action/setting described per clip below.
 """
 
@@ -111,8 +116,8 @@ INGREDIENTS:
 DISH FACT (shown as on-screen context, not narration):
 {dish_fact}
 
-SEGMENT TIMELINE ({n_segments} segments, ~{duration}s total; no voiceover -
-each segment shows a short on-screen text card):
+SEGMENT TIMELINE ({n_segments} segments, ~{duration}s total; no voiceover
+and NO on-screen text - visuals + natural sound only):
 {segments}
 
 SUBSCRIBE END-CARD COPY: {subscribe_cta_text}
@@ -153,11 +158,9 @@ def _format_segments(script: dict) -> str:
     for seg in script.get("segments", []):
         kind = "HERO CLIP" if seg.get("type") == "video" else "STILL"
         start, end = seg.get("start_sec", 0), seg.get("end_sec", 0)
-        card = seg.get("text_card_copy", "")
         lines.append(
             f"  [{start:5.1f}s - {end:5.1f}s] {kind:9s} - {seg.get('moment_description', '')}"
         )
-        lines.append(f"                        card: “{card}”")
     return "\n".join(lines) if lines else "  (none)"
 
 

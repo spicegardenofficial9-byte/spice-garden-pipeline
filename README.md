@@ -3,20 +3,24 @@
 A small, personal automation project that generates short-form vertical
 videos end-to-end and publishes them on a schedule using GitHub Actions.
 
-The format is a fixed **~60-second, no-narration** vertical video: four
-native-audio hero clips plus supporting stills, brief on-screen text
-cards, and an animated subscribe call-to-action in the final seconds.
-There is no spoken voiceover anywhere.
+The format is a clean **~50-second, no-narration, no-on-screen-text**
+vertical video, modelled on a Studio-Ghibli-style cooking short: four
+native-audio hero clips (~10s each) plus 1-2 supporting stills, told as
+one continuous farm-to-plate story with a consistent character and only
+the clips' natural sound. The single piece of on-screen text is an
+animated subscribe call-to-action in the final seconds. No voiceover, no
+titles, no ingredient labels, no captions.
 
 It's built as a chain of independent stages rather than one monolithic
 script, so each part can be run and debugged on its own:
 
-1. **Script generation** - produces rich, structured content for the
-   60s video: dish name + region, the full ingredient list, an
-   interesting dish fact, 5-7 "moment" segments (each a hero clip or a
-   still, with a detailed visual description and short on-screen
-   text-card copy), and a per-video subscribe CTA line. No narration is
-   written - the visuals and text cards carry the video.
+1. **Script generation** - produces the structured content for the ~50s
+   video: 5-6 "moment" segments (each a hero clip or a still, with a
+   detailed visual description) forming one continuous story, plus
+   metadata used only for the YouTube listing (dish name + region, the
+   full ingredient list, an interesting dish fact) and a per-video
+   subscribe CTA line. No narration and no on-screen copy are written -
+   the visuals and natural sound carry the video.
 2. **Review gate** - an automated pass/fail check on the generated
    script before any further (potentially paid) work happens. Designed
    to fail closed: anything ambiguous is treated as a rejection. Checks
@@ -32,13 +36,13 @@ script, so each part can be run and debugged on its own:
    moments that most need motion aren't API-generated - see
    "Human-in-the-loop" below.
 6. **Assembly** - normalises and colour-grades every segment, adds a
-   Ken-Burns push on stills, keeps each hero clip's native audio, burns
-   in consistent lower-third text cards, joins everything with short
-   crossfades, animates the subscribe end-card, overlays branding
-   TOP-LEFT (keeping Veo's bottom-right watermark unobstructed), mixes
-   music low under the native audio, and outputs a final vertical MP4
-   with FFmpeg. No captions are burned in - YouTube auto-generates its
-   own for Shorts.
+   Ken-Burns push on stills, trims each hero clip's laggy head and mildly
+   sharpens the upscale, keeps each hero clip's native audio, joins
+   everything with short crossfades, animates the subscribe end-card (the
+   only on-screen text), overlays branding TOP-LEFT (keeping any
+   bottom-right generator watermark unobstructed), mixes music low under
+   the native audio, and outputs a final vertical MP4 with FFmpeg. No text
+   or captions are burned in.
 7. **Upload** - publishes the finished video, with an AI-content
    disclosure flag set on upload. Never runs automatically - see
    "Review before publishing" below.
@@ -55,22 +59,23 @@ trigger the manual-only `approve-upload.yml` GitHub Actions workflow.
 Only on a successful upload are the consumed clip-pool inputs and the
 review-pending entry cleaned up.
 
-## No narration (text cards instead)
+## No narration, no on-screen text
 
-Short-form cooking videos with no spoken narration tend to outperform
-heavily-narrated ones, so this format has none at all: the hero clips'
-own native cooking audio plays under background music, and short
-on-screen text cards (one per segment, plus an interesting dish fact
-and an animated subscribe CTA) carry the story - see
-`SCRIPT_PROMPT_TEMPLATE` in
+This format has no spoken narration and no burned-in text at all - no
+titles, no ingredient labels, no per-step captions. The hero clips' own
+natural sound plays under background music and the visuals carry the
+whole story, exactly like the reference it's modelled on. The only text
+anywhere is a short animated subscribe card in the final seconds. The
+ingredient list and dish fact the script produces are metadata for the
+YouTube listing only - see `SCRIPT_PROMPT_TEMPLATE` in
 [stage1_script_generation.py](scripts/stage1_script_generation.py).
 
 ## Human-in-the-loop: the clip pool
 
 A fixed number of video clips per short (`HERO_CLIPS_PER_SHORT`, 4 for
-the 60s format, each with its own duration cap in
+this format, each ~10s with its own duration cap in
 `HERO_CLIP_DURATIONS_SEC`) are generated manually in a separate creative
-tool (Google Flow), then dropped into a watched "clip pool" folder via
+tool (e.g. Omni 1.1 Flash), then dropped into a watched "clip pool" folder via
 [scripts/save_clip.py](scripts/save_clip.py) (or the one-command
 `save_clip.sh` wrapper) - the automation picks them up from there and
 builds the video (stills, assembly) with no further input,

@@ -5,23 +5,22 @@ Calls Gemini (config.GEMINI_TEXT_MODEL) to write the "script". Until
 GEMINI_API_KEY is set, this stage produces a deterministic mock script
 instead, so downstream stages can be built and tested without an API key.
 
-This is a MAJOR rewrite for the new video format. There is no spoken
-voiceover anywhere in the pipeline anymore - the finished video is silent
-of narration and carries the hero clips' own native audio (sizzle, pour,
-chop) under a bed of background music. So the "script" no longer writes
-narration; it produces richer STRUCTURED CONTENT that drives on-screen
-text cards and the visuals across a full ~60 seconds:
+This is a MAJOR rewrite for the new video format, modelled on a clean
+Studio-Ghibli cooking short: one consistent character, a continuous
+farm-to-plate story, natural sound effects, and NO on-screen text and NO
+voiceover of any kind. The finished video carries the hero clips' own
+native audio (sizzle, pour, chop) under a bed of background music. So the
+"script" writes no narration AND no on-screen copy; it produces the
+STRUCTURED CONTENT that drives the visuals across ~50 seconds, plus a
+little metadata used only for the YouTube listing (never shown on screen):
 
-  - dish name + region
-  - the full ingredient list (also used to render an ingredient still)
-  - a handful of distinct "moment" segments, each detailed enough to drive
-    ONE specific visual (a hero clip or a still), plus the short, punchy
-    on-screen text-card copy for that moment
-  - a short interesting fact / origin note / tip about the dish (the extra
-    depth that fills 60 seconds meaningfully instead of stretching a
-    30-second idea thin)
-  - the copy for an animated "subscribe" call-to-action shown in the last
-    few seconds (varies per video rather than being hardcoded)
+  - dish name + region                (metadata: title/tags)
+  - the full ingredient list           (metadata only - NOT shown on screen)
+  - a short interesting fact / tip      (metadata: video description)
+  - a handful of distinct "moment" segments, each a detailed, specific
+    visual (a hero clip or a still) forming one continuous cooking story
+  - the copy for the ONE piece of on-screen text: a short animated
+    "subscribe" call-to-action shown in the last few seconds
 
 Expected input:
     A "topic brief" JSON (optional), e.g.:
@@ -34,27 +33,27 @@ Expected output (written to <output_dir>/script.json):
         "run_id": str,
         "dish_name": str,
         "region": str,                    # e.g. "South Indian" - used for YouTube tags
-        "ingredients": [str],             # FULL list, drives the ingredient still
+        "ingredients": [str],             # FULL list - metadata only, NOT shown on screen
         "title": str,                     # YouTube title, <= 100 chars
-        "dish_fact": str,                 # one interesting fact / origin note / tip
+        "dish_fact": str,                 # one interesting fact / origin note / tip (description)
         "subscribe_cta_text": str,        # short CTA copy for the animated end-card
         "segments": [                     # SEGMENTS_MIN..SEGMENTS_MAX moments, in order
             {
                 "id": int,
                 "type": "video" | "image",   # hero clip vs supporting still
                 "moment_description": str,   # detailed, specific visual for this beat
-                "text_card_copy": str,       # short on-screen card copy (2-3s readable)
                 "start_sec": float,
                 "end_sec": float
             }
         ],
         # segments MUST contain exactly HERO_CLIPS_PER_SHORT (4) "video"
-        # segments (the hero clips a human generates in Google Flow and drops
-        # into clip-pool/incoming/ - this pipeline never calls Veo via API,
-        # see stage5's docstring) plus STILLS_PER_SHORT_MIN..MAX "image"
-        # segments (free Pollinations stills generated here). Stage 2's
-        # review gate fails closed on this shape.
-        "estimated_duration_sec": float,  # target ~TARGET_DURATION_SEC (60)
+        # segments (the hero clips a human generates in the creative tool and
+        # drops into clip-pool/incoming/ - this pipeline never calls a video
+        # API, see stage5's docstring) plus STILLS_PER_SHORT_MIN..MAX "image"
+        # segments (free Pollinations stills generated here). No segment
+        # carries on-screen text. Stage 2's review gate fails closed on this
+        # shape.
+        "estimated_duration_sec": float,  # target ~TARGET_DURATION_SEC (50)
         "hashtags": [str],
         "ai_disclosure_required": true,
         "generated_at": iso8601 str,
@@ -91,14 +90,22 @@ logger = logging.getLogger(__name__)
 GEMINI_API_KEY_ENV = "GEMINI_API_KEY"
 
 SCRIPT_PROMPT_TEMPLATE = """You are the content designer for "Spice Garden", \
-an Indian home-cooking YouTube Shorts channel. Design ONE {target_dur}-second \
+an Indian home-cooking YouTube Shorts channel. Design ONE ~{target_dur}-second \
 video about: {dish_hint}.
 
-These videos are SILENT of narration - there is no voiceover at all. The video \
-is carried by short vertical hero clips (with their own natural cooking sound) \
-and still images, with brief on-screen TEXT CARDS. Your job is NOT to write \
-narration; it is to design rich, specific structured content: the moments, the \
-text cards, the ingredient list, an interesting fact, and a subscribe line.
+STYLE - study this carefully. The video is a clean, cinematic Studio-Ghibli-style \
+animated cooking story: ONE consistent character (a young woman cooking in a \
+rustic Indian village kitchen/garden) shown across a continuous farm-to-plate \
+journey. It is SILENT of narration and has ABSOLUTELY NO on-screen text - no \
+title, no ingredient labels, no captions, no per-step words. The whole thing is \
+carried by beautiful vertical clips with their own natural sound effects \
+(sizzling, pouring, chopping, bubbling). Do NOT write any narration or any \
+on-screen copy. The ONLY text anywhere is a short animated subscribe line at the \
+very end.
+
+The ingredient list and dish fact you return are METADATA ONLY (for the YouTube \
+title/tags/description) - they are never shown on screen, so do not design a \
+"list of ingredients" moment.
 
 Return ONLY a single JSON object (no markdown fences, no commentary) with \
 exactly this shape:
@@ -107,10 +114,10 @@ exactly this shape:
   "region": "string, the Indian region/cuisine this dish belongs to (e.g. South Indian, Punjabi, Gujarati)",
   "ingredients": ["string", "..."],
   "title": "string, <=100 chars, include an emoji and #shorts",
-  "dish_fact": "string, one genuinely interesting, factually-sound fact, origin note, or pro tip about this dish",
+  "dish_fact": "string, one genuinely interesting, factually-sound fact, origin note, or pro tip about this dish (for the description)",
   "subscribe_cta_text": "string, a SHORT subscribe call-to-action (<=4 words), ideally tied to the dish (e.g. 'More dosa secrets?', 'Subscribe for more', 'Daily Indian recipes')",
   "segments": [
-    {{"id": 1, "type": "image", "moment_description": "string, a vivid, SPECIFIC visual", "text_card_copy": "string, short punchy card", "start_sec": 0.0, "end_sec": 0.0}}
+    {{"id": 1, "type": "image", "moment_description": "string, a vivid, SPECIFIC visual", "start_sec": 0.0, "end_sec": 0.0}}
   ],
   "estimated_duration_sec": {target_dur}.0,
   "hashtags": ["#shorts", "..."]
@@ -118,19 +125,19 @@ exactly this shape:
 
 Hard requirements for "segments", non-negotiable and checked by an automated \
 reviewer that rejects any mismatch:
-- Between {seg_min} and {seg_max} segments total, in chronological cooking order.
-- EXACTLY {n_hero_clips} segments with "type": "video" - these are the hero clips \
-a human generates in Google Flow. Choose the {n_hero_clips} moments that most \
-need real MOTION (e.g. mustard seeds crackling in hot oil, batter being spread \
-on a hot tawa, dough being folded, a finished dish being garnished). Each video \
-segment is capped at its own length - do not exceed it: {per_clip_caps}.
-- Between {stills_min} and {stills_max} segments with "type": "image" - supporting \
-stills for moments that don't need motion. AT LEAST ONE image segment MUST be a \
-clear shot of the full ingredient spread (its moment_description should reference \
-the key ingredients), and one should be the finished, plated dish. Also use a \
-still for any step that happens over real time a short clip cannot show \
-(fermenting overnight, marinating, dough resting, simmering) - dim/covered-vessel \
-lighting to imply elapsed time.
+- Between {seg_min} and {seg_max} segments total, in chronological order, forming \
+ONE coherent story (e.g. gathering/harvesting -> prepping -> cooking -> the \
+finished dish). Keep the same character and setting consistent across them.
+- EXACTLY {n_hero_clips} segments with "type": "video" - the hero clips a human \
+generates in the creative tool. Choose the {n_hero_clips} moments with the most \
+satisfying MOTION and SOUND (e.g. mustard seeds crackling in hot oil, batter \
+spread on a hot tawa, dough folded, water poured into a pot, a dish garnished). \
+Each video segment is capped at its own length - do not exceed it: {per_clip_caps}.
+- Between {stills_min} and {stills_max} segments with "type": "image" - stills for \
+slower story beats that don't need motion (a quiet establishing shot, an \
+over-time step like fermenting/resting/soaking shown with dim or covered-vessel \
+lighting, or the final plated dish). Do NOT make any still an "ingredient \
+lineup"/labels shot.
 - All segments' start_sec/end_sec MUST be contiguous (no gaps, no overlaps) and \
 cover the full estimated_duration_sec (~{target_dur}s). The final segment should \
 be held slightly longer (it doubles as the backdrop for the subscribe end-card).
@@ -142,32 +149,24 @@ Write "mustard seeds crackling and popping in shimmering hot oil, curry leaves \
 dropped in" - NOT "tempering the spices" or "cooking begins". Name what the food \
 is doing (sizzling, bubbling, browning, steam rising), the specific hand action, \
 and the framing/angle. A video segment's description should be scaled to its \
-length - one tightly-scoped action for an {shortest_clip}s clip.
+length - one tightly-scoped action for a {shortest_clip}s clip.
 - Every segment must depict a clear PHYSICAL ACTION or a rich, deliberate \
-composition (an ingredient spread, the plated dish) - never a bland, empty frame.
-- Describe ONLY the scene/action/framing (what a camera sees). Do NOT mention the \
-host character's appearance - a separate reference image handles that.
+composition - never a bland, empty frame, and never any text/lettering in frame.
+- You MAY describe the consistent character performing the action (e.g. "the \
+young woman in a white-and-gold sari pours..."), keeping her look consistent, but \
+keep the focus on the food and the action.
 - Cooking technique must be realistic at every step: correct traditional tools, \
 correct order of operations (aromatics brown before tomatoes; batter spread \
 immediately after pouring), correct timing.
 
-Hard requirements for "text_card_copy", checked by the reviewer:
-- SHORT and punchy - readable in 2-3 seconds. A few words or a short phrase, NOT \
-a full sentence and NOT narration. Think caption, not script. (e.g. "Crispy. \
-Golden. Perfect.", "Ferment 12 hrs", "Ghee, not oil".)
-- One per segment, relevant to that segment's moment.
+Hard requirement for "ingredients" (metadata), checked by the reviewer:
+- The "ingredients" list MUST include every ingredient referenced anywhere in the \
+output (moment_description or dish_fact) - garnishes, tempering/tadka items, \
+spices, aromatics, everything - even though ingredients are never shown on screen.
 
-Hard requirement for "ingredients", non-negotiable and checked by the reviewer:
-- The "ingredients" list MUST include every single ingredient referenced anywhere \
-else in the output - in any moment_description, text_card_copy, or dish_fact \
-(garnishes, tempering/tadka items, spices, aromatics like ginger/garlic, \
-everything). Re-read the whole output and add any ingredient you referenced but \
-left out of the list.
-
-Hard requirement for "dish_fact":
+Hard requirement for "dish_fact" (metadata):
 - One or two sentences, genuinely informative and factually accurate for this \
-dish and region. No invented history. This is the depth that justifies a full \
-{target_dur}s video.
+dish and region. No invented history.
 """
 
 
@@ -185,8 +184,8 @@ def _validate_segments(script: dict) -> None:
             f"expected {HERO_CLIPS_PER_SHORT} video segments, got {len(video_segments)}"
         )
     for seg in segments:
-        if not seg.get("moment_description") or not seg.get("text_card_copy"):
-            raise RuntimeError(f"segment missing moment_description/text_card_copy: {seg!r}")
+        if not seg.get("moment_description"):
+            raise RuntimeError(f"segment missing moment_description: {seg!r}")
 
 
 @retry_with_backoff(max_attempts=3, exceptions=(RuntimeError,))
@@ -248,9 +247,10 @@ def call_llm_for_script(topic_brief: dict) -> dict:
 def _mock_script(topic_brief: dict) -> dict:
     dish_name = topic_brief.get("dish_hint", "Masala Dosa")
     now = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
-    # A 7-segment, ~60s timeline: 3 stills (ingredient spread, a fermenting
-    # over-time still, the plated finish) + 4 hero clips, in cooking order.
-    # The final still is held longest - it backs the subscribe end-card.
+    # A 6-segment, ~50s continuous story: 2 stills (a quiet over-time beat and
+    # the plated finish) + 4 hero clips, in cooking order, one consistent
+    # character. No on-screen text on any segment. The final still is held
+    # longest - it backs the subscribe end-card.
     return {
         "dish_name": dish_name,
         "region": "South Indian",
@@ -270,68 +270,60 @@ def _mock_script(topic_brief: dict) -> dict:
             {
                 "id": 1, "type": "image",
                 "moment_description": (
-                    "Flat-lay of the full ingredient spread on a stone counter: "
-                    "soaked rice and urad dal in bowls, whole potatoes, onion, "
-                    "green chilies, ginger, mustard seeds, curry leaves, turmeric "
-                    "and a small pot of ghee, warm morning light"
+                    "A covered clay vessel of dosa batter resting overnight on a "
+                    "rustic wooden shelf in dim, warm village-kitchen light, the "
+                    "batter risen and gently bubbled at the surface to imply long "
+                    "fermentation"
                 ),
-                "text_card_copy": "5 pantry staples", "start_sec": 0.0, "end_sec": 9.0,
+                "start_sec": 0.0, "end_sec": 6.0,
             },
             {
-                "id": 2, "type": "image",
+                "id": 2, "type": "video",
                 "moment_description": (
-                    "A covered steel vessel of dosa batter resting overnight in dim "
-                    "kitchen light, the batter risen and bubbled at the surface to "
-                    "imply long fermentation"
+                    "The young woman in a white-and-gold sari drops mustard seeds "
+                    "into shimmering hot ghee in a black kadai; they crackle and pop, "
+                    "curry leaves dropped in spluttering, close-up, steam rising"
                 ),
-                "text_card_copy": "Ferment 12 hrs", "start_sec": 9.0, "end_sec": 17.0,
+                "start_sec": 6.0, "end_sec": 16.0,
             },
             {
                 "id": 3, "type": "video",
                 "moment_description": (
-                    "Mustard seeds crackling and popping in shimmering hot ghee in a "
-                    "kadai, curry leaves dropped in and spluttering, close-up, steam "
-                    "rising"
+                    "A ladle of batter poured onto a screaming-hot tawa and spread "
+                    "outward in a smooth spiral with the base of the ladle, edges "
+                    "already crisping and lifting, steam rising, close-up"
                 ),
-                "text_card_copy": "Bloom the tadka", "start_sec": 17.0, "end_sec": 25.0,
+                "start_sec": 16.0, "end_sec": 26.0,
             },
             {
                 "id": 4, "type": "video",
                 "moment_description": (
-                    "A ladle of batter poured onto a screaming-hot tawa and spread "
-                    "outward in a smooth spiral with the base of the ladle, edges "
-                    "already crisping, steam rising"
+                    "Golden spiced potato masala spooned along the center of the "
+                    "crisp dosa, then the dosa folded over the filling with a flat "
+                    "wooden spatula, close-up, ghee glistening"
                 ),
-                "text_card_copy": "Spread it thin", "start_sec": 25.0, "end_sec": 33.0,
+                "start_sec": 26.0, "end_sec": 36.0,
             },
             {
                 "id": 5, "type": "video",
                 "moment_description": (
-                    "Golden spiced potato masala spooned along the center of the "
-                    "crisp dosa, then the dosa folded over the filling with a flat "
-                    "spatula, close-up"
-                ),
-                "text_card_copy": "Ghee, not oil", "start_sec": 33.0, "end_sec": 41.0,
-            },
-            {
-                "id": 6, "type": "video",
-                "moment_description": (
                     "The finished folded dosa lifted off the tawa and set onto a "
-                    "banana leaf, shattering-crisp edges catching the light"
+                    "fresh green banana leaf, its shattering-crisp edges catching "
+                    "the warm light, a little steam curling up"
                 ),
-                "text_card_copy": "Crispy. Golden.", "start_sec": 41.0, "end_sec": 49.0,
+                "start_sec": 36.0, "end_sec": 45.0,
             },
             {
-                "id": 7, "type": "image",
+                "id": 6, "type": "image",
                 "moment_description": (
                     "Overhead hero shot of the plated masala dosa with coconut "
                     "chutney and a bowl of steaming sambar, garnished with coriander, "
-                    "rich and appetizing"
+                    "rich and appetizing, soft morning light"
                 ),
-                "text_card_copy": "Serve hot", "start_sec": 49.0, "end_sec": 60.0,
+                "start_sec": 45.0, "end_sec": 50.0,
             },
         ],
-        "estimated_duration_sec": 60.0,
+        "estimated_duration_sec": 50.0,
         "hashtags": ["#shorts", "#indiancooking", "#spicegarden", "#dosa"],
         "ai_disclosure_required": True,
         "generated_at": now,

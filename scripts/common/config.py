@@ -14,14 +14,19 @@ COST_LOG_PATH = ROOT_DIR / "cost_logs" / "usage.csv"
 VIDEO_WIDTH = 1080
 VIDEO_HEIGHT = 1920
 VIDEO_FPS = 30
-# New format (major rewrite): a fixed ~60-second, no-narration video built
-# from native-audio hero clips + supporting stills, ending with an animated
-# subscribe call-to-action. The old 30-40s narrated format is gone - there
-# is no spoken voiceover at all anymore (see stage1/stage6 docstrings).
-TARGET_DURATION_SEC = 60
-MIN_DURATION_SEC = 55
-MAX_DURATION_SEC = 62
-DURATION_CHECK_SLACK_SEC = 3  # review-gate tolerance around the ~60s target
+# New format (major rewrite): a clean ~50-second, no-narration, NO-ON-SCREEN-
+# TEXT video built from native-audio hero clips + a couple of supporting
+# stills, in the style of a continuous Studio-Ghibli cooking story with one
+# consistent character. There is no voiceover and no burned-in text of any
+# kind (no title, no ingredient list, no per-moment cards) - the visuals and
+# the clips' own sound effects carry it, exactly like the reference the user
+# provided. The ONLY on-screen text is the short animated subscribe card in
+# the final seconds. Length target is ~50s: four ~10s hero clips (with their
+# laggy heads trimmed) plus 1-2 stills.
+TARGET_DURATION_SEC = 50
+MIN_DURATION_SEC = 45
+MAX_DURATION_SEC = 55
+DURATION_CHECK_SLACK_SEC = 3  # review-gate tolerance around the ~50s target
 
 BRANDING_LOGO_PATH = ASSETS_DIR / "branding" / "logo.png"
 MUSIC_DIR = ASSETS_DIR / "music"
@@ -80,40 +85,36 @@ CHARACTER_REF_IMAGE_PATH = CHARACTER_REF_DIR / "reference.png"
 # all - CREDITS_PER_VEO_CLIP is used only to log an ASSUMED Flow-credit spend
 # each time a manually-generated clip is consumed from the pool, for
 # tracking against the 1,000/month Pro allowance. It is not a real API cost.
-CREDITS_PER_VEO_CLIP = 10
+CREDITS_PER_VEO_CLIP = 7
 MONTHLY_FLOW_CREDIT_BUDGET = 1000
-# Chosen structure for the 60-second format: 4 hero clips/video, each up to
-# 8s (Flow/Veo's per-generation cap). Four clips of native-audio motion are
-# what carry a full 60s now that there is no voiceover - the clips' own
-# sizzle/cooking sound is the audio bed. Each clip has its own duration cap
-# (uniform 8s here, but kept as a list so a future non-uniform structure is
-# a one-line change). HERO_CLIPS_PER_SHORT is derived from the list length
-# so the two can never drift apart - change the list, not the count.
-HERO_CLIP_DURATIONS_SEC = [8, 8, 8, 8]
+# Chosen structure for the ~50-second format: 4 hero clips/video, each up to
+# 10s. Clips are generated manually in the creative tool (currently Omni 1.1
+# Flash at 7 credits per 360p/10s generation) and dropped into the clip pool;
+# assembly upscales the 360p source to 1080x1920 and trims each clip's laggy
+# head (see CLIP_LAG_TRIM_SEC). Four ~10s clips of native-audio motion, with
+# their dead frames cut, plus 1-2 stills, comfortably fill ~50s. Each clip
+# has its own cap (uniform 10s here, kept as a list so a future non-uniform
+# structure is a one-line change); HERO_CLIPS_PER_SHORT is derived from the
+# list length so the two can never drift apart - change the list, not count.
+HERO_CLIP_DURATIONS_SEC = [10, 10, 10, 10]
 HERO_CLIPS_PER_SHORT = len(HERO_CLIP_DURATIONS_SEC)
 VEO_CLIP_DURATION_SEC = max(HERO_CLIP_DURATIONS_SEC)  # generic "up to Xs" cap, for messaging only
-# CREDITS_PER_VEO_CLIP is a flat per-clip assumption - unverified whether
-# Flow charges more for a longer clip; check Google AI Studio's billing
-# dashboard for ground truth (same caveat as check_credit_budget.py).
-# 4 clips x 10 credits x 2 videos/day = 80 credits/day -> 1,000/month
-# supports ~12 sustained days, then a pause until the Pro renewal date
-# (not tracked here) - fewer days than the old 3-clip format, since a 60s
-# video with 4 hero clips is more real motion content per video.
+# CREDITS_PER_VEO_CLIP is a flat per-clip assumption (7 credits per Omni 1.1
+# Flash 360p/10s generation, per the user's account). 4 clips x 7 credits x
+# 2 videos/day = 56 credits/day -> 1,000/month supports ~17 sustained days.
 #
-# Supporting stills per video. The segment timeline is 5-7 entries total,
-# of which exactly HERO_CLIPS_PER_SHORT (4) are hero clips; the remaining
-# 1-3 are free Pollinations stills (ingredient spread, an over-time step
-# like simmering/resting, the finished-dish shot). The 4-6 "moments"
-# sketched in the original brief widened to 5-7 once the format locked to
-# a fixed ~60s built from four 8s clips: 4x8s = 32s of clips, so >=1 still
-# is needed to reach 60s without holding any single still absurdly long,
-# and up to 3 keeps every hold in a comfortable ~8-12s range.
+# Supporting stills per video. The segment timeline is 5-6 entries total, of
+# which exactly HERO_CLIPS_PER_SHORT (4) are hero clips; the remaining 1-2
+# are free Pollinations stills used for slower story beats (e.g. an
+# over-time step like fermenting/resting, or the finished-dish hero shot) so
+# the whole ~50s isn't 4 clips held at their absolute max. These stills are
+# still visuals-only - there is NO ingredient-list card or any other text.
 STILLS_PER_SHORT_MIN = 1
-STILLS_PER_SHORT_MAX = 3
+STILLS_PER_SHORT_MAX = 2
 SEGMENTS_MIN = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MIN  # 5
-SEGMENTS_MAX = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MAX  # 7
+SEGMENTS_MAX = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MAX  # 6
 
-VEO_MODEL_NAME = "veo-3.1-lite"
+VEO_MODEL_NAME = "omni-1.1-flash"  # current hero-clip model (360p/10s, 7 credits)
 
 # Image generation: FINAL correction, after three rounds of getting this
 # wrong. Gemini's image models (Nano Banana, Nano Banana 2, Imagen - all
@@ -218,23 +219,27 @@ PACING_QUICK_MULTIPLIER = 0.9   # ingredient / prep moments
 PACING_HOLD_MULTIPLIER = 1.25   # final plated-dish moment
 
 # Colour normalisation applied identically to every segment (stills AND
-# clips) so a photoreal hero clip and an illustrated still don't jar in
-# exposure / saturation / temperature sitting next to each other. Mild on
+# clips) so the illustrated stills and the (upscaled) hero clips don't jar
+# in exposure / saturation / temperature sitting next to each other. Mild on
 # purpose - it unifies, it does not restyle.
 COLOR_NORMALIZE_FILTER = (
     "eq=contrast=1.05:saturation=1.08:brightness=0.015:gamma=1.02"
 )
 
-# Text-card typography - one definition, used for every card on every video.
-TEXT_CARD_FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-TEXT_CARD_FONT_SIZE = 62
-TEXT_CARD_FONT_COLOR = "white"
-TEXT_CARD_BOX_COLOR = "black@0.55"   # semi-opaque plate behind the text
-TEXT_CARD_BOX_BORDER_PX = 26
-# Fixed vertical anchor for every card: a stable lower-third, kept high
-# enough to sit clear of the bottom-right Veo watermark band (see below).
-TEXT_CARD_Y_RATIO = 0.68
-TEXT_CARD_FADE_SEC = 0.3             # each card fades in/out, no hard pop
+# Hero clips come in at low resolution (360p on Omni 1.1 Flash) and are
+# upscaled to 1080x1920, which softens them - a mild unsharp restores some
+# crispness without looking processed. Applied only where it helps.
+UPSCALE_SHARPEN_FILTER = "unsharp=5:5:0.6:5:5:0.0"
+
+# Generative video clips often open with a static/warm-up "lag" frame or two
+# before the real motion starts. Trim this many seconds off the HEAD of each
+# hero clip when cutting its segment, so the assembled video jumps straight
+# into the action (this is the "cutting the lag" the user described - it's
+# also why four ~10s clips comfortably fill ~50s rather than a strict 40s).
+CLIP_LAG_TRIM_SEC = 0.5
+
+# NOTE: there is intentionally NO text-card typography here. This format
+# burns in no on-screen text at all except the subscribe end-card below.
 
 # Animated subscribe call-to-action, rendered as an overlay over the last
 # SUBSCRIBE_CTA_DURATION_SEC of the video (part of the ~60s, not appended
@@ -250,8 +255,8 @@ DEFAULT_SUBSCRIBE_CTA_TEXT = "Subscribe for more"
 # BOTTOM-RIGHT corner of every hero clip. It is a policy requirement that
 # it stay fully visible and unobstructed, so:
 #   - our channel logo goes TOP-LEFT (opposite corner), and
-#   - text cards and the subscribe CTA are kept out of the bottom-right
-#     band defined by these margins.
+#   - the subscribe end-card is kept out of the bottom-right band defined
+#     by these margins (there are no other on-screen overlays).
 # The safe band is the bottom WATERMARK_RESERVED_H_PX pixels within the
 # right WATERMARK_RESERVED_W_PX pixels - nothing we draw may enter it.
 BRANDING_CORNER = "top-left"
