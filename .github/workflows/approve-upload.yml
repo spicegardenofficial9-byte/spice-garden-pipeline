@@ -1,0 +1,52 @@
+name: Spice Garden - Approve & Upload
+
+# Manual-trigger only, never scheduled - this is the deliberate "yes,
+# publish this one" action, run only after watching the built video at
+# review-pending/<run_id>/final.mp4 (built by pipeline.yml, which stops
+# before ever uploading). This is the ONLY workflow that calls Stage 7.
+#
+# Trigger from the Actions tab ("Run workflow") or via:
+#   gh workflow run approve-upload.yml -f run_id=<run_id>
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "run_id to publish (see review-pending/<run_id>/), as printed by run_stage_bc.py"
+        required: true
+        type: string
+
+jobs:
+  approve-and-upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Publish the reviewed video
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          # Defaults to "unlisted" (current review-first plan). Set a repo
+          # variable named YOUTUBE_PRIVACY_STATUS to "public" once satisfied.
+          YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'unlisted' }}
+        run: python scripts/approve_upload.py --run-id "${{ inputs.run_id }}"
+
+      - name: Commit clip-pool/review-pending cleanup
+        if: always()
+        run: |
+          git config user.name "spice-garden-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add cost_logs/usage.csv clip-pool/ review-pending/
+          git diff --staged --quiet || git commit -m "chore: approve and publish ${{ inputs.run_id }} [skip ci]"
+          git push

@@ -1,0 +1,123 @@
+{
+  "dish_name": "Paneer Butter Masala",
+  "region": "Punjabi / North Indian",
+  "ingredients": [
+    "Paneer",
+    "Butter",
+    "Onions",
+    "Tomatoes",
+    "Cashews",
+    "Ginger",
+    "Garlic",
+    "Cardamom",
+    "Cloves",
+    "Kashmiri red chili powder",
+    "Garam masala",
+    "Salt",
+    "Kasuri methi",
+    "Fresh cream",
+    "Fresh cilantro"
+  ],
+  "title": "Authentic Paneer Butter Masala at Home! 🧈✨ #shorts",
+  "hook": "Stop buying restaurant paneer butter masala when you can make it better at home!",
+  "voiceover_script": "Stop buying restaurant paneer butter masala when you can make it better at home! First, sauté onions, tomatoes, cashews, ginger, garlic, and whole spices in butter until soft. Blend this into a silky smooth puree. Pour it back into melted butter, then add Kashmiri red chili powder, garam masala, and salt. Toss in fresh paneer cubes and simmer gently. Finish with crushed kasuri methi and fresh cream. Subscribe to Spice Garden for more authentic recipes!",
+  "segments": [
+    {
+      "id": 1,
+      "text": "Stop buying restaurant paneer butter masala when you can make it better at home!",
+      "start_sec": 0.0,
+      "end_sec": 5.0
+    },
+    {
+      "id": 2,
+      "text": "First, sauté onions, tomatoes, cashews, ginger, garlic, and whole spices in butter until soft.",
+      "start_sec": 5.0,
+      "end_sec": 11.0
+    },
+    {
+      "id": 3,
+      "text": "Blend this into a silky smooth puree.",
+      "start_sec": 11.0,
+      "end_sec": 15.0
+    },
+    {
+      "id": 4,
+      "text": "Pour it back into melted butter, then add Kashmiri red chili powder, garam masala, and salt.",
+      "start_sec": 15.0,
+      "end_sec": 21.0
+    },
+    {
+      "id": 5,
+      "text": "Toss in fresh paneer cubes and simmer gently.",
+      "start_sec": 21.0,
+      "end_sec": 27.0
+    },
+    {
+      "id": 6,
+      "text": "Finish with crushed kasuri methi and fresh cream. Subscribe to Spice Garden for more authentic recipes!",
+      "start_sec": 27.0,
+      "end_sec": 34.0
+    }
+  ],
+  "key_visual_moments": [
+    "Close-up video of pouring smooth orange tomato-cashew puree into sizzled butter in a deep pan, creating aromatic steam.",
+    "Slow-motion video of rich cream swirling into the bubbling orange paneer butter masala, followed by a sprinkle of crushed green kasuri methi."
+  ],
+  "visual_beats": [
+    {
+      "id": 1,
+      "type": "image",
+      "prompt": "A mouthwatering top-down shot of a freshly prepared bowl of Paneer Butter Masala garnished with a swirl of fresh cream and fresh cilantro.",
+      "start_sec": 0.0,
+      "end_sec": 5.0
+    },
+    {
+      "id": 2,
+      "type": "image",
+      "prompt": "Cinematic close-up shot of chopped onions, red tomatoes, cashew nuts, ginger, garlic, cardamoms, and cloves sautéing in a pan with melting butter.",
+      "start_sec": 5.0,
+      "end_sec": 11.0
+    },
+    {
+      "id": 3,
+      "type": "image",
+      "prompt": "Close-up shot of a blender pitcher filled with a thick, velvety smooth orange cashew and tomato puree.",
+      "start_sec": 11.0,
+      "end_sec": 15.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "prompt": "Close-up video of pouring smooth orange tomato-cashew puree into sizzled butter in a deep pan, creating aromatic steam.",
+      "start_sec": 15.0,
+      "end_sec": 21.0
+    },
+    {
+      "id": 5,
+      "type": "image",
+      "prompt": "Close-up shot of fresh, soft white paneer cubes being added into the simmering spiced orange gravy.",
+      "start_sec": 21.0,
+      "end_sec": 27.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "prompt": "Slow-motion video of rich cream swirling into the bubbling orange paneer butter masala, followed by a sprinkle of crushed green kasuri methi.",
+      "start_sec": 27.0,
+      "end_sec": 34.0
+    }
+  ],
+  "estimated_duration_sec": 34.0,
+  "hashtags": [
+    "#shorts",
+    "#paneerbuttermasala",
+    "#indiancooking",
+    "#curry",
+    "#spicegarden",
+    "#recipes"
+  ],
+  "model": "gemini-3.6-flash",
+  "generated_at": "2026-09-07T03:46:50Z",
+  "ai_disclosure_required": true,
+  "run_id": "20260907T034623Z"
+}

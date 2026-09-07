@@ -1,0 +1,98 @@
+name: Spice Garden Shorts Pipeline
+
+# Two schedules per day, 9am and 6pm IST (UTC+5:30):
+#   9:00 IST  = 3:30 UTC  -> AM trigger
+#   18:00 IST = 12:30 UTC -> PM trigger
+#
+# Per explicit user request, AM and PM scripts are generated TOGETHER on
+# the morning trigger (run_pipeline.py --batch) so the human can generate
+# all hero clips for both videos in a single Flow sitting instead of two
+# separate sessions - see generate_flow_prompt.py's write_combined_brief().
+# The PM trigger does NOT generate a new script; both triggers run Stage
+# A->B (run_stage_bc.py) to check whether ANY previously-requested clip
+# has been dropped into clip-pool/incoming/ by now and, if so, build it.
+# This may fulfill a request from many hours earlier, not necessarily
+# from today's batch.
+#
+# This workflow NEVER uploads to YouTube - it only builds a video and
+# stops (review-pending/<run_id>/final.mp4), per explicit user decision
+# to keep a human review step before anything goes live. Publishing is a
+# separate, deliberate action - see approve-upload.yml.
+on:
+  schedule:
+    - cron: "30 3 * * *"   # 9:00 AM IST - generates both AM+PM scripts, then fulfills
+    - cron: "30 12 * * *"  # 6:00 PM IST - fulfills only, no new scripts
+  workflow_dispatch:
+    inputs:
+      generate:
+        description: "Also generate a fresh AM+PM script batch on this manual run"
+        type: boolean
+        default: false
+
+jobs:
+  produce-short:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Determine date (IST) and whether to generate
+        id: ctx
+        run: |
+          if [ "${{ github.event.schedule }}" = "30 3 * * *" ]; then
+            GENERATE=true
+          elif [ "${{ github.event.schedule }}" = "30 12 * * *" ]; then
+            GENERATE=false
+          else
+            GENERATE="${{ github.event.inputs.generate }}"
+          fi
+          DATE=$(TZ=Asia/Kolkata date +%Y-%m-%d)
+          echo "generate=$GENERATE" >> "$GITHUB_OUTPUT"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          echo "Resolved generate=$GENERATE date=$DATE"
+
+      - name: "Step 1: generate today's AM+PM script batch + combined Flow brief"
+        if: steps.ctx.outputs.generate == 'true'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/run_pipeline.py --batch --date "${{ steps.ctx.outputs.date }}"
+
+      - name: "Step 2: fulfill any ready clip-pool request (Stage A->B only - stops for review)"
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/run_stage_bc.py
+
+      - name: Check Flow credit budget
+        if: always()
+        run: python scripts/check_credit_budget.py
+
+      - name: Upload run artifacts (debugging)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-output-${{ steps.ctx.outputs.date }}-${{ github.run_id }}
+          path: output/
+          retention-days: 7
+
+      - name: Commit clip-pool, review-pending, and usage-log changes
+        if: always()
+        run: |
+          git config user.name "spice-garden-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add cost_logs/usage.csv clip-pool/ review-pending/
+          git diff --staged --quiet || git commit -m "chore: update clip-pool/review-pending and usage log [skip ci]"
+          git push

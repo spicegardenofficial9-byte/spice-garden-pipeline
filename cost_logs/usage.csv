@@ -1,0 +1,55 @@
+timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
+2026-09-06T10:58:37Z,20260906T105801Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-06T10:58:45Z,20260906T105801Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-06T10:59:42Z,20260906T105913Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-06T10:59:56Z,20260906T105913Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-06T11:00:57Z,20260906T110027Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-06T11:01:06Z,20260906T110027Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-06T11:02:02Z,20260906T110133Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-06T11:02:30Z,20260906T110133Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,approved
+2026-09-06T11:03:41Z,sample-20260906T110338Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-06T11:04:25Z,sample-20260906T110338Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-06T11:05:10Z,sample-20260906T110338Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-06T11:05:56Z,sample-20260906T110338Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-06T11:05:56Z,sample-20260906T110338Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
+2026-09-06T11:06:01Z,sample-20260906T110338Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,658,characters,0.000000,free/local TTS
+2026-09-06T11:06:12Z,sample-20260906T110338Z,stage4_captions,faster-whisper,base,1,transcription,0.000000,free/local Whisper
+2026-09-07T03:32:23Z,20260907T033200Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:32:28Z,20260907T033200Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T03:35:12Z,20260907T033413Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:35:31Z,20260907T033413Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T03:38:30Z,20260907T033605Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:39:23Z,20260907T033855Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:39:38Z,20260907T033855Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T03:40:45Z,20260907T034004Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:41:41Z,20260907T034004Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T03:42:28Z,20260907T034159Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:42:36Z,20260907T034159Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T03:44:54Z,20260907T034339Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:46:50Z,20260907T034623Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T03:47:12Z,20260907T034623Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,approved
+2026-09-07T05:10:22Z,2026-09-07-AM-20260907T051019Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T05:11:07Z,2026-09-07-AM-20260907T051019Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T05:11:52Z,2026-09-07-AM-20260907T051019Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T05:12:37Z,2026-09-07-AM-20260907T051019Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T05:12:37Z,2026-09-07-AM-20260907T051019Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
+2026-09-07T05:12:46Z,2026-09-07-AM-20260907T051019Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,456,characters,0.000000,free/local TTS
+2026-09-07T05:12:51Z,2026-09-07-AM-20260907T051019Z,stage4_captions,faster-whisper,base,1,transcription,0.000000,free/local Whisper
+2026-09-07T05:34:54Z,test-minimal-narration,stage5_visual_generation,mock,mock,3,assets,0.000000,mock mode
+2026-09-07T05:34:54Z,test-minimal-narration,stage3_voiceover,none,silence,0,characters,0.000000,minimal-narration video - no TTS call made
+2026-09-07T06:04:58Z,test-3clip-mock,stage1_script_generation,mock,mock,1,generation,0.000000,mock mode - no LLM call made
+2026-09-07T06:12:01Z,test-durations,stage1_script_generation,mock,mock,1,generation,0.000000,mock mode - no LLM call made
+2026-09-07T06:12:04Z,test-durations,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T06:12:30Z,2026-09-07-AM-resample-20260907T061229Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:12:33Z,2026-09-07-AM-resample-20260907T061229Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:12:36Z,2026-09-07-AM-resample-20260907T061229Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:12:39Z,2026-09-07-AM-resample-20260907T061229Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:12:39Z,2026-09-07-AM-resample-20260907T061229Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
+2026-09-07T06:12:45Z,2026-09-07-AM-resample-20260907T061229Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,456,characters,0.000000,free/local TTS
+2026-09-07T06:55:26Z,2099-02-01-AM-20260907T065516Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:56:11Z,2099-02-01-AM-20260907T065516Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:56:56Z,2099-02-01-AM-20260907T065516Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:57:41Z,2099-02-01-AM-20260907T065516Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T06:57:41Z,2099-02-01-AM-20260907T065516Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
+2026-09-07T06:57:41Z,2099-02-01-AM-20260907T065516Z,run_stage_bc,manual-flow,veo-3.1-lite,30,flow_credits_assumed,0.000000,"3 hero clips manually generated in Flow, consumed from clip-pool (2099-02-01-AM-1.mp4, 2099-02-01-AM-2.mp4, 2099-02-01-AM-3.mp4)"
+2026-09-07T06:57:43Z,2099-02-01-AM-20260907T065516Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,72,characters,0.000000,free/local TTS

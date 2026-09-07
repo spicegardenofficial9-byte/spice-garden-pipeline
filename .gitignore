@@ -1,0 +1,32 @@
+__pycache__/
+*.pyc
+.env
+*.egg-info/
+.DS_Store
+.venv/
+
+# Per-run pipeline output (media files, intermediate JSON) - ephemeral,
+# not meant to live in git history. cost_logs/usage.csv is tracked
+# separately and is NOT excluded.
+output/*
+!output/.gitkeep
+
+# Character reference image, fetched at runtime from a private content
+# repo/store (see scripts/fetch_character_reference.py) - must never be
+# committed to this public repo.
+_private_assets/
+
+# NOTE: clip-pool/incoming/*.mp4 and clip-pool/pending/** are deliberately
+# NOT gitignored. They must be committed and pushed - that's the only way
+# a manually-generated Flow clip (or a pending script waiting for one)
+# gets from your machine to the GitHub Actions runner. approve_upload.py
+# deletes consumed entries once a video is successfully uploaded; the
+# workflow commits that cleanup back. Repo history will still retain old
+# clip blobs indefinitely - periodic git history cleanup (e.g. BFG) is a
+# known maintenance item, not handled automatically.
+
+# NOTE: review-pending/** is ALSO deliberately NOT gitignored, same
+# reasoning as clip-pool above. run_stage_bc.py stops here (a built,
+# not-yet-published final.mp4) rather than auto-uploading, so a human can
+# review it - see approve_upload.py, the only script that ever calls
+# Stage 7 (upload).

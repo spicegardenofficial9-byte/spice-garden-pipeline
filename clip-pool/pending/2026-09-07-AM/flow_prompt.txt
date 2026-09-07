@@ -1,0 +1,25 @@
+Dish: Paneer Butter Masala (Punjabi / North Indian)
+
+This video needs 2 separate hero clips - generate each one
+independently in Flow and save under its own filename below.
+
+Common requirements for every clip:
+- Attach the Spice Garden character reference image for consistency
+  (image-to-video / reference-frame mode, not text description alone).
+- Duration: 8s or less each.
+- Aspect ratio: 9:16 vertical (1080x1920 target).
+- Style: Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework - vary only the action/setting described per clip below.
+
+--- Clip 1 of 2 ---
+Prompt (paste into Flow):
+Close-up video of pouring smooth orange tomato-cashew puree into sizzled butter in a deep pan, creating aromatic steam.
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-07-AM-1.mp4
+
+--- Clip 2 of 2 ---
+Prompt (paste into Flow):
+Slow-motion video of rich cream swirling into the bubbling orange paneer butter masala, followed by a sprinkle of crushed green kasuri methi.
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-07-AM-2.mp4
