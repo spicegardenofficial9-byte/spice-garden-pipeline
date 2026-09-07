@@ -241,15 +241,17 @@ CLIP_LAG_TRIM_SEC = 0.5
 # NOTE: there is intentionally NO text-card typography here. This format
 # burns in no on-screen text at all except the subscribe end-card below.
 
-# Animated subscribe call-to-action, rendered as an overlay over the last
-# SUBSCRIBE_CTA_DURATION_SEC of the video (part of the ~60s, not appended
-# on top). Slides up + fades in via drawtext/overlay keyframing - no
-# external animation tool. The text itself comes from the script's
-# subscribe_cta_text field so it varies per video; DEFAULT is only a
-# fallback when a script omits it.
+# Subscribe ending: a real, pre-made ~4-second subscribe animation asset
+# (with its own bell-chime sound) is appended to the END of every video,
+# per explicit user decision. This replaces the old programmatically-drawn
+# image card + bell (removed). Drop the animation at SUBSCRIBE_ANIMATION_PATH
+# (override with the SUBSCRIBE_ANIMATION env var); it is scaled to frame,
+# capped at SUBSCRIBE_CTA_DURATION_SEC, crossfaded in as the final segment,
+# and keeps its own audio (the bell sound). If the asset is absent the video
+# simply ends on the final dish shot (with a warning) - no drawn fallback.
 SUBSCRIBE_CTA_DURATION_SEC = 4.0
-SUBSCRIBE_CTA_FONT_SIZE = 88
-DEFAULT_SUBSCRIBE_CTA_TEXT = "Subscribe for more"
+SUBSCRIBE_ANIMATION_PATH = ASSETS_DIR / "branding" / "subscribe.mp4"
+DEFAULT_SUBSCRIBE_CTA_TEXT = "Subscribe for more"  # suggested line for the animation
 
 # Google Veo stamps a "Made with Veo" / SynthID watermark fixed in the
 # BOTTOM-RIGHT corner of every hero clip. It is a policy requirement that

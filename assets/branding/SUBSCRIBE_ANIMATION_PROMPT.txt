@@ -1,0 +1,42 @@
+SPICE GARDEN - SUBSCRIBE ANIMATION (make this ONCE, reused on every video)
+============================================================================
+
+Generate a single ~4-second vertical (9:16) subscribe animation, save it as:
+
+    assets/branding/subscribe.mp4
+
+The pipeline appends it (crossfaded, with its own audio) to the END of every
+video automatically - so it only needs to be made once. Keep it on-brand:
+warm, hand-painted Studio-Ghibli look, cozy Indian-kitchen palette
+(saffron / warm gold / deep green), matching the videos.
+
+MUST include (all of these):
+- A gold notification BELL icon that animates: it drops/pops in, then RINGS
+  (wobbles/shakes side to side a couple of times), with small motion lines or
+  a soft sparkle on the ring.
+- A "SUBSCRIBE" button/pill (classic red) that pops in, and a short line of
+  text above or below it, e.g. "Subscribe for more" / "More recipes daily".
+- SOUND: a clear BELL "ding"/chime sound effect synced to the moment the bell
+  rings (the audio is kept and plays in the final video). A soft whoosh/pop on
+  the button is a nice extra. This bell sound is required.
+- Duration ~4 seconds, 9:16 vertical, 1080x1920 (or upscaled to it).
+- Keep the bottom-right corner clear (that corner may carry a generator
+  watermark on the main clips; the subscribe screen should not clutter it).
+
+PROMPT you can paste into your animation / video tool:
+----------------------------------------------------------------------------
+A 4-second vertical 9:16 subscribe end-screen in a warm hand-painted Studio
+Ghibli style, cozy Indian kitchen colours (saffron, warm gold, deep green). A
+gold notification bell icon pops into the centre and rings - wobbling side to
+side with tiny motion lines and a soft sparkle - while a classic red
+"SUBSCRIBE" button pops in beneath it with the words "Subscribe for more".
+Gentle, satisfying motion; clean and uncluttered; keep the bottom-right corner
+empty. Audio: a bright, clear bell "ding" chime synced to the bell ringing,
+plus a soft pop/whoosh as the button appears.
+----------------------------------------------------------------------------
+
+Notes:
+- Any short clip works as long as it ends cleanly; it will be capped at
+  config.SUBSCRIBE_CTA_DURATION_SEC (~4s) and scaled to 1080x1920.
+- To change it later, just replace assets/branding/subscribe.mp4 - every
+  future build picks up the new one. No code change needed.

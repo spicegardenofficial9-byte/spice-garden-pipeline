@@ -7,9 +7,10 @@ The format is a clean **~50-second, no-narration, no-on-screen-text**
 vertical video, modelled on a Studio-Ghibli-style cooking short: four
 native-audio hero clips (~10s each) plus 1-2 supporting stills, told as
 one continuous farm-to-plate story with a consistent character and only
-the clips' natural sound. The single piece of on-screen text is an
-animated subscribe call-to-action in the final seconds. No voiceover, no
-titles, no ingredient labels, no captions.
+the clips' natural sound. A pre-made ~4-second subscribe animation (with its
+own bell sound, dropped at assets/branding/subscribe.mp4) is appended to every
+ending. No voiceover, no titles, no ingredient labels, no captions - the only
+branding text lives inside that supplied subscribe animation.
 
 It's built as a chain of independent stages rather than one monolithic
 script, so each part can be run and debugged on its own:
@@ -38,10 +39,11 @@ script, so each part can be run and debugged on its own:
 6. **Assembly** - normalises and colour-grades every segment, adds a
    Ken-Burns push on stills, trims each hero clip's laggy head and mildly
    sharpens the upscale, keeps each hero clip's native audio, joins
-   everything with short crossfades, animates the subscribe end-card (the
-   only on-screen text), overlays branding TOP-LEFT (keeping any
-   bottom-right generator watermark unobstructed), mixes music low under
-   the native audio, and outputs a final vertical MP4 with FFmpeg. No text
+   everything with short crossfades, appends the supplied ~4s subscribe
+   animation (with its bell sound) as the final segment, overlays branding
+   TOP-LEFT (keeping any bottom-right generator watermark unobstructed),
+   mixes music low under the native audio, and outputs a final vertical MP4
+   with FFmpeg. No text
    or captions are burned in.
 7. **Upload** - publishes the finished video, with an AI-content
    disclosure flag set on upload. Never runs automatically - see
@@ -64,8 +66,10 @@ review-pending entry cleaned up.
 This format has no spoken narration and no burned-in text at all - no
 titles, no ingredient labels, no per-step captions. The hero clips' own
 natural sound plays under background music and the visuals carry the
-whole story, exactly like the reference it's modelled on. The only text
-anywhere is a short animated subscribe card in the final seconds. The
+whole story, exactly like the reference it's modelled on. The only branding
+text anywhere lives inside the supplied ~4s subscribe animation appended to
+the end (assets/branding/subscribe.mp4; see SUBSCRIBE_ANIMATION_PROMPT.txt
+there for how to make it). The
 ingredient list and dish fact the script produces are metadata for the
 YouTube listing only - see `SCRIPT_PROMPT_TEMPLATE` in
 [stage1_script_generation.py](scripts/stage1_script_generation.py).
