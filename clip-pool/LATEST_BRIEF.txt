@@ -1,22 +1,107 @@
 SPICE GARDEN - 2026-09-07
 ============================================================
-This is always the latest brief. To see it any time, run this ONE
-command from anywhere in a terminal:
-  "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/show_brief.sh"
-No videos passed review today, 0 clips total. Do them in order, video
+All commands below assume you're in a terminal INSIDE your project
+folder (cd there first if needed). Start every day with ONE command
+(pulls the latest + shows this brief):
+  ./daily.sh
+(Or just re-view this file without pulling: ./show_brief.sh)
+There is 1 video today (PM), 3 clips total. Do them in order, video
 by video.
 ============================================================
-  (nothing to do - no script passed review this run)
+
 ============================================================
-That's it - once all the clips above exist, the scheduled runs pick up
-each video automatically and build it. Nothing else to do.
+PM VIDEO: Punjabi Aloo Paratha (Punjabi)
+============================================================
+
+CLIP 1 of 3 (PM, up to 8s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 8 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+Mashing soft boiled potatoes in a stainless steel bowl with finely chopped green chillies, ginger, fresh coriander leaves, red chilli powder, roasted cumin powder, amchur powder, and salt.
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 2 of 3 (PM, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+Hands shaping a whole wheat dough ball into a cup, sealing a large potato stuffing ball inside, and rolling it out smoothly with a wooden rolling pin.
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 3 of 3 (PM, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+Searing the stuffed paratha on a hot cast-iron tawa, drizzling desi ghee around the edges, flipping it over, and watching it puff up with sizzling brown spots.
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+
+Once ALL 3 clips above are generated and downloaded, run this
+ONE command - no cd, no venv activation. It grabs all 3 of your
+most recent downloads and files them correctly, in order:
+
+    ./save_clips.sh PM
+
+(Prefer a file manager instead? Rename each downloaded file to exactly
+"2026-09-07-PM-1.mp4", "-2.mp4", etc. (in the order you generated them)
+and drag them into: clip-pool/incoming/ (inside your project folder)
+Do NOT type that folder path by itself into a terminal - it's a
+destination, not a command.)
+
+============================================================
+That's it. Once all the clips for a video are saved and pushed
+(./push_clips.sh), the scheduled runs pick it up automatically, build
+it, and wait for you at ./review.sh - then ./approve.sh to publish.
 ============================================================
 NOTE - some slots have no video today:
-  - AM: rejected this cycle (Flawed cooking sequence: The potato masala filling is prepared after the dosa batter is poured on the hot tawa, which would cause the dosa to burn in real life; filling must be prepared prior to cooking the dosa.) - will retry on the next scheduled run.
-  - PM: rejected this cycle (The hook claims a 'ten-minute garlic dal tadka', which is culinary implausible because pressure cooking soaked toor dal and allowing pressure release takes at least 15-20 minutes.; Adding Kashmiri red chilli powder directly into high-heat bubbling ghee alongside frying garlic and chillies will scorch the powder instantly, turning it dark brown/black and bitter rather than blooming into a bright crimson liquid.; The voiceover script has a complete silence gap from 4.0s to 29.0s, leaving the entire cooking sequence unnarrated.) - will retry on the next scheduled run.
+  - AM: rejected this cycle (Diced red onions and julienned ginger chopped in visual beat 4 are completely omitted from the cooking and tempering steps in subsequent beats.) - will retry on the next scheduled run.
 ============================================================
 
 
 REFERENCE ONLY (not needed to complete the steps above)
 ============================================================
-  (none)
+
+--- PM: Punjabi Aloo Paratha (Punjabi) ---
+TITLE: Foolproof Punjabi Aloo Paratha Recipe 🫓 #shorts
+
+INGREDIENTS:
+  - whole wheat flour
+  - water
+  - boiled potatoes
+  - green chillies
+  - ginger
+  - fresh coriander leaves
+  - red chilli powder
+  - roasted cumin powder
+  - amchur powder
+  - salt
+  - ghee
+  - butter
+  - curd
+  - pickle
+
+FULL NARRATION:
+Stop tearing your Aloo Parathas! Subscribe to Spice Garden for real home flavors!
+
+VISUAL TIMELINE (7 beats, ~35.0s total):
+  [  0.0s -   2.5s] STILL     - Hands gently pulling apart a steaming hot golden-brown Aloo Paratha, revealing the seasoned spicy potato filling bursting from inside as steam rises off the fresh flatbread.
+  [  2.5s -   9.5s] HERO CLIP - Macro close-up shot at a 45-degree angle. A pair of hands presses a stainless steel potato masher into boiled yellow potatoes inside a mixing bowl. Sprinkles of finely chopped green chillies, minced ginger, fresh coriander leaves, red chilli powder, roasted cumin powder, amchur powder, and salt are tossed in, then lightly mixed together with a wooden spoon into a smooth yellow-orange spiced mixture.
+  [  9.5s -  12.5s] STILL     - A smooth kneaded whole wheat flour dough ball sitting inside a brass bowl, covered resting under a damp white cloth on a wooden kitchen counter to let the dough rest.
+  [ 12.5s -  21.5s] HERO CLIP - Top-down close-up shot. Hands flatten a portion of whole wheat dough into a shallow cup, place a ball of spiced potato filling in the center, and pinch the pleated dough edges tightly over the top to enclose it fully. The sealed ball is dusted with dry flour and rolled smoothly back and forth with a wooden rolling pin into a round flatbread.
+  [ 21.5s -  24.5s] STILL     - A hand carefully placing the raw rolled stuffed paratha onto a smoking hot black cast-iron tawa griddle over a blue gas flame as gentle heat bubbles begin forming on the surface.
+  [ 24.5s -  32.5s] HERO CLIP - Eye-level side shot. A steel spoon pours a line of golden molten ghee around the edges of the paratha on the hot tawa. A flat metal spatula flips the paratha, exposing a crisp golden-brown speckled crust that sizzles loudly, causing the stuffed flatbread to puff up in the center.
+  [ 32.5s -  35.0s] STILL     - A large slice of white homemade butter melting over the center of a piping hot crispy Aloo Paratha, served on a traditional brass plate with bowls of thick curd and tangy mango pickle.
+
+HASHTAGS: #shorts #AlooParatha #IndianCooking #PunjabiFood #SpiceGarden
+

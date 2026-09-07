@@ -1,0 +1,32 @@
+Dish: Punjabi Aloo Paratha (Punjabi)
+
+This video needs 3 separate hero clips - generate each one
+independently in Flow and save under its own filename below. Each clip
+has its OWN duration cap, not a shared one - see per-clip below.
+
+Common requirements for every clip:
+- Attach the Spice Garden character reference image for consistency
+  (image-to-video / reference-frame mode, not text description alone).
+- Aspect ratio: 9:16 vertical (1080x1920 target).
+- Style: Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework - vary only the action/setting described per clip below.
+
+--- Clip 1 of 3 (up to 8s) ---
+Prompt (paste into Flow):
+Mashing soft boiled potatoes in a stainless steel bowl with finely chopped green chillies, ginger, fresh coriander leaves, red chilli powder, roasted cumin powder, amchur powder, and salt.
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-07-PM-1.mp4
+
+--- Clip 2 of 3 (up to 10s) ---
+Prompt (paste into Flow):
+Hands shaping a whole wheat dough ball into a cup, sealing a large potato stuffing ball inside, and rolling it out smoothly with a wooden rolling pin.
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-07-PM-2.mp4
+
+--- Clip 3 of 3 (up to 10s) ---
+Prompt (paste into Flow):
+Searing the stuffed paratha on a hot cast-iron tawa, drizzling desi ghee around the edges, flipping it over, and watching it puff up with sizzling brown spots.
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-07-PM-3.mp4

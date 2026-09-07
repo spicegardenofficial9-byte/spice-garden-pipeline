@@ -57,3 +57,7 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T09:02:13Z,20260907T090118Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
 2026-09-07T09:03:54Z,20260907T090213Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
 2026-09-07T09:04:21Z,20260907T090213Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T09:14:24Z,20260907T091326Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T09:15:03Z,20260907T091326Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T09:15:49Z,20260907T091503Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T09:16:10Z,20260907T091503Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,approved
