@@ -17,28 +17,28 @@ Common requirements for every clip:
 
 --- Clip 1 of 4 (up to 10s) ---
 Prompt (paste into Flow):
-The young woman in a white-and-gold sari drops mustard seeds into shimmering hot ghee in a black kadai; the seeds crackle and pop, then a handful of fresh curry leaves is dropped in and splutters, extreme close-up, steam rising, warm morning light
+Extreme macro on a heavy black iron kadai: dark mustard seeds tumble into a shallow pool of shimmering hot ghee and burst into a dancing crackle, then a fistful of fresh curry leaves is scattered in and spits violently in the fat; a beat later finely chopped onion, slit green chillies and grated ginger cascade in and hiss loudly, turning glassy and golden as a wooden spatula folds them through, fragrant steam curling upward in warm raking morning light
 
 Once generated, download and save as:
   clip-pool/incoming/2026-09-07-AM-1.mp4
 
 --- Clip 2 of 4 (up to 10s) ---
 Prompt (paste into Flow):
-A ladle of pale dosa batter poured onto a screaming-hot flat tawa and immediately spread outward in one smooth spiral with the base of the ladle, the surface bubbling and the lacy edges already crisping and lifting, steam rising, top-down close-up
+Soft boiled potato chunks are tipped from a brass bowl into the tempered aromatics; a hand presses and folds them with a wooden masher, a pinch of bright turmeric rains over the top and stains everything gold, a small splash of water is added and it all sizzles as the spatula stirs it into a glossy, steaming spiced potato mash, tight close-up of the potatoes breaking apart
 
 Once generated, download and save as:
   clip-pool/incoming/2026-09-07-AM-2.mp4
 
 --- Clip 3 of 4 (up to 10s) ---
 Prompt (paste into Flow):
-Golden spiced potato masala spooned in a line along the centre of the crisp dosa, then the dosa folded over the filling with a flat wooden spatula, ghee glistening on the crackly golden surface, close-up
+Straight-down on a screaming-hot flat tawa: a steel ladle pours a pool of pale fermented batter at the centre, then in one confident continuous spiral from the inside outward spreads it paper-thin with the ladle's base into a wide even circle; the surface instantly blisters into hundreds of tiny bubbles, the lacy edges set and begin to lift, and a spoon drizzles ghee around the rim that sizzles and browns it to crisp golden lace
 
 Once generated, download and save as:
   clip-pool/incoming/2026-09-07-AM-3.mp4
 
 --- Clip 4 of 4 (up to 10s) ---
 Prompt (paste into Flow):
-The finished folded dosa lifted off the tawa with both hands and set down onto a fresh green banana leaf, its shattering-crisp edges catching the warm light, a thin curl of steam rising
+A spoon lays a neat line of the golden potato masala down the centre of the crackly dosa; a flat spatula slides under one crisp edge and folds the dosa over the filling, pressing so it audibly crackles, then both hands lift the long folded dosa off the tawa and set it down onto a fresh green banana leaf, a thin ribbon of steam rising off its glassy golden surface
 
 Once generated, download and save as:
   clip-pool/incoming/2026-09-07-AM-4.mp4

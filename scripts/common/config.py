@@ -247,7 +247,7 @@ CLIP_LAG_TRIM_SEC = 0.5
 # external animation tool. The text itself comes from the script's
 # subscribe_cta_text field so it varies per video; DEFAULT is only a
 # fallback when a script omits it.
-SUBSCRIBE_CTA_DURATION_SEC = 3.5
+SUBSCRIBE_CTA_DURATION_SEC = 4.0
 SUBSCRIBE_CTA_FONT_SIZE = 88
 DEFAULT_SUBSCRIBE_CTA_TEXT = "Subscribe for more"
 

@@ -25,8 +25,10 @@ own natural sound. Specifically:
      early/prep beats, a longer hold on the final plated dish, preserving the
      overall ~50s length.
   6. The ONLY on-screen text is an animated Subscribe call-to-action (from the
-     script's subscribe_cta_text) that slides up and fades in over the final
-     config.SUBSCRIBE_CTA_DURATION_SEC - a drawtext/overlay animation.
+     script's subscribe_cta_text) shown over the final
+     config.SUBSCRIBE_CTA_DURATION_SEC (~4s): the card slides up and fades in
+     with a gold notification bell above it that fades in and "rings" (a
+     rotate oscillation) - an overlay animation, no external tool.
   7. Background music (if present) is mixed low under the native audio.
 
 Watermark policy: if the source clips carry a generator watermark it sits in
@@ -170,6 +172,39 @@ def _render_subscribe_png(text: str, out_png: Path):
     img.save(out_png)
 
 
+BELL_CANVAS = 280  # small square so rotate() wiggles the bell around its own centre
+
+
+def _render_bell_png(out_png: Path):
+    """A small gold notification-bell icon centred on a transparent square
+    canvas, drawn with primitives (no emoji font needed). It's centred so the
+    rotate filter can wiggle it in place for a 'ringing' animation."""
+    from PIL import Image, ImageDraw
+
+    img = Image.new("RGBA", (BELL_CANVAS, BELL_CANVAS), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+    cx = BELL_CANVAS // 2
+    gold = (255, 201, 64, 255)
+    edge = (120, 78, 0, 255)
+
+    # top handle knob
+    draw.ellipse([cx - 14, 44, cx + 14, 72], fill=gold, outline=edge, width=3)
+    # bell body: rounded dome shoulders tapering to a wide base
+    body = [
+        (cx - 78, 190), (cx - 66, 150), (cx - 52, 108),
+        (cx - 40, 82), (cx + 40, 82), (cx + 52, 108),
+        (cx + 66, 150), (cx + 78, 190),
+    ]
+    draw.polygon(body, fill=gold, outline=edge)
+    draw.ellipse([cx - 40, 66, cx + 40, 100], fill=gold, outline=edge, width=3)
+    # base rim
+    draw.rounded_rectangle([cx - 92, 186, cx + 92, 212], radius=13, fill=gold, outline=edge, width=3)
+    # clapper
+    draw.ellipse([cx - 15, 216, cx + 15, 246], fill=gold, outline=edge, width=3)
+
+    img.save(out_png)
+
+
 # --------------------------------------------------------------------------
 # Segment builders (each outputs a normalised mp4 with video + audio streams
 # of exactly `duration` - no on-screen text)
@@ -283,34 +318,54 @@ def _pick_music_track():
 # Finalise: animated subscribe overlay + top-left branding + music mix
 # --------------------------------------------------------------------------
 
-def _finalize(combined: Path, total_duration: float, subscribe_png: Path, out_path: Path):
+def _finalize(combined: Path, total_duration: float, subscribe_png: Path,
+              bell_png: Path, out_path: Path):
     cta_start = max(0.0, total_duration - SUBSCRIBE_CTA_DURATION_SEC)
     fade = 0.4
 
-    inputs = ["-i", str(combined), "-loop", "1", "-i", str(subscribe_png)]
-    parts = [f"[1:v]format=rgba,fade=t=in:st={cta_start:.3f}:d={fade}:alpha=1[cta]"]
+    # Input 0 = combined video; 1 = subscribe card PNG; 2 = bell PNG; then
+    # optional logo, then optional music - indices tracked as we append.
+    inputs = ["-i", str(combined),
+              "-loop", "1", "-i", str(subscribe_png),
+              "-loop", "1", "-i", str(bell_png)]
+    parts = []
+
+    # Subscribe card: fade + slight upward slide into place.
+    parts.append(f"[1:v]format=rgba,fade=t=in:st={cta_start:.3f}:d={fade}:alpha=1[cta]")
     slide = f"40*(1-min(1,(t-{cta_start:.3f})/{fade}))"
     parts.append(
         f"[0:v][cta]overlay=x=(W-w)/2:y='{slide}':"
         f"enable='between(t,{cta_start:.3f},{total_duration:.3f})'[vcta]"
     )
-    last_v = "[vcta]"
+
+    # Bell: fade in, then a continuous ringing wiggle (rotate oscillation
+    # around its own centre), overlaid just above the subscribe card.
+    bell_y = int(VIDEO_HEIGHT * 0.205)
+    parts.append(
+        f"[2:v]format=rgba,rotate=a='0.28*sin(2*PI*3*t)':c=none:ow=rotw(0):oh=roth(0),"
+        f"fade=t=in:st={cta_start:.3f}:d={fade}:alpha=1[bell]"
+    )
+    parts.append(
+        f"[vcta][bell]overlay=x=(W-w)/2:y={bell_y}:"
+        f"enable='between(t,{cta_start:.3f},{total_duration:.3f})'[vbell]"
+    )
+    last_v = "[vbell]"
+    next_idx = 3
 
     logo = BRANDING_LOGO_PATH
     if logo.exists():
         inputs += ["-i", str(logo)]
-        parts.append(f"[2:v]scale={BRANDING_LOGO_WIDTH_PX}:-1[logo]")
+        parts.append(f"[{next_idx}:v]scale={BRANDING_LOGO_WIDTH_PX}:-1[logo]")
         parts.append(f"{last_v}[logo]overlay={BRANDING_MARGIN_PX}:{BRANDING_MARGIN_PX}[vbr]")
         last_v = "[vbr]"
-        music_idx = 3
+        next_idx += 1
     else:
         logger.warning("No branding logo at %s - skipping logo overlay (still watermark-safe).", logo)
-        music_idx = 2
 
     music = _pick_music_track()
     if music and music.exists():
         inputs += ["-stream_loop", "-1", "-i", str(music)]
-        parts.append(f"[{music_idx}:a]volume={MUSIC_VOLUME}[music]")
+        parts.append(f"[{next_idx}:a]volume={MUSIC_VOLUME}[music]")
         parts.append("[0:a][music]amix=inputs=2:duration=first:dropout_transition=2[aout]")
         audio_map = "[aout]"
     else:
@@ -354,9 +409,11 @@ def assemble(output_dir: str, run_id: str) -> dict:
 
     subscribe_png = work_dir / "subscribe.png"
     _render_subscribe_png(script.get("subscribe_cta_text", DEFAULT_SUBSCRIBE_CTA_TEXT), subscribe_png)
+    bell_png = work_dir / "bell.png"
+    _render_bell_png(bell_png)
 
     final_path = out_dir / "final.mp4"
-    _finalize(combined, total_duration, subscribe_png, final_path)
+    _finalize(combined, total_duration, subscribe_png, bell_png, final_path)
 
     meta = {
         "run_id": run_id,

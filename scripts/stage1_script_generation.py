@@ -256,69 +256,85 @@ def _mock_script(topic_brief: dict) -> dict:
         "region": "South Indian",
         "ingredients": [
             "rice", "urad dal", "fenugreek seeds", "water", "salt", "potatoes",
-            "onion", "mustard seeds", "curry leaves", "turmeric", "green chilies",
-            "ginger", "ghee", "coconut", "coriander",
+            "onion", "green chilies", "ginger", "mustard seeds", "curry leaves",
+            "turmeric", "ghee", "coconut", "coriander",
         ],
         "title": f"The Secret to Perfect {dish_name} \U0001F525 #shorts",
         "dish_fact": (
-            "The dosa's signature tang and lightness come from wild fermentation: "
+            "The dosa's signature tang and lightness come from wild fermentation - "
             "the rice-and-urad-dal batter is left overnight so natural lactic "
-            "bacteria leaven it - no yeast, no baking soda."
+            "bacteria leaven it, no yeast and no baking soda."
         ),
         "subscribe_cta_text": "More dosa secrets?",
         "segments": [
             {
                 "id": 1, "type": "image",
                 "moment_description": (
-                    "A covered clay vessel of dosa batter resting overnight on a "
-                    "rustic wooden shelf in dim, warm village-kitchen light, the "
-                    "batter risen and gently bubbled at the surface to imply long "
-                    "fermentation"
+                    "A covered earthen clay pot of dosa batter resting overnight on "
+                    "a rustic wooden shelf in a dim, warm village kitchen; the batter "
+                    "has risen and its surface is dotted with tiny fermentation "
+                    "bubbles, a soft shaft of dawn light falling across it, hushed "
+                    "and still"
                 ),
                 "start_sec": 0.0, "end_sec": 6.0,
             },
             {
                 "id": 2, "type": "video",
                 "moment_description": (
-                    "The young woman in a white-and-gold sari drops mustard seeds "
-                    "into shimmering hot ghee in a black kadai; they crackle and pop, "
-                    "curry leaves dropped in spluttering, close-up, steam rising"
+                    "Extreme macro on a heavy black iron kadai: dark mustard seeds "
+                    "tumble into a shallow pool of shimmering hot ghee and burst into "
+                    "a dancing crackle, then a fistful of fresh curry leaves is "
+                    "scattered in and spits violently; a beat later finely chopped "
+                    "onion, slit green chillies and grated ginger cascade in and hiss "
+                    "loudly, turning glassy and golden as a wooden spatula folds them "
+                    "through, fragrant steam curling upward in warm morning light"
                 ),
                 "start_sec": 6.0, "end_sec": 16.0,
             },
             {
                 "id": 3, "type": "video",
                 "moment_description": (
-                    "A ladle of batter poured onto a screaming-hot tawa and spread "
-                    "outward in a smooth spiral with the base of the ladle, edges "
-                    "already crisping and lifting, steam rising, close-up"
+                    "Soft boiled potato chunks are tipped from a brass bowl into the "
+                    "tempered aromatics; a hand presses and folds them with a wooden "
+                    "masher, a pinch of bright turmeric rains over the top and stains "
+                    "everything gold, a splash of water is added and it all sizzles "
+                    "as the spatula stirs it into a glossy, steaming spiced potato "
+                    "mash, tight close-up of the potatoes breaking apart"
                 ),
                 "start_sec": 16.0, "end_sec": 26.0,
             },
             {
                 "id": 4, "type": "video",
                 "moment_description": (
-                    "Golden spiced potato masala spooned along the center of the "
-                    "crisp dosa, then the dosa folded over the filling with a flat "
-                    "wooden spatula, close-up, ghee glistening"
+                    "Straight-down on a screaming-hot flat tawa: a steel ladle pours "
+                    "a pool of pale fermented batter at the centre, then in one "
+                    "confident continuous spiral from the inside outward spreads it "
+                    "paper-thin into a wide even circle; the surface instantly "
+                    "blisters into hundreds of tiny bubbles, the lacy edges set and "
+                    "lift, and a spoon drizzles ghee around the rim that sizzles and "
+                    "browns it to crisp golden lace"
                 ),
                 "start_sec": 26.0, "end_sec": 36.0,
             },
             {
                 "id": 5, "type": "video",
                 "moment_description": (
-                    "The finished folded dosa lifted off the tawa and set onto a "
-                    "fresh green banana leaf, its shattering-crisp edges catching "
-                    "the warm light, a little steam curling up"
+                    "A spoon lays a neat line of golden potato masala down the centre "
+                    "of the crackly dosa; a flat spatula folds the dosa over the "
+                    "filling, pressing so it audibly crackles, then both hands lift "
+                    "the long folded dosa off the tawa and set it onto a fresh green "
+                    "banana leaf, a thin ribbon of steam rising off its glassy golden "
+                    "surface"
                 ),
                 "start_sec": 36.0, "end_sec": 45.0,
             },
             {
                 "id": 6, "type": "image",
                 "moment_description": (
-                    "Overhead hero shot of the plated masala dosa with coconut "
-                    "chutney and a bowl of steaming sambar, garnished with coriander, "
-                    "rich and appetizing, soft morning light"
+                    "Overhead hero shot of the finished masala dosa on a banana leaf "
+                    "with a small bowl of white coconut chutney and a steaming bowl "
+                    "of sambar, scattered with fresh coriander, rich and appetising "
+                    "in soft morning light"
                 ),
                 "start_sec": 45.0, "end_sec": 50.0,
             },

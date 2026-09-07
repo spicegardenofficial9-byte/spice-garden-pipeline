@@ -19,7 +19,7 @@ Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-The young woman in a white-and-gold sari drops mustard seeds into shimmering hot ghee in a black kadai; the seeds crackle and pop, then a handful of fresh curry leaves is dropped in and splutters, extreme close-up, steam rising, warm morning light
+Extreme macro on a heavy black iron kadai: dark mustard seeds tumble into a shallow pool of shimmering hot ghee and burst into a dancing crackle, then a fistful of fresh curry leaves is scattered in and spits violently in the fat; a beat later finely chopped onion, slit green chillies and grated ginger cascade in and hiss loudly, turning glassy and golden as a wooden spatula folds them through, fragrant steam curling upward in warm raking morning light
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
@@ -30,7 +30,7 @@ Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-A ladle of pale dosa batter poured onto a screaming-hot flat tawa and immediately spread outward in one smooth spiral with the base of the ladle, the surface bubbling and the lacy edges already crisping and lifting, steam rising, top-down close-up
+Soft boiled potato chunks are tipped from a brass bowl into the tempered aromatics; a hand presses and folds them with a wooden masher, a pinch of bright turmeric rains over the top and stains everything gold, a small splash of water is added and it all sizzles as the spatula stirs it into a glossy, steaming spiced potato mash, tight close-up of the potatoes breaking apart
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
@@ -41,7 +41,7 @@ Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-Golden spiced potato masala spooned in a line along the centre of the crisp dosa, then the dosa folded over the filling with a flat wooden spatula, ghee glistening on the crackly golden surface, close-up
+Straight-down on a screaming-hot flat tawa: a steel ladle pours a pool of pale fermented batter at the centre, then in one confident continuous spiral from the inside outward spreads it paper-thin with the ladle's base into a wide even circle; the surface instantly blisters into hundreds of tiny bubbles, the lacy edges set and begin to lift, and a spoon drizzles ghee around the rim that sizzles and browns it to crisp golden lace
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
@@ -52,7 +52,7 @@ Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-The finished folded dosa lifted off the tawa with both hands and set down onto a fresh green banana leaf, its shattering-crisp edges catching the warm light, a thin curl of steam rising
+A spoon lays a neat line of the golden potato masala down the centre of the crackly dosa; a flat spatula slides under one crisp edge and folds the dosa over the filling, pressing so it audibly crackles, then both hands lift the long folded dosa off the tawa and set it down onto a fresh green banana leaf, a thin ribbon of steam rising off its glassy golden surface
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
@@ -90,11 +90,11 @@ INGREDIENTS:
   - salt
   - potatoes
   - onion
+  - green chilies
+  - ginger
   - mustard seeds
   - curry leaves
   - turmeric
-  - green chilies
-  - ginger
   - ghee
   - coconut
   - coriander
@@ -104,12 +104,12 @@ The dosa's signature tang and lightness come from wild fermentation - the rice-a
 
 SEGMENT TIMELINE (6 segments, ~50.0s total; no voiceover
 and NO on-screen text - visuals + natural sound only):
-  [  0.0s -   6.0s] STILL     - A covered clay vessel of dosa batter resting overnight on a rustic wooden shelf in dim, warm village-kitchen light, the batter risen and gently bubbled at the surface to imply long fermentation, Studio Ghibli style
-  [  6.0s -  16.0s] HERO CLIP - The young woman in a white-and-gold sari drops mustard seeds into shimmering hot ghee in a black kadai; the seeds crackle and pop, then a handful of fresh curry leaves is dropped in and splutters, extreme close-up, steam rising, warm morning light
-  [ 16.0s -  26.0s] HERO CLIP - A ladle of pale dosa batter poured onto a screaming-hot flat tawa and immediately spread outward in one smooth spiral with the base of the ladle, the surface bubbling and the lacy edges already crisping and lifting, steam rising, top-down close-up
-  [ 26.0s -  36.0s] HERO CLIP - Golden spiced potato masala spooned in a line along the centre of the crisp dosa, then the dosa folded over the filling with a flat wooden spatula, ghee glistening on the crackly golden surface, close-up
-  [ 36.0s -  45.0s] HERO CLIP - The finished folded dosa lifted off the tawa with both hands and set down onto a fresh green banana leaf, its shattering-crisp edges catching the warm light, a thin curl of steam rising
-  [ 45.0s -  50.0s] STILL     - Overhead hero shot of the plated masala dosa on a banana leaf with a small bowl of coconut chutney and a bowl of steaming sambar, garnished with fresh coriander, rich and appetising, soft morning light, Studio Ghibli style
+  [  0.0s -   6.0s] STILL     - A covered earthen clay pot of dosa batter resting overnight on a rustic wooden shelf in a dim, warm village kitchen; the batter has risen and its surface is dotted with tiny fermentation bubbles, a soft shaft of dawn light falling across it, Studio Ghibli style, hushed and still
+  [  6.0s -  16.0s] HERO CLIP - Extreme macro on a heavy black iron kadai: dark mustard seeds tumble into a shallow pool of shimmering hot ghee and burst into a dancing crackle, then a fistful of fresh curry leaves is scattered in and spits violently in the fat; a beat later finely chopped onion, slit green chillies and grated ginger cascade in and hiss loudly, turning glassy and golden as a wooden spatula folds them through, fragrant steam curling upward in warm raking morning light
+  [ 16.0s -  26.0s] HERO CLIP - Soft boiled potato chunks are tipped from a brass bowl into the tempered aromatics; a hand presses and folds them with a wooden masher, a pinch of bright turmeric rains over the top and stains everything gold, a small splash of water is added and it all sizzles as the spatula stirs it into a glossy, steaming spiced potato mash, tight close-up of the potatoes breaking apart
+  [ 26.0s -  36.0s] HERO CLIP - Straight-down on a screaming-hot flat tawa: a steel ladle pours a pool of pale fermented batter at the centre, then in one confident continuous spiral from the inside outward spreads it paper-thin with the ladle's base into a wide even circle; the surface instantly blisters into hundreds of tiny bubbles, the lacy edges set and begin to lift, and a spoon drizzles ghee around the rim that sizzles and browns it to crisp golden lace
+  [ 36.0s -  45.0s] HERO CLIP - A spoon lays a neat line of the golden potato masala down the centre of the crackly dosa; a flat spatula slides under one crisp edge and folds the dosa over the filling, pressing so it audibly crackles, then both hands lift the long folded dosa off the tawa and set it down onto a fresh green banana leaf, a thin ribbon of steam rising off its glassy golden surface
+  [ 45.0s -  50.0s] STILL     - Overhead hero shot of the finished masala dosa on a banana leaf with a small bowl of white coconut chutney and a steaming bowl of sambar, scattered with fresh coriander, rich and appetising in soft morning light, Studio Ghibli style
 
 SUBSCRIBE END-CARD COPY: More dosa secrets?
 
