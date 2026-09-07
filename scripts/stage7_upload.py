@@ -88,7 +88,13 @@ def upload_video(output_dir: str, run_id: str, privacy_status: str = None) -> di
     dish_name = script.get("dish_name", "")
     region = script.get("region", "")
     ingredients_line = ", ".join(script.get("ingredients", []))
-    description_parts = [script.get("voiceover_script", "")]
+    # No voiceover in this format - build the description from the dish's
+    # region + interesting fact and the ingredient list instead.
+    intro = " ".join(p for p in (
+        f"{dish_name} ({region})." if dish_name or region else "",
+        script.get("dish_fact", ""),
+    ) if p)
+    description_parts = [intro]
     if ingredients_line:
         description_parts.append(f"Ingredients: {ingredients_line}")
     description_parts.append(" ".join(script.get("hashtags", [])))

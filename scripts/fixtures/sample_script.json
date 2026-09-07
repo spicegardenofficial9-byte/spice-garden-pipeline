@@ -2,33 +2,21 @@
   "run_id": "fixture",
   "dish_name": "Masala Dosa",
   "region": "South Indian",
-  "ingredients": ["rice", "urad dal", "water", "salt", "potatoes", "onion", "mustard seeds", "curry leaves", "turmeric", "green chilies", "ghee"],
+  "ingredients": ["rice", "urad dal", "fenugreek seeds", "water", "salt", "potatoes", "onion", "mustard seeds", "curry leaves", "turmeric", "green chilies", "ginger", "ghee", "coconut", "coriander"],
   "title": "The Secret to Perfect Masala Dosa 🔥 #shorts",
-  "hook": "Why does your masala dosa never turn out this crispy?",
-  "voiceover_script": "Why does your masala dosa never turn out this crispy? Here's what most home cooks get wrong. Start with a well-fermented batter, at least twelve hours, then spread it thin on a screaming hot tawa. Drizzle the edges with ghee, not oil, and let it sit untouched until the edges lift on their own. That's the exact moment it turns golden and shatters like glass. Fill it with spiced potato masala, fold, and serve immediately with coconut chutney and hot sambar. Try this tonight.",
+  "dish_fact": "The dosa's signature tang and lightness come from wild fermentation: the rice-and-urad-dal batter is left overnight so natural lactic bacteria leaven it - no yeast, no baking soda.",
+  "subscribe_cta_text": "More dosa secrets?",
   "segments": [
-    {"id": 1, "text": "Why does your masala dosa never turn out this crispy?", "start_sec": 0.0, "end_sec": 4.0},
-    {"id": 2, "text": "Here's what most home cooks get wrong.", "start_sec": 4.0, "end_sec": 7.0},
-    {"id": 3, "text": "Start with a well-fermented batter, at least twelve hours, then spread it thin on a screaming hot tawa.", "start_sec": 7.0, "end_sec": 15.0},
-    {"id": 4, "text": "Drizzle the edges with ghee, not oil, and let it sit untouched until the edges lift on their own.", "start_sec": 15.0, "end_sec": 23.0},
-    {"id": 5, "text": "That's the exact moment it turns golden and shatters like glass.", "start_sec": 23.0, "end_sec": 27.0},
-    {"id": 6, "text": "Fill it with spiced potato masala, fold, and serve immediately with coconut chutney and hot sambar.", "start_sec": 27.0, "end_sec": 32.0},
-    {"id": 7, "text": "Try this tonight.", "start_sec": 32.0, "end_sec": 33.0}
+    {"id": 1, "type": "image", "moment_description": "Flat-lay of the full ingredient spread on a stone counter: soaked rice and urad dal in bowls, whole potatoes, onion, green chilies, ginger, mustard seeds, curry leaves, turmeric and a small pot of ghee, warm morning light", "text_card_copy": "5 pantry staples", "start_sec": 0.0, "end_sec": 9.0},
+    {"id": 2, "type": "image", "moment_description": "A covered steel vessel of dosa batter resting overnight in dim kitchen light, the batter risen and bubbled at the surface to imply long fermentation", "text_card_copy": "Ferment 12 hrs", "start_sec": 9.0, "end_sec": 17.0},
+    {"id": 3, "type": "video", "moment_description": "Mustard seeds crackling and popping in shimmering hot ghee in a kadai, curry leaves dropped in and spluttering, close-up, steam rising", "text_card_copy": "Bloom the tadka", "start_sec": 17.0, "end_sec": 25.0},
+    {"id": 4, "type": "video", "moment_description": "A ladle of batter poured onto a screaming-hot tawa and spread outward in a smooth spiral with the base of the ladle, edges already crisping, steam rising", "text_card_copy": "Spread it thin", "start_sec": 25.0, "end_sec": 33.0},
+    {"id": 5, "type": "video", "moment_description": "Golden spiced potato masala spooned along the center of the crisp dosa, then the dosa folded over the filling with a flat spatula, close-up", "text_card_copy": "Ghee, not oil", "start_sec": 33.0, "end_sec": 41.0},
+    {"id": 6, "type": "video", "moment_description": "The finished folded dosa lifted off the tawa and set onto a banana leaf, shattering-crisp edges catching the light", "text_card_copy": "Crispy. Golden.", "start_sec": 41.0, "end_sec": 49.0},
+    {"id": 7, "type": "image", "moment_description": "Overhead hero shot of the plated masala dosa with coconut chutney and a bowl of steaming sambar, garnished with coriander, rich and appetizing", "text_card_copy": "Serve hot", "start_sec": 49.0, "end_sec": 60.0}
   ],
-  "key_visual_moments": [
-    "Batter being poured and spread across a sizzling hot tawa in smooth circles, steam rising, slow motion",
-    "Hands folding the crispy masala dosa over the spiced potato filling, then plating it, slow motion"
-  ],
-  "visual_beats": [
-    {"id": 1, "type": "image", "prompt": "Close-up of raw masala dosa batter fermenting in a bowl, morning light", "start_sec": 0.0, "end_sec": 5.0},
-    {"id": 2, "type": "video", "prompt": "Batter being poured and spread across a sizzling hot tawa in smooth circles, steam rising, slow motion", "start_sec": 5.0, "end_sec": 11.0},
-    {"id": 3, "type": "image", "prompt": "Crispy golden masala dosa on the tawa with spiced potato filling being added", "start_sec": 11.0, "end_sec": 16.0},
-    {"id": 4, "type": "image", "prompt": "Overhead shot of the spiced potato masala filling in a pan, steam rising", "start_sec": 16.0, "end_sec": 21.0},
-    {"id": 5, "type": "video", "prompt": "Hands folding the crispy masala dosa over the spiced potato filling, then plating it, slow motion", "start_sec": 21.0, "end_sec": 28.0},
-    {"id": 6, "type": "image", "prompt": "Finished masala dosa plated with coconut chutney and sambar, steam rising", "start_sec": 28.0, "end_sec": 33.0}
-  ],
-  "estimated_duration_sec": 33.0,
-  "hashtags": ["#shorts", "#indiancooking", "#spicegarden"],
+  "estimated_duration_sec": 60.0,
+  "hashtags": ["#shorts", "#indiancooking", "#spicegarden", "#dosa"],
   "ai_disclosure_required": true,
   "generated_at": "2026-01-01T00:00:00Z",
   "model": "fixture"

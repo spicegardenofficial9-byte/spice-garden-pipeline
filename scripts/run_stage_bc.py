@@ -2,11 +2,13 @@
 Stage B orchestrator - the automated part that runs once Stage A
 (stageA_clip_pool_watcher.py) finds a fulfilled clip-pool request.
 
-Stage B (automated editing): stills generation, voiceover, FFmpeg
-assembly - run in that order. Captions (Stage 4) are intentionally not
-part of this chain - burned-in captions looked clumsy and YouTube
+Stage B (automated editing): stills generation, then FFmpeg assembly.
+There is no voiceover step anymore - the 60-second format is silent of
+narration and carries the hero clips' own native audio under background
+music (see stage1/stage6 docstrings). Captions (Stage 4) are likewise
+not part of this chain - burned-in captions looked clumsy and YouTube
 already auto-generates its own for Shorts, per explicit user decision.
-If ANY of these three steps fails, the run stops immediately: nothing
+If ANY of these steps fails, the run stops immediately: nothing
 is ever uploaded from this script, all intermediate files are preserved
 (nothing is ever deleted on failure), and the run's report.json records
 exactly which step failed. The source clips and their pending script
@@ -39,7 +41,6 @@ from common.cost_logger import log_cost
 from common.io_utils import new_run_id, save_json
 from stageA_clip_pool_watcher import find_pending_clip
 
-import stage3_voiceover as stage3
 import stage5_visual_generation as stage5
 import stage6_assembly as stage6
 
@@ -111,15 +112,6 @@ def run_stage_bc(clip_info: dict = None) -> dict:
     except Exception as exc:
         logger.error("Stage B failed at stills_and_hero_clips: %s", exc)
         report.step_failed("stills_and_hero_clips", exc)
-        report.finish("stage_b_failed")
-        return report.data
-
-    try:
-        voiceover_meta = stage3.generate_voiceover(str(script_path), str(output_dir), run_id)
-        report.step_ok("voiceover", {"duration_sec": voiceover_meta["duration_sec"]})
-    except Exception as exc:
-        logger.error("Stage B failed at voiceover: %s", exc)
-        report.step_failed("voiceover", exc)
         report.finish("stage_b_failed")
         return report.data
 

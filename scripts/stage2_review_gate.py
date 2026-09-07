@@ -1,5 +1,5 @@
 """
-Stage 2 - Automated review gate.
+Stage 2 - Automated review gate (60-second, no-narration format).
 
 Runs an automated pass/fail check on a generated script before any paid
 downstream work happens. This gate is deliberately FAIL-CLOSED: if the
@@ -7,12 +7,16 @@ review call errors, times out, or returns anything that can't be parsed
 into the expected shape, the script is treated as REJECTED. An ambiguous
 result is never treated as a pass.
 
-Reviewer is Gemini (config.GEMINI_TEXT_MODEL), used as an LLM-as-judge
-for culinary plausibility, ingredient sanity, and regional accuracy, on
-top of the dependency-free structural checks in _basic_shape_check().
+Reviewer is Gemini (config.GEMINI_TEXT_MODEL), used as an LLM-as-judge on
+top of the dependency-free structural checks in _basic_shape_check(). For
+the richer new schema the judge now checks four things: culinary
+plausibility, ingredient completeness/sanity, regional accuracy, and -
+new - that each moment_description is genuinely SPECIFIC (not generic
+filler) and that dish_fact is factually sound.
 
 Expected input (<output_dir>/script.json from Stage 1):
-    see stage1_script_generation.py docstring.
+    see stage1_script_generation.py docstring (dish_name, region,
+    ingredients, dish_fact, subscribe_cta_text, segments[...], ...).
 
 Expected output (<output_dir>/review.json):
     {
@@ -37,7 +41,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common.config import (
     DURATION_CHECK_SLACK_SEC, GEMINI_TEXT_MODEL, HERO_CLIP_DURATIONS_SEC,
     HERO_CLIPS_PER_SHORT, MAX_DURATION_SEC, MIN_DURATION_SEC,
-    STILLS_PER_SHORT_MAX, STILLS_PER_SHORT_MIN, get_env, run_output_dir,
+    SEGMENTS_MAX, SEGMENTS_MIN, STILLS_PER_SHORT_MAX, STILLS_PER_SHORT_MIN,
+    get_env, run_output_dir,
 )
 from common.cost_logger import log_cost
 from common.io_utils import load_json, save_json
@@ -46,10 +51,14 @@ from common.retry import retry_with_backoff
 logger = logging.getLogger(__name__)
 
 REVIEW_API_KEY_ENV = "GEMINI_API_KEY"
-# voiceover_script is deliberately NOT required here - minimal/no-narration
-# videos are a valid, intentional choice (see stage1's docstring), so an
-# empty voiceover_script must not fail this check.
-REQUIRED_SCRIPT_FIELDS = ("visual_beats", "estimated_duration_sec")
+REQUIRED_SCRIPT_FIELDS = (
+    "dish_name", "region", "ingredients", "dish_fact",
+    "subscribe_cta_text", "segments", "estimated_duration_sec",
+)
+# A text card must read in 2-3 seconds - anything longer is narration
+# creeping back in, which this format does not use.
+MAX_TEXT_CARD_CHARS = 60
+MAX_SUBSCRIBE_CTA_CHARS = 40
 
 
 class ReviewFailure(Exception):
@@ -57,24 +66,31 @@ class ReviewFailure(Exception):
 
 
 REVIEW_PROMPT_TEMPLATE = """You are a strict quality-control reviewer for an \
-Indian home-cooking YouTube Shorts channel. Review the script JSON below \
-against EXACTLY these three criteria, and nothing else:
+Indian home-cooking YouTube Shorts channel. The video is a ~60-second, \
+NO-NARRATION piece: short hero clips and stills with brief on-screen text \
+cards, no voiceover. Review the script JSON below against EXACTLY these four \
+criteria, and nothing else:
 
 1. Culinary plausibility - is the technique, timing, and sequence of steps \
-realistic and physically correct?
-2. Ingredient sanity - are the ingredients real, compatible with the dish, \
-and free of contradictions?
-3. Regional accuracy - does this match how the dish is actually made in \
-Indian home cooking (not a generic/foreign approximation)?
+across the "segments" realistic and physically correct?
+2. Ingredient completeness & sanity - are the ingredients real and compatible \
+with the dish, AND does the "ingredients" list include EVERY ingredient named \
+anywhere in any moment_description, text_card_copy, or dish_fact? Reject if an \
+ingredient is referenced but missing from the list, or vice versa.
+3. Regional accuracy - does this match how the dish is actually made in Indian \
+home cooking (not a generic/foreign approximation)?
+4. Moment specificity & fact soundness - is EACH "moment_description" specific \
+and concrete (a real, filmable action or composition like "mustard seeds \
+crackling in hot oil"), NOT vague filler like "cooking begins" or "tempering \
+the spices"? AND is "dish_fact" factually accurate for this dish/region (no \
+invented history)?
 
-If you are not fully confident on all three, reject it. When in doubt, reject.
+If you are not fully confident on all four, reject it. When in doubt, reject.
 
-Do NOT reject for anything outside these three criteria. In particular, \
-this channel intentionally uses minimal or no spoken narration - it is \
-CORRECT and EXPECTED for "voiceover_script" to be short or empty, and for \
-long stretches of "visual_beats" to have no corresponding "segments" entry \
-(silence during on-screen action). Never treat narration length, narration \
-gaps, or silence as a defect - judge only the three criteria above.
+Do NOT reject for anything outside these four criteria. In particular this \
+channel intentionally has NO spoken narration - do not treat the absence of a \
+voiceover as a defect. Text cards are meant to be short fragments, not \
+sentences; that is correct. Judge only the four criteria above.
 
 Script JSON:
 {script_json}
@@ -119,15 +135,15 @@ def call_review_model(script: dict) -> dict:
 def _basic_shape_check(script: dict) -> list:
     """Cheap, dependency-free sanity checks that run before any model call.
 
-    Also enforces the hybrid clip structure (HERO_CLIPS_PER_SHORT hero
-    clips/video, per explicit user confirmation): exactly
-    HERO_CLIPS_PER_SHORT Veo 3.1 Lite hero clips, each checked against
-    its OWN duration cap in HERO_CLIP_DURATIONS_SEC (in clip order - not
-    a uniform cap), plus 3-6 Nano Banana stills. This bounds how much
-    you're asked to manually generate in Flow per video and keeps the
-    monthly Flow-credit math accurate - a script asking for a different
-    clip count is rejected here rather than causing a mismatch between
-    what's requested and what Flow credits were actually spent on.
+    Enforces the 60-second segment structure: SEGMENTS_MIN..SEGMENTS_MAX
+    segments, of which EXACTLY HERO_CLIPS_PER_SHORT (4) are "video" hero
+    clips - each checked against its OWN duration cap in
+    HERO_CLIP_DURATIONS_SEC (in order) - and STILLS_PER_SHORT_MIN..MAX are
+    "image" stills. A script asking for a different clip count is rejected
+    here rather than causing a mismatch between what's requested and the
+    Flow credits actually spent. Also verifies every segment carries a
+    non-empty, suitably-short moment_description and text_card_copy, and
+    that the timeline is contiguous over the target duration.
     """
     problems = []
     for field in REQUIRED_SCRIPT_FIELDS:
@@ -140,30 +156,80 @@ def _basic_shape_check(script: dict) -> list:
     if isinstance(duration, (int, float)) and not (lo <= duration <= hi):
         problems.append(f"estimated_duration_sec out of range ({lo}-{hi}): {duration}")
 
-    beats = script.get("visual_beats") or []
-    video_beats = [b for b in beats if b.get("type") == "video"]
-    image_beats = [b for b in beats if b.get("type") == "image"]
-
-    if len(video_beats) != HERO_CLIPS_PER_SHORT:
+    subscribe_cta = script.get("subscribe_cta_text") or ""
+    if len(subscribe_cta) > MAX_SUBSCRIBE_CTA_CHARS:
         problems.append(
-            f"expected exactly {HERO_CLIPS_PER_SHORT} video beats (Veo hero "
-            f"clips, manually generated in Flow), found {len(video_beats)}"
+            f"subscribe_cta_text too long ({len(subscribe_cta)} chars, "
+            f"max {MAX_SUBSCRIBE_CTA_CHARS}): {subscribe_cta!r}"
+        )
+
+    segments = script.get("segments") or []
+    if not (SEGMENTS_MIN <= len(segments) <= SEGMENTS_MAX):
+        problems.append(
+            f"expected {SEGMENTS_MIN}-{SEGMENTS_MAX} segments, found {len(segments)}"
+        )
+
+    video_segments = [s for s in segments if s.get("type") == "video"]
+    image_segments = [s for s in segments if s.get("type") == "image"]
+
+    if len(video_segments) != HERO_CLIPS_PER_SHORT:
+        problems.append(
+            f"expected exactly {HERO_CLIPS_PER_SHORT} video segments (Veo hero "
+            f"clips, manually generated in Flow), found {len(video_segments)}"
         )
     else:
-        for idx, vb in enumerate(video_beats):
+        for idx, vs in enumerate(video_segments):
             cap = HERO_CLIP_DURATIONS_SEC[idx]
-            vb_duration = vb.get("end_sec", 0) - vb.get("start_sec", 0)
-            if vb_duration > cap + 0.5:
+            vs_duration = vs.get("end_sec", 0) - vs.get("start_sec", 0)
+            if vs_duration > cap + 0.5:
                 problems.append(
-                    f"video beat {vb.get('id')} (hero clip {idx + 1}) duration {vb_duration}s "
-                    f"exceeds its {cap}s cap"
+                    f"video segment {vs.get('id')} (hero clip {idx + 1}) duration "
+                    f"{vs_duration}s exceeds its {cap}s cap"
                 )
 
-    if not (STILLS_PER_SHORT_MIN <= len(image_beats) <= STILLS_PER_SHORT_MAX + 1):
+    if not (STILLS_PER_SHORT_MIN <= len(image_segments) <= STILLS_PER_SHORT_MAX):
         problems.append(
             f"expected {STILLS_PER_SHORT_MIN}-{STILLS_PER_SHORT_MAX} still-image "
-            f"beats, found {len(image_beats)}"
+            f"segments, found {len(image_segments)}"
         )
+
+    # Per-segment content quality (structural only - the LLM judges whether
+    # the descriptions are actually specific, not just present).
+    for seg in segments:
+        sid = seg.get("id")
+        if not seg.get("moment_description"):
+            problems.append(f"segment {sid}: missing/empty moment_description")
+        if seg.get("type") not in ("video", "image"):
+            problems.append(f"segment {sid}: type must be 'video' or 'image', got {seg.get('type')!r}")
+        card = seg.get("text_card_copy") or ""
+        if not card:
+            problems.append(f"segment {sid}: missing/empty text_card_copy")
+        elif len(card) > MAX_TEXT_CARD_CHARS:
+            problems.append(
+                f"segment {sid}: text_card_copy too long ({len(card)} chars, "
+                f"max {MAX_TEXT_CARD_CHARS}) - cards must read in 2-3s, not be sentences"
+            )
+
+    # Timeline must be contiguous and cover the duration (no gaps/overlaps).
+    ordered = sorted(
+        [s for s in segments if isinstance(s.get("start_sec"), (int, float))
+         and isinstance(s.get("end_sec"), (int, float))],
+        key=lambda s: s["start_sec"],
+    )
+    if len(ordered) == len(segments) and segments:
+        prev_end = 0.0
+        for seg in ordered:
+            if abs(seg["start_sec"] - prev_end) > 0.5:
+                problems.append(
+                    f"segment {seg.get('id')}: timeline gap/overlap - starts at "
+                    f"{seg['start_sec']}s, expected ~{prev_end}s"
+                )
+                break
+            prev_end = seg["end_sec"]
+        if isinstance(duration, (int, float)) and abs(prev_end - duration) > 1.0:
+            problems.append(
+                f"segments end at {prev_end}s but estimated_duration_sec is {duration}s"
+            )
 
     return problems
 

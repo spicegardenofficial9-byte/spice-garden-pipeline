@@ -3,34 +3,42 @@
 A small, personal automation project that generates short-form vertical
 videos end-to-end and publishes them on a schedule using GitHub Actions.
 
-It's built as a chain of independent stages rather than one monolithic
-script, so each part (voiceover, assembly, etc.) can be run and
-debugged on its own:
+The format is a fixed **~60-second, no-narration** vertical video: four
+native-audio hero clips plus supporting stills, brief on-screen text
+cards, and an animated subscribe call-to-action in the final seconds.
+There is no spoken voiceover anywhere.
 
-1. **Script generation** - produces a short, minimal-narration script
-   (narration is optional - many videos intentionally have none, see
-   "Minimal narration" below) and a list of "visual beats" (what should
-   be on screen and when, biased toward depicting real physical action).
+It's built as a chain of independent stages rather than one monolithic
+script, so each part can be run and debugged on its own:
+
+1. **Script generation** - produces rich, structured content for the
+   60s video: dish name + region, the full ingredient list, an
+   interesting dish fact, 5-7 "moment" segments (each a hero clip or a
+   still, with a detailed visual description and short on-screen
+   text-card copy), and a per-video subscribe CTA line. No narration is
+   written - the visuals and text cards carry the video.
 2. **Review gate** - an automated pass/fail check on the generated
    script before any further (potentially paid) work happens. Designed
-   to fail closed: anything ambiguous is treated as a rejection.
-3. **Voiceover** - text-to-speech narration (local, no API key). If the
-   script has no narration, this stage produces a silent track of the
-   target duration instead of calling TTS.
+   to fail closed: anything ambiguous is treated as a rejection. Checks
+   ingredient completeness, moment specificity, and dish-fact soundness.
+3. **Voiceover** - retired from the automated chain (this format has no
+   narration). The Edge-TTS stage is kept only for standalone use.
 4. **Captions** - speech-to-text timing (local, no API key). Not part of
    the automated video pipeline anymore (see below) - still runnable
    standalone if ever needed again.
-5. **Visual generation** - produces several supporting still images per
-   the script's visual beats. A single recurring reference image (for
-   character/style consistency) is pulled in from a private source at
-   runtime rather than stored in this repo. The short video clips for
-   the moments that most need motion aren't API-generated - see
+5. **Visual generation** - produces the supporting stills (Pollinations)
+   from each "image" segment's description, and maps the manually-made
+   hero clips onto the "video" segments. The short video clips for the
+   moments that most need motion aren't API-generated - see
    "Human-in-the-loop" below.
-6. **Assembly** - pans/zooms the stills, inserts each video clip at its
-   timestamp, overlays branding, mixes voiceover/silence with music, and
-   outputs a final vertical MP4 with FFmpeg. No captions are burned in -
-   burned-in whisper captions looked clumsy, and YouTube already
-   auto-generates its own for Shorts.
+6. **Assembly** - normalises and colour-grades every segment, adds a
+   Ken-Burns push on stills, keeps each hero clip's native audio, burns
+   in consistent lower-third text cards, joins everything with short
+   crossfades, animates the subscribe end-card, overlays branding
+   TOP-LEFT (keeping Veo's bottom-right watermark unobstructed), mixes
+   music low under the native audio, and outputs a final vertical MP4
+   with FFmpeg. No captions are burned in - YouTube auto-generates its
+   own for Shorts.
 7. **Upload** - publishes the finished video, with an AI-content
    disclosure flag set on upload. Never runs automatically - see
    "Review before publishing" below.
@@ -47,23 +55,25 @@ trigger the manual-only `approve-upload.yml` GitHub Actions workflow.
 Only on a successful upload are the consumed clip-pool inputs and the
 review-pending entry cleaned up.
 
-## Minimal narration
+## No narration (text cards instead)
 
-Short-form cooking videos with little or no spoken narration tend to
-outperform heavily-narrated ones, so Stage 1 defaults to writing 0-20
-words of narration (often none at all) and lets the visuals carry the
-story - see `SCRIPT_PROMPT_TEMPLATE` in
+Short-form cooking videos with no spoken narration tend to outperform
+heavily-narrated ones, so this format has none at all: the hero clips'
+own native cooking audio plays under background music, and short
+on-screen text cards (one per segment, plus an interesting dish fact
+and an animated subscribe CTA) carry the story - see
+`SCRIPT_PROMPT_TEMPLATE` in
 [stage1_script_generation.py](scripts/stage1_script_generation.py).
 
 ## Human-in-the-loop: the clip pool
 
-A fixed number of video clips per short (`HERO_CLIPS_PER_SHORT`, 3 by
-default, each with its own duration cap in `HERO_CLIP_DURATIONS_SEC`)
-are generated manually in a separate creative tool (Google Flow), then
-dropped into a watched "clip pool" folder via
+A fixed number of video clips per short (`HERO_CLIPS_PER_SHORT`, 4 for
+the 60s format, each with its own duration cap in
+`HERO_CLIP_DURATIONS_SEC`) are generated manually in a separate creative
+tool (Google Flow), then dropped into a watched "clip pool" folder via
 [scripts/save_clip.py](scripts/save_clip.py) (or the one-command
 `save_clip.sh` wrapper) - the automation picks them up from there and
-builds the video (stills, narration, assembly) with no further input,
+builds the video (stills, assembly) with no further input,
 then stops for review (see above). A request isn't considered fulfilled
 until all of its clips have arrived. If nothing is waiting yet, a
 scheduled run just checks, finds nothing, and exits cleanly rather than

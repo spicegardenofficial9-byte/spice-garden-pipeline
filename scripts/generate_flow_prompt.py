@@ -1,7 +1,7 @@
 """
 Generates the copy-pasteable Flow prompts for one or more approved
-scripts' hero clips (HERO_CLIPS_PER_SHORT each, 2 by default), and
-stashes each script + its Flow prompt in clip-pool/pending/<date>-<slot>/
+scripts' hero clips (HERO_CLIPS_PER_SHORT each, 4 for the 60s format),
+and stashes each script + its Flow prompt in clip-pool/pending/<date>-<slot>/
 so a later scheduled run (once the human has dropped the finished clips
 into clip-pool/incoming/) can find the right script to build the video
 from - GitHub Actions runners don't persist state between runs, so this
@@ -16,8 +16,8 @@ saves it with the one-command ./save_clip.sh wrapper.
 
 Per explicit user request, AM and PM requests are generated TOGETHER in
 one run (see run_pipeline.py's run_batch()) so the human can do all
-HERO_CLIPS_PER_SHORT * 2 clips (4, by default) in a single Flow sitting
-instead of two separate sessions per day. write_combined_brief() below
+HERO_CLIPS_PER_SHORT * 2 clips (8, for the 60s format) in a single Flow
+sitting instead of two separate sessions per day. write_combined_brief() below
 merges however many slots got approved into ONE document.
 
 Output (clip-pool/pending/<date>-<slot>/), once per approved slot:
@@ -108,11 +108,14 @@ TITLE: {title}
 INGREDIENTS:
 {ingredients}
 
-FULL NARRATION:
-{voiceover_script}
+DISH FACT (shown as on-screen context, not narration):
+{dish_fact}
 
-VISUAL TIMELINE ({n_beats} beats, ~{duration}s total):
-{beats}
+SEGMENT TIMELINE ({n_segments} segments, ~{duration}s total; no voiceover -
+each segment shows a short on-screen text card):
+{segments}
+
+SUBSCRIBE END-CARD COPY: {subscribe_cta_text}
 
 HASHTAGS: {hashtags}
 """
@@ -145,23 +148,27 @@ REFERENCE ONLY (not needed to complete the steps above)
 """
 
 
-def _format_beats(script: dict) -> str:
+def _format_segments(script: dict) -> str:
     lines = []
-    for beat in script.get("visual_beats", []):
-        kind = "HERO CLIP" if beat.get("type") == "video" else "STILL"
-        start, end = beat.get("start_sec", 0), beat.get("end_sec", 0)
-        lines.append(f"  [{start:5.1f}s - {end:5.1f}s] {kind:9s} - {beat.get('prompt', '')}")
+    for seg in script.get("segments", []):
+        kind = "HERO CLIP" if seg.get("type") == "video" else "STILL"
+        start, end = seg.get("start_sec", 0), seg.get("end_sec", 0)
+        card = seg.get("text_card_copy", "")
+        lines.append(
+            f"  [{start:5.1f}s - {end:5.1f}s] {kind:9s} - {seg.get('moment_description', '')}"
+        )
+        lines.append(f"                        card: “{card}”")
     return "\n".join(lines) if lines else "  (none)"
 
 
-def _get_key_visual_moments(script: dict) -> list:
-    key_visual_moments = script.get("key_visual_moments")
-    if not key_visual_moments:
-        video_beats = [b for b in script.get("visual_beats", []) if b.get("type") == "video"]
-        key_visual_moments = [b["prompt"] for b in video_beats]
-    if not key_visual_moments:
-        key_visual_moments = ["(no key visual moment found in script)"] * HERO_CLIPS_PER_SHORT
-    return key_visual_moments[:HERO_CLIPS_PER_SHORT]
+def _get_hero_moments(script: dict) -> list:
+    """The moment_description of each "video" segment, in order - one per
+    hero clip the human generates in Flow."""
+    video_segments = [s for s in script.get("segments", []) if s.get("type") == "video"]
+    moments = [s.get("moment_description", "") for s in video_segments]
+    if not moments:
+        moments = ["(no hero-clip moment found in script)"] * HERO_CLIPS_PER_SHORT
+    return moments[:HERO_CLIPS_PER_SHORT]
 
 
 def write_request(script: dict, date: str, slot: str, script_path: str) -> Path:
@@ -177,7 +184,7 @@ def write_request(script: dict, date: str, slot: str, script_path: str) -> Path:
         n_clips=HERO_CLIPS_PER_SHORT,
         style=VISUAL_STYLE_PREFIX.rstrip(": "),
     )
-    for i, moment in enumerate(_get_key_visual_moments(script), start=1):
+    for i, moment in enumerate(_get_hero_moments(script), start=1):
         prompt_text += FLOW_PROMPT_CLIP_SECTION.format(
             clip_num=i, n_clips=HERO_CLIPS_PER_SHORT, key_visual_moment=moment,
             date=date, slot=slot, duration=HERO_CLIP_DURATIONS_SEC[i - 1],
@@ -197,7 +204,7 @@ def _slot_steps(script: dict, date: str, slot: str) -> str:
             clip_num=i, n_clips=HERO_CLIPS_PER_SHORT, key_visual_moment=moment,
             slot=slot, duration=HERO_CLIP_DURATIONS_SEC[i - 1],
         )
-        for i, moment in enumerate(_get_key_visual_moments(script), start=1)
+        for i, moment in enumerate(_get_hero_moments(script), start=1)
     )
     # Relative paths/commands only - this brief may be GENERATED on a
     # GitHub Actions runner (an ephemeral machine with its own unrelated
@@ -218,9 +225,10 @@ def _slot_reference(script: dict, slot: str) -> str:
     return REFERENCE_BLOCK.format(
         slot=slot, dish_name=script.get("dish_name", "unknown"), region=script.get("region", "Indian"),
         title=script.get("title", ""), ingredients=ingredients,
-        voiceover_script=script.get("voiceover_script") or "(none - minimal-narration video, visuals only)",
-        n_beats=len(script.get("visual_beats", [])), duration=script.get("estimated_duration_sec", "?"),
-        beats=_format_beats(script), hashtags=" ".join(script.get("hashtags", [])),
+        dish_fact=script.get("dish_fact") or "(none)",
+        subscribe_cta_text=script.get("subscribe_cta_text") or "(default)",
+        n_segments=len(script.get("segments", [])), duration=script.get("estimated_duration_sec", "?"),
+        segments=_format_segments(script), hashtags=" ".join(script.get("hashtags", [])),
     )
 
 

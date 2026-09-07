@@ -43,12 +43,12 @@ The character reference image is NOT used by this stage anymore (see
 common/config.py) - it only matters for your own manual use when
 generating hero clips in Flow.
 
-Input: script.json (Stage 1 output), specifically the "visual_beats" list:
-    [{"id": int, "type": "image"|"video", "prompt": str,
-      "start_sec": float, "end_sec": float}, ...]
-    Stage 2's review gate enforces the hybrid shape (exactly
-    HERO_CLIPS_PER_SHORT video beats <=8s each, 3-6 image beats) before
-    this stage ever runs.
+Input: script.json (Stage 1 output), specifically the "segments" list:
+    [{"id": int, "type": "image"|"video", "moment_description": str,
+      "text_card_copy": str, "start_sec": float, "end_sec": float}, ...]
+    Each segment's moment_description is the image/clip prompt. Stage 2's
+    review gate enforces the shape (exactly HERO_CLIPS_PER_SHORT video
+    segments <=8s each, plus 1-3 image segments) before this stage runs.
 
 Output (<output_dir>/):
     visuals/beat_<id>.png   (for type == "image")
@@ -59,7 +59,7 @@ Output (<output_dir>/):
             "mock_mode": bool,
             "hero_clip_sources": [str, ...],
             "beats": [{"beat_id": int, "type": str, "path": str,
-                       "start_sec": float, "end_sec": float}]
+                       "text_card_copy": str, "start_sec": float, "end_sec": float}]
         }
 """
 import argparse
@@ -134,7 +134,7 @@ def _mock_video(prompt: str, duration_sec: float, out_path: Path):
 
 def generate_visuals(script_path: str, output_dir: str, run_id: str, hero_clip_paths: list = None) -> dict:
     script = load_json(script_path)
-    beats = script.get("visual_beats", [])
+    segments = script.get("segments", [])
     hero_clip_paths = list(hero_clip_paths) if hero_clip_paths else []
     hero_clip_iter = iter(hero_clip_paths)
 
@@ -148,19 +148,21 @@ def generate_visuals(script_path: str, output_dir: str, run_id: str, hero_clip_p
 
     result_beats = []
     real_image_calls_made = 0
-    for beat in beats:
-        beat_id = beat["id"]
-        beat_type = beat["type"]
-        duration = beat["end_sec"] - beat["start_sec"]
+    for seg in segments:
+        beat_id = seg["id"]
+        beat_type = seg["type"]
+        prompt = seg.get("moment_description", "")
+        text_card = seg.get("text_card_copy", "")
+        duration = seg["end_sec"] - seg["start_sec"]
 
         if beat_type == "image":
             out_path = visuals_dir / f"beat_{beat_id}.png"
             if mock_mode:
-                _mock_image(beat["prompt"], out_path)
+                _mock_image(prompt, out_path)
             else:
                 if real_image_calls_made > 0:
                     time.sleep(POLLINATIONS_REQUEST_DELAY_SEC)
-                call_image_api(beat["prompt"], out_path)
+                call_image_api(prompt, out_path)
                 real_image_calls_made += 1
                 log_cost(
                     run_id=run_id, stage="stage5_visual_generation",
@@ -175,17 +177,18 @@ def generate_visuals(script_path: str, output_dir: str, run_id: str, hero_clip_p
                 shutil.copy(hero_clip_path, out_path)
                 logger.info("Hero clip copied from clip-pool: %s", hero_clip_path)
             else:
-                logger.warning("No hero clip available for beat %d - using a mock placeholder video beat.", beat_id)
-                _mock_video(beat["prompt"], duration, out_path)
+                logger.warning("No hero clip available for segment %s - using a mock placeholder video beat.", beat_id)
+                _mock_video(prompt, duration, out_path)
         else:
-            raise ValueError(f"Unknown visual beat type: {beat_type!r}")
+            raise ValueError(f"Unknown segment type: {beat_type!r}")
 
         result_beats.append({
             "beat_id": beat_id,
             "type": beat_type,
             "path": str(out_path.relative_to(out_dir)),
-            "start_sec": beat["start_sec"],
-            "end_sec": beat["end_sec"],
+            "text_card_copy": text_card,
+            "start_sec": seg["start_sec"],
+            "end_sec": seg["end_sec"],
         })
 
     meta = {
@@ -196,7 +199,7 @@ def generate_visuals(script_path: str, output_dir: str, run_id: str, hero_clip_p
     }
     save_json(out_dir / "visuals_meta.json", meta)
 
-    image_beat_count = sum(1 for b in beats if b.get("type") == "image")
+    image_beat_count = sum(1 for s in segments if s.get("type") == "image")
     log_cost(
         run_id=run_id, stage="stage5_visual_generation",
         provider="mock" if mock_mode else "pollinations",

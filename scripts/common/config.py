@@ -14,9 +14,14 @@ COST_LOG_PATH = ROOT_DIR / "cost_logs" / "usage.csv"
 VIDEO_WIDTH = 1080
 VIDEO_HEIGHT = 1920
 VIDEO_FPS = 30
-MIN_DURATION_SEC = 30
-MAX_DURATION_SEC = 40
-DURATION_CHECK_SLACK_SEC = 5  # review-gate tolerance around the 30-40s target
+# New format (major rewrite): a fixed ~60-second, no-narration video built
+# from native-audio hero clips + supporting stills, ending with an animated
+# subscribe call-to-action. The old 30-40s narrated format is gone - there
+# is no spoken voiceover at all anymore (see stage1/stage6 docstrings).
+TARGET_DURATION_SEC = 60
+MIN_DURATION_SEC = 55
+MAX_DURATION_SEC = 62
+DURATION_CHECK_SLACK_SEC = 3  # review-gate tolerance around the ~60s target
 
 BRANDING_LOGO_PATH = ASSETS_DIR / "branding" / "logo.png"
 MUSIC_DIR = ASSETS_DIR / "music"
@@ -77,25 +82,36 @@ CHARACTER_REF_IMAGE_PATH = CHARACTER_REF_DIR / "reference.png"
 # tracking against the 1,000/month Pro allowance. It is not a real API cost.
 CREDITS_PER_VEO_CLIP = 10
 MONTHLY_FLOW_CREDIT_BUDGET = 1000
-# Chosen structure, updated per explicit user request: 3 hero clips/video
-# (up from 2), each with its OWN duration cap, in clip order - clip 1 is
-# shorter (8s), clips 2-3 are longer (10s each), not a uniform cap.
-# HERO_CLIPS_PER_SHORT is derived from this list's length so they can
-# never drift out of sync - change the list, not the count, if this
-# structure changes again.
-HERO_CLIP_DURATIONS_SEC = [8, 10, 10]
+# Chosen structure for the 60-second format: 4 hero clips/video, each up to
+# 8s (Flow/Veo's per-generation cap). Four clips of native-audio motion are
+# what carry a full 60s now that there is no voiceover - the clips' own
+# sizzle/cooking sound is the audio bed. Each clip has its own duration cap
+# (uniform 8s here, but kept as a list so a future non-uniform structure is
+# a one-line change). HERO_CLIPS_PER_SHORT is derived from the list length
+# so the two can never drift apart - change the list, not the count.
+HERO_CLIP_DURATIONS_SEC = [8, 8, 8, 8]
 HERO_CLIPS_PER_SHORT = len(HERO_CLIP_DURATIONS_SEC)
 VEO_CLIP_DURATION_SEC = max(HERO_CLIP_DURATIONS_SEC)  # generic "up to Xs" cap, for messaging only
-# CREDITS_PER_VEO_CLIP is still a flat per-clip assumption regardless of
-# duration - unverified whether Flow actually charges more for a 10s clip
-# than an 8s one; check Google AI Studio's billing dashboard for ground
-# truth, same caveat as check_credit_budget.py's docstring.
-# 3 clips x 10 credits x 2 videos/day = 60 credits/day -> 1,000/month
-# supports ~16-17 sustained days, then a pause until the Pro renewal date
-# (not yet confirmed/tracked here) - down from ~25 days under the old
-# 2-clip/8s structure, since there's more real hero-clip content per video.
-STILLS_PER_SHORT_MIN = 3
-STILLS_PER_SHORT_MAX = 6
+# CREDITS_PER_VEO_CLIP is a flat per-clip assumption - unverified whether
+# Flow charges more for a longer clip; check Google AI Studio's billing
+# dashboard for ground truth (same caveat as check_credit_budget.py).
+# 4 clips x 10 credits x 2 videos/day = 80 credits/day -> 1,000/month
+# supports ~12 sustained days, then a pause until the Pro renewal date
+# (not tracked here) - fewer days than the old 3-clip format, since a 60s
+# video with 4 hero clips is more real motion content per video.
+#
+# Supporting stills per video. The segment timeline is 5-7 entries total,
+# of which exactly HERO_CLIPS_PER_SHORT (4) are hero clips; the remaining
+# 1-3 are free Pollinations stills (ingredient spread, an over-time step
+# like simmering/resting, the finished-dish shot). The 4-6 "moments"
+# sketched in the original brief widened to 5-7 once the format locked to
+# a fixed ~60s built from four 8s clips: 4x8s = 32s of clips, so >=1 still
+# is needed to reach 60s without holding any single still absurdly long,
+# and up to 3 keeps every hold in a comfortable ~8-12s range.
+STILLS_PER_SHORT_MIN = 1
+STILLS_PER_SHORT_MAX = 3
+SEGMENTS_MIN = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MIN  # 5
+SEGMENTS_MAX = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MAX  # 7
 
 VEO_MODEL_NAME = "veo-3.1-lite"
 
@@ -181,3 +197,65 @@ def run_output_dir(run_id: str) -> Path:
 # time to review a video before it's swept; override with the env var if a
 # shorter/longer window is wanted. See cleanup_old_runs.py.
 OUTPUT_RETENTION_DAYS = int(os.environ.get("OUTPUT_RETENTION_DAYS", "14"))
+
+
+# --------------------------------------------------------------------------
+# Editing / assembly look-and-feel (Stage 6). Centralised here so every
+# video is cut and captioned identically - nothing about the on-screen look
+# is decided per-run.
+# --------------------------------------------------------------------------
+
+# Clean, fast crossfades between every segment (clip<->still, clip<->clip).
+# Short enough to keep Shorts pacing snappy, long enough to avoid a hard
+# jump-cut. No flash/strobe/"disco" transitions - a plain dissolve only.
+TRANSITION_DURATION_SEC = 0.25
+
+# Per-segment hold multipliers, applied to the base beat duration so pacing
+# tracks the energy of the moment: quicker cuts on prep/ingredient shots,
+# a longer hold on the final plated dish. Applied in Stage 6 based on a
+# segment's position/role, not baked into the script's timings.
+PACING_QUICK_MULTIPLIER = 0.9   # ingredient / prep moments
+PACING_HOLD_MULTIPLIER = 1.25   # final plated-dish moment
+
+# Colour normalisation applied identically to every segment (stills AND
+# clips) so a photoreal hero clip and an illustrated still don't jar in
+# exposure / saturation / temperature sitting next to each other. Mild on
+# purpose - it unifies, it does not restyle.
+COLOR_NORMALIZE_FILTER = (
+    "eq=contrast=1.05:saturation=1.08:brightness=0.015:gamma=1.02"
+)
+
+# Text-card typography - one definition, used for every card on every video.
+TEXT_CARD_FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+TEXT_CARD_FONT_SIZE = 62
+TEXT_CARD_FONT_COLOR = "white"
+TEXT_CARD_BOX_COLOR = "black@0.55"   # semi-opaque plate behind the text
+TEXT_CARD_BOX_BORDER_PX = 26
+# Fixed vertical anchor for every card: a stable lower-third, kept high
+# enough to sit clear of the bottom-right Veo watermark band (see below).
+TEXT_CARD_Y_RATIO = 0.68
+TEXT_CARD_FADE_SEC = 0.3             # each card fades in/out, no hard pop
+
+# Animated subscribe call-to-action, rendered as an overlay over the last
+# SUBSCRIBE_CTA_DURATION_SEC of the video (part of the ~60s, not appended
+# on top). Slides up + fades in via drawtext/overlay keyframing - no
+# external animation tool. The text itself comes from the script's
+# subscribe_cta_text field so it varies per video; DEFAULT is only a
+# fallback when a script omits it.
+SUBSCRIBE_CTA_DURATION_SEC = 3.5
+SUBSCRIBE_CTA_FONT_SIZE = 88
+DEFAULT_SUBSCRIBE_CTA_TEXT = "Subscribe for more"
+
+# Google Veo stamps a "Made with Veo" / SynthID watermark fixed in the
+# BOTTOM-RIGHT corner of every hero clip. It is a policy requirement that
+# it stay fully visible and unobstructed, so:
+#   - our channel logo goes TOP-LEFT (opposite corner), and
+#   - text cards and the subscribe CTA are kept out of the bottom-right
+#     band defined by these margins.
+# The safe band is the bottom WATERMARK_RESERVED_H_PX pixels within the
+# right WATERMARK_RESERVED_W_PX pixels - nothing we draw may enter it.
+BRANDING_CORNER = "top-left"
+BRANDING_MARGIN_PX = 40
+BRANDING_LOGO_WIDTH_PX = 170
+WATERMARK_RESERVED_W_PX = 420   # right-hand width Veo's mark can occupy
+WATERMARK_RESERVED_H_PX = 240   # bottom height Veo's mark can occupy
