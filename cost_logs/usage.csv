@@ -74,3 +74,5 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T09:44:19Z,2026-09-07-PM-20260907T094201Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
 2026-09-07T09:44:19Z,2026-09-07-PM-20260907T094201Z,run_stage_bc,manual-flow,veo-3.1-lite,30,flow_credits_assumed,0.000000,"3 hero clips manually generated in Flow, consumed from clip-pool (2026-09-07-PM-1.mp4, 2026-09-07-PM-2.mp4, 2026-09-07-PM-3.mp4)"
 2026-09-07T09:44:21Z,2026-09-07-PM-20260907T094201Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS
+2026-09-07T09:56:00Z,test-duration-fix,stage5_visual_generation,mock,mock,4,assets,0.000000,mock mode
+2026-09-07T09:56:02Z,test-duration-fix,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS

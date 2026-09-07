@@ -52,7 +52,15 @@ def _run(cmd):
 
 def _rescale_beats(beats: list, actual_duration: float) -> list:
     """Stage 1's visual_beats timing is provisional; stretch/shrink it to
-    match the real voiceover duration measured in Stage 3."""
+    match the script's estimated_duration_sec (the real target length).
+
+    This must NOT be driven by the voiceover's actual spoken duration -
+    minimal-narration videos may have 0-9s of speech in a 30-40s video,
+    and rescaling the whole visual timeline down to match a short
+    voiceover would (and did) shrink the entire video far below the
+    30-40s target. The voiceover is padded with silence to fill
+    whatever's left instead - see _mix_audio.
+    """
     if not beats:
         return beats
     original_end = beats[-1]["end_sec"]
@@ -139,17 +147,25 @@ def _pick_music_track():
 
 
 def _mix_audio(voiceover_path: Path, duration: float, out_path: Path):
+    # voiceover.mp3 may be much shorter than `duration` (minimal-narration
+    # videos) - apad fills the rest with silence so the output is always
+    # exactly `duration` long, never shorter. Without this, a short
+    # voiceover truncates the whole final video via _mux's -shortest.
     music_path = _pick_music_track()
     if not music_path or not music_path.exists():
-        logger.warning("No background music found in %s - using voiceover only.", MUSIC_DIR)
-        _run(["ffmpeg", "-y", "-i", str(voiceover_path), "-t", str(duration), str(out_path)])
+        logger.warning("No background music found in %s - using voiceover (padded with silence) only.", MUSIC_DIR)
+        _run([
+            "ffmpeg", "-y", "-i", str(voiceover_path),
+            "-af", "apad", "-t", str(duration), str(out_path),
+        ])
         return
     _run([
         "ffmpeg", "-y", "-i", str(voiceover_path),
         "-stream_loop", "-1", "-i", str(music_path),
         "-filter_complex",
+        "[0:a]apad[voice];"
         f"[1:a]volume={MUSIC_VOLUME}[music];"
-        "[0:a][music]amix=inputs=2:duration=first:dropout_transition=2[aout]",
+        "[voice][music]amix=inputs=2:duration=first:dropout_transition=2[aout]",
         "-map", "[aout]", "-t", str(duration), str(out_path),
     ])
 
@@ -167,9 +183,11 @@ def assemble(output_dir: str, run_id: str) -> dict:
     work_dir = out_dir / "_assembly_tmp"
     work_dir.mkdir(parents=True, exist_ok=True)
 
-    voiceover_meta = load_json(out_dir / "voiceover_meta.json")
+    script = load_json(out_dir / "script.json")
     visuals_meta = load_json(out_dir / "visuals_meta.json")
-    duration = voiceover_meta["duration_sec"]
+    # Authoritative length is the script's target duration, NOT the
+    # voiceover's actual spoken length - see _rescale_beats' docstring.
+    duration = script.get("estimated_duration_sec") or visuals_meta["beats"][-1]["end_sec"]
     beats = _rescale_beats(visuals_meta["beats"], duration)
 
     segment_paths = []
