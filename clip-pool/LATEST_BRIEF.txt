@@ -1,95 +1,22 @@
-SPICE GARDEN - 2026-09-07 AM
+SPICE GARDEN - 2026-09-07
 ============================================================
-This is always the latest brief - just re-open this same file every day,
-nothing to look up. There are 2 steps. Do them in order.
+This is always the latest brief. To see it any time, run this ONE
+command from anywhere in a terminal:
+  "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/show_brief.sh"
+No videos passed review today, 0 clips total. Do them in order, video
+by video.
+============================================================
+  (nothing to do - no script passed review this run)
+============================================================
+That's it - once all the clips above exist, the scheduled runs pick up
+each video automatically and build it. Nothing else to do.
+============================================================
+NOTE - some slots have no video today:
+  - AM: rejected this cycle (Flawed cooking sequence: The potato masala filling is prepared after the dosa batter is poured on the hot tawa, which would cause the dosa to burn in real life; filling must be prepared prior to cooking the dosa.) - will retry on the next scheduled run.
+  - PM: rejected this cycle (The hook claims a 'ten-minute garlic dal tadka', which is culinary implausible because pressure cooking soaked toor dal and allowing pressure release takes at least 15-20 minutes.; Adding Kashmiri red chilli powder directly into high-heat bubbling ghee alongside frying garlic and chillies will scorch the powder instantly, turning it dark brown/black and bitter rather than blooming into a bright crimson liquid.; The voiceover script has a complete silence gap from 4.0s to 29.0s, leaving the entire cooking sequence unnarrated.) - will retry on the next scheduled run.
 ============================================================
 
-STEP 1 of 2
-------------------------------------------------------------
-1) Copy everything between the lines below and paste it into Flow
-   as the prompt (attach the Spice Garden character reference image
-   in Flow's UI before generating):
---------------------- COPY BELOW THIS LINE ------------------
-Close-up video of pouring smooth orange tomato-cashew puree into sizzled butter in a deep pan, creating aromatic steam.
---------------------- COPY ABOVE THIS LINE ------------------
-
-2) Generate the clip in Flow and download it (it lands in your
-   Downloads folder). Then run these 3 lines in a terminal, exactly
-   as shown, one at a time - no paths to type or remember, this
-   grabs whatever you just downloaded and puts it in the right place
-   automatically:
-
-     cd "/home/chandrakiran/Documents/Spice Garden pipeline"
-     source .venv/bin/activate
-     python scripts/save_clip.py 1
-
-   (Prefer a file manager instead? Rename the file in Downloads to
-   exactly "2026-09-07-AM-1.mp4" and drag it into this folder:
-       /home/chandrakiran/Documents/Spice Garden pipeline/clip-pool/incoming
-   Do NOT type that folder path by itself into a terminal - it's a
-   destination, not a command.)
-
-STEP 2 of 2
-------------------------------------------------------------
-1) Copy everything between the lines below and paste it into Flow
-   as the prompt (attach the Spice Garden character reference image
-   in Flow's UI before generating):
---------------------- COPY BELOW THIS LINE ------------------
-Slow-motion video of rich cream swirling into the bubbling orange paneer butter masala, followed by a sprinkle of crushed green kasuri methi.
---------------------- COPY ABOVE THIS LINE ------------------
-
-2) Generate the clip in Flow and download it (it lands in your
-   Downloads folder). Then run these 3 lines in a terminal, exactly
-   as shown, one at a time - no paths to type or remember, this
-   grabs whatever you just downloaded and puts it in the right place
-   automatically:
-
-     cd "/home/chandrakiran/Documents/Spice Garden pipeline"
-     source .venv/bin/activate
-     python scripts/save_clip.py 2
-
-   (Prefer a file manager instead? Rename the file in Downloads to
-   exactly "2026-09-07-AM-2.mp4" and drag it into this folder:
-       /home/chandrakiran/Documents/Spice Garden pipeline/clip-pool/incoming
-   Do NOT type that folder path by itself into a terminal - it's a
-   destination, not a command.)
-
-============================================================
-That's it - once both files above exist, the next scheduled run picks
-them up automatically and builds the video. Nothing else to do.
-============================================================
 
 REFERENCE ONLY (not needed to complete the steps above)
 ============================================================
-DISH: Paneer Butter Masala (Punjabi / North Indian)
-TITLE: Authentic Paneer Butter Masala at Home! 🧈✨ #shorts
-
-INGREDIENTS:
-  - Paneer
-  - Butter
-  - Onions
-  - Tomatoes
-  - Cashews
-  - Ginger
-  - Garlic
-  - Cardamom
-  - Cloves
-  - Kashmiri red chili powder
-  - Garam masala
-  - Salt
-  - Kasuri methi
-  - Fresh cream
-  - Fresh cilantro
-
-FULL NARRATION:
-Stop buying restaurant paneer butter masala when you can make it better at home! First, sauté onions, tomatoes, cashews, ginger, garlic, and whole spices in butter until soft. Blend this into a silky smooth puree. Pour it back into melted butter, then add Kashmiri red chili powder, garam masala, and salt. Toss in fresh paneer cubes and simmer gently. Finish with crushed kasuri methi and fresh cream. Subscribe to Spice Garden for more authentic recipes!
-
-VISUAL TIMELINE (6 beats, ~34.0s total):
-  [  0.0s -   5.0s] STILL     - A mouthwatering top-down shot of a freshly prepared bowl of Paneer Butter Masala garnished with a swirl of fresh cream and fresh cilantro.
-  [  5.0s -  11.0s] STILL     - Cinematic close-up shot of chopped onions, red tomatoes, cashew nuts, ginger, garlic, cardamoms, and cloves sautéing in a pan with melting butter.
-  [ 11.0s -  15.0s] STILL     - Close-up shot of a blender pitcher filled with a thick, velvety smooth orange cashew and tomato puree.
-  [ 15.0s -  21.0s] HERO CLIP - Close-up video of pouring smooth orange tomato-cashew puree into sizzled butter in a deep pan, creating aromatic steam.
-  [ 21.0s -  27.0s] STILL     - Close-up shot of fresh, soft white paneer cubes being added into the simmering spiced orange gravy.
-  [ 27.0s -  34.0s] HERO CLIP - Slow-motion video of rich cream swirling into the bubbling orange paneer butter masala, followed by a sprinkle of crushed green kasuri methi.
-
-HASHTAGS: #shorts #paneerbuttermasala #indiancooking #curry #spicegarden #recipes
+  (none)

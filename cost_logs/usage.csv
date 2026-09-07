@@ -53,3 +53,7 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T06:57:41Z,2099-02-01-AM-20260907T065516Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
 2026-09-07T06:57:41Z,2099-02-01-AM-20260907T065516Z,run_stage_bc,manual-flow,veo-3.1-lite,30,flow_credits_assumed,0.000000,"3 hero clips manually generated in Flow, consumed from clip-pool (2099-02-01-AM-1.mp4, 2099-02-01-AM-2.mp4, 2099-02-01-AM-3.mp4)"
 2026-09-07T06:57:43Z,2099-02-01-AM-20260907T065516Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,72,characters,0.000000,free/local TTS
+2026-09-07T09:01:43Z,20260907T090118Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T09:02:13Z,20260907T090118Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T09:03:54Z,20260907T090213Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
+2026-09-07T09:04:21Z,20260907T090213Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
