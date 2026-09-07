@@ -89,3 +89,7 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T12:24:12Z,20260907T122318Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
 2026-09-07T12:24:52Z,20260907T122412Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
 2026-09-07T12:25:04Z,20260907T122412Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T14:35:00Z,2026-09-07-AM-20260907T143457Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T14:35:44Z,2026-09-07-AM-20260907T143457Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T14:35:44Z,2026-09-07-AM-20260907T143457Z,stage5_visual_generation,pollinations,pollinations-flux,2,assets,0.000000,stills summary - see per-asset rows above
+2026-09-07T14:35:44Z,2026-09-07-AM-20260907T143457Z,run_stage_bc,manual-flow,veo-3.1-lite,28,flow_credits_assumed,0.000000,"4 hero clips manually generated in Flow, consumed from clip-pool (2026-09-07-AM-1.mp4, 2026-09-07-AM-2.mp4, 2026-09-07-AM-3.mp4, 2026-09-07-AM-4.mp4)"

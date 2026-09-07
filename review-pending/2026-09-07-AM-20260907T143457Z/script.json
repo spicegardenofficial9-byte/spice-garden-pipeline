@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-09-07-AM-authored",
+  "dish_name": "Masala Dosa",
+  "region": "South Indian",
+  "ingredients": ["rice", "urad dal", "fenugreek seeds", "water", "salt", "potatoes", "onion", "green chilies", "ginger", "mustard seeds", "curry leaves", "turmeric", "ghee", "coconut", "coriander"],
+  "title": "The Secret to Perfect Masala Dosa 🔥 #shorts",
+  "dish_fact": "The dosa's signature tang and lightness come from wild fermentation - the rice-and-urad-dal batter is left overnight so natural lactic bacteria leaven it, no yeast and no baking soda.",
+  "subscribe_cta_text": "More dosa secrets?",
+  "segments": [
+    {"id": 1, "type": "image", "moment_description": "A covered earthen clay pot of dosa batter resting overnight on a rustic wooden shelf in a dim, warm village kitchen; the batter has risen and its surface is dotted with tiny fermentation bubbles, a soft shaft of dawn light falling across it, Studio Ghibli style, hushed and still", "start_sec": 0.0, "end_sec": 6.0},
+    {"id": 2, "type": "video", "moment_description": "Extreme macro on a heavy black iron kadai: dark mustard seeds tumble into a shallow pool of shimmering hot ghee and burst into a dancing crackle, then a fistful of fresh curry leaves is scattered in and spits violently in the fat; a beat later finely chopped onion, slit green chillies and grated ginger cascade in and hiss loudly, turning glassy and golden as a wooden spatula folds them through, fragrant steam curling upward in warm raking morning light", "start_sec": 6.0, "end_sec": 16.0},
+    {"id": 3, "type": "video", "moment_description": "Soft boiled potato chunks are tipped from a brass bowl into the tempered aromatics; a hand presses and folds them with a wooden masher, a pinch of bright turmeric rains over the top and stains everything gold, a small splash of water is added and it all sizzles as the spatula stirs it into a glossy, steaming spiced potato mash, tight close-up of the potatoes breaking apart", "start_sec": 16.0, "end_sec": 26.0},
+    {"id": 4, "type": "video", "moment_description": "Straight-down on a screaming-hot flat tawa: a steel ladle pours a pool of pale fermented batter at the centre, then in one confident continuous spiral from the inside outward spreads it paper-thin with the ladle's base into a wide even circle; the surface instantly blisters into hundreds of tiny bubbles, the lacy edges set and begin to lift, and a spoon drizzles ghee around the rim that sizzles and browns it to crisp golden lace", "start_sec": 26.0, "end_sec": 36.0},
+    {"id": 5, "type": "video", "moment_description": "A spoon lays a neat line of the golden potato masala down the centre of the crackly dosa; a flat spatula slides under one crisp edge and folds the dosa over the filling, pressing so it audibly crackles, then both hands lift the long folded dosa off the tawa and set it down onto a fresh green banana leaf, a thin ribbon of steam rising off its glassy golden surface", "start_sec": 36.0, "end_sec": 45.0},
+    {"id": 6, "type": "image", "moment_description": "Overhead hero shot of the finished masala dosa on a banana leaf with a small bowl of white coconut chutney and a steaming bowl of sambar, scattered with fresh coriander, rich and appetising in soft morning light, Studio Ghibli style", "start_sec": 45.0, "end_sec": 50.0}
+  ],
+  "estimated_duration_sec": 50.0,
+  "hashtags": ["#shorts", "#indiancooking", "#spicegarden", "#dosa", "#masaladosa"],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-07T00:00:00Z",
+  "model": "authored-by-claude"
+}
