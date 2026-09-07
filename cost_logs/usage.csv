@@ -78,3 +78,10 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T09:56:02Z,test-duration-fix,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS
 2026-09-07T10:03:55Z,test-subscribe-card,stage5_visual_generation,mock,mock,2,assets,0.000000,mock mode
 2026-09-07T10:03:55Z,test-subscribe-card,stage3_voiceover,none,silence,0,characters,0.000000,minimal-narration video - no TTS call made
+2026-09-07T10:08:53Z,2026-09-07-PM-20260907T100853Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T10:08:56Z,2026-09-07-PM-20260907T100853Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T10:08:58Z,2026-09-07-PM-20260907T100853Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T10:09:01Z,2026-09-07-PM-20260907T100853Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-07T10:09:01Z,2026-09-07-PM-20260907T100853Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
+2026-09-07T10:09:01Z,2026-09-07-PM-20260907T100853Z,run_stage_bc,manual-flow,veo-3.1-lite,30,flow_credits_assumed,0.000000,"3 hero clips manually generated in Flow, consumed from clip-pool (2026-09-07-PM-1.mp4, 2026-09-07-PM-2.mp4, 2026-09-07-PM-3.mp4)"
+2026-09-07T10:09:03Z,2026-09-07-PM-20260907T100853Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS
