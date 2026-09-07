@@ -61,3 +61,9 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T09:15:03Z,20260907T091326Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
 2026-09-07T09:15:49Z,20260907T091503Z,stage1_script_generation,gemini-api,gemini-3.6-flash,1,generation,0.000000,free-tier Gemini API quota
 2026-09-07T09:16:10Z,20260907T091503Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,approved
+2026-09-07T09:19:33Z,20260907T091933Z,stage1_script_generation,mock,mock,1,generation,0.000000,mock mode - no LLM call made
+2026-09-07T09:19:37Z,20260907T091933Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T09:19:37Z,20260907T091937Z,stage1_script_generation,mock,mock,1,generation,0.000000,mock mode - no LLM call made
+2026-09-07T09:19:40Z,20260907T091937Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed
+2026-09-07T09:19:40Z,20260907T091940Z,stage1_script_generation,mock,mock,1,generation,0.000000,mock mode - no LLM call made
+2026-09-07T09:19:43Z,20260907T091940Z,stage2_review_gate,gemini-api,gemini-3.6-flash,1,review_call,0.000000,rejected/fail-closed

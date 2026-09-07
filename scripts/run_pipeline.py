@@ -40,21 +40,37 @@ import stage2_review_gate as stage2
 
 logger = logging.getLogger(__name__)
 
+# A rejected script just means Gemini's first attempt had a flaw (e.g. an
+# ingredient introduced then never cooked) - per explicit user request,
+# retry a few times in the SAME run instead of just leaving that slot
+# empty until the next scheduled run. Each attempt costs 2 Gemini calls
+# (generate + review), so this is capped to stay within the free-tier
+# daily quota even if every attempt happens to fail.
+MAX_GENERATION_ATTEMPTS = 3
+
 
 def _generate_and_review(topic_brief: str, slot: str) -> dict:
-    run_id = new_run_id()
-    output_dir = str(run_output_dir(run_id))
-    logger.info("--- Generating %s script (run %s) ---", slot, run_id)
+    last_result = None
+    for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
+        run_id = new_run_id()
+        output_dir = str(run_output_dir(run_id))
+        logger.info("--- Generating %s script, attempt %d/%d (run %s) ---",
+                    slot, attempt, MAX_GENERATION_ATTEMPTS, run_id)
 
-    stage1.generate_script(topic_brief, output_dir, run_id)
-    script_path = f"{output_dir}/script.json"
+        stage1.generate_script(topic_brief, output_dir, run_id)
+        script_path = f"{output_dir}/script.json"
 
-    review = stage2.review_script(script_path, output_dir, run_id)
-    if not review["approved"]:
-        logger.error("%s script rejected - no Flow prompt written: %s", slot, review["reasons"])
-        return {"slot": slot, "approved": False, "reasons": review["reasons"], "run_id": run_id}
+        review = stage2.review_script(script_path, output_dir, run_id)
+        if review["approved"]:
+            return {"slot": slot, "approved": True, "run_id": run_id, "script_path": script_path}
 
-    return {"slot": slot, "approved": True, "run_id": run_id, "script_path": script_path}
+        logger.warning("%s script rejected on attempt %d/%d: %s",
+                        slot, attempt, MAX_GENERATION_ATTEMPTS, review["reasons"])
+        last_result = {"slot": slot, "approved": False, "reasons": review["reasons"], "run_id": run_id}
+
+    logger.error("%s: all %d attempts rejected - no Flow prompt written this cycle: %s",
+                 slot, MAX_GENERATION_ATTEMPTS, last_result["reasons"])
+    return last_result
 
 
 def run(topic_brief: str = None, date: str = None, slot: str = None) -> dict:
