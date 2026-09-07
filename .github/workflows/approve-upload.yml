@@ -38,9 +38,11 @@ jobs:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          # Defaults to "unlisted" (current review-first plan). Set a repo
-          # variable named YOUTUBE_PRIVACY_STATUS to "public" once satisfied.
-          YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'unlisted' }}
+          # Publishes PUBLIC on approval, per explicit user decision - the
+          # human review + this manual approve step ARE the gate. Override by
+          # setting a repo variable named YOUTUBE_PRIVACY_STATUS (e.g. to
+          # "unlisted" or "private") if you ever want a softer default.
+          YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'public' }}
         run: python scripts/approve_upload.py --run-id "${{ inputs.run_id }}"
 
       - name: Commit clip-pool/review-pending cleanup

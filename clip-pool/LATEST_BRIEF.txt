@@ -5,56 +5,67 @@ folder (cd there first if needed). Start every day with ONE command
 (pulls the latest + shows this brief):
   ./daily.sh
 (Or just re-view this file without pulling: ./show_brief.sh)
-There is 1 video today (PM), 3 clips total. Do them in order, video
+There is 1 video today (AM), 4 clips total. Do them in order, video
 by video.
 ============================================================
 
 ============================================================
-PM VIDEO: Punjabi Aloo Paratha (Punjabi)
+AM VIDEO: Masala Dosa (South Indian)
 ============================================================
 
-CLIP 1 of 3 (PM, up to 8s)
-------------------------------------------------------------
-Copy everything between the lines below and paste it into Flow as the
-prompt (attach the Spice Garden character reference image in Flow's UI,
-and set this clip's duration to 8 seconds before generating):
---------------------- COPY BELOW THIS LINE ------------------
-Mashing soft boiled potatoes in a stainless steel bowl with finely chopped green chillies, ginger, fresh coriander leaves, red chilli powder, roasted cumin powder, amchur powder, and salt.
---------------------- COPY ABOVE THIS LINE ------------------
-Download it when done - don't save it anywhere yet, just leave it in
-Downloads.
-
-CLIP 2 of 3 (PM, up to 10s)
+CLIP 1 of 4 (AM, up to 10s)
 ------------------------------------------------------------
 Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-Hands shaping a whole wheat dough ball into a cup, sealing a large potato stuffing ball inside, and rolling it out smoothly with a wooden rolling pin.
+The young woman in a white-and-gold sari drops mustard seeds into shimmering hot ghee in a black kadai; the seeds crackle and pop, then a handful of fresh curry leaves is dropped in and splutters, extreme close-up, steam rising, warm morning light
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
 
-CLIP 3 of 3 (PM, up to 10s)
+CLIP 2 of 4 (AM, up to 10s)
 ------------------------------------------------------------
 Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-Searing the stuffed paratha on a hot cast-iron tawa, drizzling desi ghee around the edges, flipping it over, and watching it puff up with sizzling brown spots.
+A ladle of pale dosa batter poured onto a screaming-hot flat tawa and immediately spread outward in one smooth spiral with the base of the ladle, the surface bubbling and the lacy edges already crisping and lifting, steam rising, top-down close-up
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 3 of 4 (AM, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+Golden spiced potato masala spooned in a line along the centre of the crisp dosa, then the dosa folded over the filling with a flat wooden spatula, ghee glistening on the crackly golden surface, close-up
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 4 of 4 (AM, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The finished folded dosa lifted off the tawa with both hands and set down onto a fresh green banana leaf, its shattering-crisp edges catching the warm light, a thin curl of steam rising
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
 
 
-Once ALL 3 clips above are generated and downloaded, run this
-ONE command - no cd, no venv activation. It grabs all 3 of your
+Once ALL 4 clips above are generated and downloaded, run this
+ONE command - no cd, no venv activation. It grabs all 4 of your
 most recent downloads and files them correctly, in order:
 
-    ./save_clips.sh PM
+    ./save_clips.sh AM
 
 (Prefer a file manager instead? Rename each downloaded file to exactly
-"2026-09-07-PM-1.mp4", "-2.mp4", etc. (in the order you generated them)
+"2026-09-07-AM-1.mp4", "-2.mp4", etc. (in the order you generated them)
 and drag them into: clip-pool/incoming/ (inside your project folder)
 Do NOT type that folder path by itself into a terminal - it's a
 destination, not a command.)
@@ -64,44 +75,43 @@ That's it. Once all the clips for a video are saved and pushed
 (./push_clips.sh), the scheduled runs pick it up automatically, build
 it, and wait for you at ./review.sh - then ./approve.sh to publish.
 ============================================================
-NOTE - some slots have no video today:
-  - AM: rejected this cycle (Diced red onions and julienned ginger chopped in visual beat 4 are completely omitted from the cooking and tempering steps in subsequent beats.) - will retry on the next scheduled run.
-============================================================
-
 
 REFERENCE ONLY (not needed to complete the steps above)
 ============================================================
 
---- PM: Punjabi Aloo Paratha (Punjabi) ---
-TITLE: Foolproof Punjabi Aloo Paratha Recipe 🫓 #shorts
+--- AM: Masala Dosa (South Indian) ---
+TITLE: The Secret to Perfect Masala Dosa 🔥 #shorts
 
 INGREDIENTS:
-  - whole wheat flour
+  - rice
+  - urad dal
+  - fenugreek seeds
   - water
-  - boiled potatoes
-  - green chillies
-  - ginger
-  - fresh coriander leaves
-  - red chilli powder
-  - roasted cumin powder
-  - amchur powder
   - salt
+  - potatoes
+  - onion
+  - mustard seeds
+  - curry leaves
+  - turmeric
+  - green chilies
+  - ginger
   - ghee
-  - butter
-  - curd
-  - pickle
+  - coconut
+  - coriander
 
-FULL NARRATION:
-Stop tearing your Aloo Parathas! Subscribe to Spice Garden for real home flavors!
+DISH FACT (shown as on-screen context, not narration):
+The dosa's signature tang and lightness come from wild fermentation - the rice-and-urad-dal batter is left overnight so natural lactic bacteria leaven it, no yeast and no baking soda.
 
-VISUAL TIMELINE (7 beats, ~35.0s total):
-  [  0.0s -   2.5s] STILL     - Hands gently pulling apart a steaming hot golden-brown Aloo Paratha, revealing the seasoned spicy potato filling bursting from inside as steam rises off the fresh flatbread.
-  [  2.5s -   9.5s] HERO CLIP - Macro close-up shot at a 45-degree angle. A pair of hands presses a stainless steel potato masher into boiled yellow potatoes inside a mixing bowl. Sprinkles of finely chopped green chillies, minced ginger, fresh coriander leaves, red chilli powder, roasted cumin powder, amchur powder, and salt are tossed in, then lightly mixed together with a wooden spoon into a smooth yellow-orange spiced mixture.
-  [  9.5s -  12.5s] STILL     - A smooth kneaded whole wheat flour dough ball sitting inside a brass bowl, covered resting under a damp white cloth on a wooden kitchen counter to let the dough rest.
-  [ 12.5s -  21.5s] HERO CLIP - Top-down close-up shot. Hands flatten a portion of whole wheat dough into a shallow cup, place a ball of spiced potato filling in the center, and pinch the pleated dough edges tightly over the top to enclose it fully. The sealed ball is dusted with dry flour and rolled smoothly back and forth with a wooden rolling pin into a round flatbread.
-  [ 21.5s -  24.5s] STILL     - A hand carefully placing the raw rolled stuffed paratha onto a smoking hot black cast-iron tawa griddle over a blue gas flame as gentle heat bubbles begin forming on the surface.
-  [ 24.5s -  32.5s] HERO CLIP - Eye-level side shot. A steel spoon pours a line of golden molten ghee around the edges of the paratha on the hot tawa. A flat metal spatula flips the paratha, exposing a crisp golden-brown speckled crust that sizzles loudly, causing the stuffed flatbread to puff up in the center.
-  [ 32.5s -  35.0s] STILL     - A large slice of white homemade butter melting over the center of a piping hot crispy Aloo Paratha, served on a traditional brass plate with bowls of thick curd and tangy mango pickle.
+SEGMENT TIMELINE (6 segments, ~50.0s total; no voiceover
+and NO on-screen text - visuals + natural sound only):
+  [  0.0s -   6.0s] STILL     - A covered clay vessel of dosa batter resting overnight on a rustic wooden shelf in dim, warm village-kitchen light, the batter risen and gently bubbled at the surface to imply long fermentation, Studio Ghibli style
+  [  6.0s -  16.0s] HERO CLIP - The young woman in a white-and-gold sari drops mustard seeds into shimmering hot ghee in a black kadai; the seeds crackle and pop, then a handful of fresh curry leaves is dropped in and splutters, extreme close-up, steam rising, warm morning light
+  [ 16.0s -  26.0s] HERO CLIP - A ladle of pale dosa batter poured onto a screaming-hot flat tawa and immediately spread outward in one smooth spiral with the base of the ladle, the surface bubbling and the lacy edges already crisping and lifting, steam rising, top-down close-up
+  [ 26.0s -  36.0s] HERO CLIP - Golden spiced potato masala spooned in a line along the centre of the crisp dosa, then the dosa folded over the filling with a flat wooden spatula, ghee glistening on the crackly golden surface, close-up
+  [ 36.0s -  45.0s] HERO CLIP - The finished folded dosa lifted off the tawa with both hands and set down onto a fresh green banana leaf, its shattering-crisp edges catching the warm light, a thin curl of steam rising
+  [ 45.0s -  50.0s] STILL     - Overhead hero shot of the plated masala dosa on a banana leaf with a small bowl of coconut chutney and a bowl of steaming sambar, garnished with fresh coriander, rich and appetising, soft morning light, Studio Ghibli style
 
-HASHTAGS: #shorts #AlooParatha #IndianCooking #PunjabiFood #SpiceGarden
+SUBSCRIBE END-CARD COPY: More dosa secrets?
+
+HASHTAGS: #shorts #indiancooking #spicegarden #dosa #masaladosa
 

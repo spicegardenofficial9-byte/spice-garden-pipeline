@@ -81,9 +81,10 @@ def upload_video(output_dir: str, run_id: str, privacy_status: str = None) -> di
     script = load_json(out_dir / "script.json")
     video_path = out_dir / "final.mp4"
 
-    # Default unlisted, per the current review-first plan - switch to
-    # "public" via YOUTUBE_PRIVACY_STATUS once satisfied with live runs.
-    privacy_status = privacy_status or get_env("YOUTUBE_PRIVACY_STATUS", "unlisted")
+    # Default PUBLIC on approval, per explicit user decision - the human
+    # review + the deliberate approve step are the gate. Override with the
+    # YOUTUBE_PRIVACY_STATUS env var (or --privacy-status) for unlisted/private.
+    privacy_status = privacy_status or get_env("YOUTUBE_PRIVACY_STATUS", "public")
 
     dish_name = script.get("dish_name", "")
     region = script.get("region", "")

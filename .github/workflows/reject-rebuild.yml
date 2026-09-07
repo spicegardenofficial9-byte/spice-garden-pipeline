@@ -1,0 +1,49 @@
+name: Spice Garden - Reject & Re-edit
+
+# Manual-trigger only. Use when a video waiting in review looks bad: this
+# deletes ONLY that edited video and rebuilds a fresh edit from the SAME
+# already-generated hero clips (the paid clips are reused, never remade).
+# It never uploads.
+#
+# Trigger from the Actions tab ("Run workflow") with the run_id shown under
+# review-pending/<run_id>/.
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "run_id to reject and re-edit (see review-pending/<run_id>/)"
+        required: true
+        type: string
+
+jobs:
+  reject-and-rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Reject the edit and rebuild from the same clips
+        run: python scripts/reject_review.py --run-id "${{ inputs.run_id }}"
+
+      - name: Commit the re-edited review video
+        if: always()
+        run: |
+          git config user.name "spice-garden-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add cost_logs/usage.csv clip-pool/ review-pending/
+          git diff --staged --quiet || git commit -m "chore: reject ${{ inputs.run_id }} and re-edit from same clips [skip ci]"
+          git push
