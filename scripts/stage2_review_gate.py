@@ -58,7 +58,7 @@ class ReviewFailure(Exception):
 
 REVIEW_PROMPT_TEMPLATE = """You are a strict quality-control reviewer for an \
 Indian home-cooking YouTube Shorts channel. Review the script JSON below \
-against exactly three criteria:
+against EXACTLY these three criteria, and nothing else:
 
 1. Culinary plausibility - is the technique, timing, and sequence of steps \
 realistic and physically correct?
@@ -68,6 +68,13 @@ and free of contradictions?
 Indian home cooking (not a generic/foreign approximation)?
 
 If you are not fully confident on all three, reject it. When in doubt, reject.
+
+Do NOT reject for anything outside these three criteria. In particular, \
+this channel intentionally uses minimal or no spoken narration - it is \
+CORRECT and EXPECTED for "voiceover_script" to be short or empty, and for \
+long stretches of "visual_beats" to have no corresponding "segments" entry \
+(silence during on-screen action). Never treat narration length, narration \
+gaps, or silence as a defect - judge only the three criteria above.
 
 Script JSON:
 {script_json}

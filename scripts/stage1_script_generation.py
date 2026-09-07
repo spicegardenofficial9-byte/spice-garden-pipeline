@@ -138,13 +138,15 @@ posed shots. Reserve a purely plated/finished shot for at most one beat \
 Hard requirement for chronological sync, non-negotiable and checked by an \
 automated reviewer that rejects any mismatch - this is the single most \
 common mistake, check it carefully:
-- Every visual_beats entry's (start_sec, end_sec) window MUST show what is \
-ACTUALLY being narrated in the "segments" entries covering that same time \
-window. Build the narration (segments) first in cooking order, then place \
-each visual beat to match what that specific slice of narration is \
-describing - never write generic visuals in an order that doesn't track \
-the voiceover. Before finalizing, walk through every visual beat's time \
-window and confirm the segment(s) overlapping it describe the same action.
+- This rule applies ONLY where "segments" actually has narration covering a \
+given moment. Since minimal narration is the default (see below), most or \
+all of the video may have NO segment covering it - that is correct and \
+expected, NOT a defect, and must never be flagged as one. Where a segment \
+DOES exist, the visual_beats entries in that same time window MUST show \
+what is actually being narrated there - build whatever narration you do \
+write first in cooking order, then place those specific visual beats to \
+match it. Never write a visual beat that contradicts narration playing at \
+the same time; silence alongside visuals is fine.
 - Cooking technique must be realistic at every step: correct traditional \
 tools (e.g. dosa batter is spread with a flat-bottomed ladle/katori, never \
 a wooden spoon or ladle), correct order of operations (e.g. onions/aromatics \

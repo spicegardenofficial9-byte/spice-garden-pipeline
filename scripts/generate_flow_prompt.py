@@ -35,8 +35,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common.config import (
-    CLIP_POOL_INCOMING_DIR, CLIP_POOL_PENDING_DIR, HERO_CLIP_DURATIONS_SEC,
-    HERO_CLIPS_PER_SHORT, LATEST_BRIEF_PATH, ROOT_DIR, VISUAL_STYLE_PREFIX,
+    CLIP_POOL_PENDING_DIR, HERO_CLIP_DURATIONS_SEC, HERO_CLIPS_PER_SHORT,
+    LATEST_BRIEF_PATH, VISUAL_STYLE_PREFIX,
 )
 from common.io_utils import load_json
 
@@ -64,39 +64,42 @@ Once generated, download and save as:
   clip-pool/incoming/{date}-{slot}-{clip_num}.mp4
 """
 
-# STEP_SECTION is the ONLY part you actually need to act on each day: one
-# prompt to paste into Flow, and the one command to save the result,
-# right next to each other so there's nothing to hunt for.
+# STEP_SECTION is just the prompt to paste into Flow for one clip - no
+# save command here anymore. Generate + download ALL of a video's clips
+# first, THEN save them all in one shot (see SAVE_ALL_SECTION below).
 STEP_SECTION = """
-STEP {clip_num} of {n_clips} ({slot} clip {clip_num}, up to {duration}s)
+CLIP {clip_num} of {n_clips} ({slot}, up to {duration}s)
 ------------------------------------------------------------
-1) Copy everything between the lines below and paste it into Flow
-   as the prompt (attach the Spice Garden character reference image
-   in Flow's UI before generating). In Flow, set this clip's duration
-   to {duration} seconds:
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to {duration} seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
 {key_visual_moment}
 --------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+"""
 
-2) Generate the clip in Flow and download it (it lands in your
-   Downloads folder). Then run this ONE command in a terminal - no cd,
-   no venv activation, nothing else needed. It grabs whatever you just
-   downloaded and puts it in the right place automatically:
+SAVE_ALL_SECTION = """
+Once ALL {n_clips} clips above are generated and downloaded, run this
+ONE command - no cd, no venv activation. It grabs all {n_clips} of your
+most recent downloads and files them correctly, in order:
 
-     {save_clip_cmd} {slot} {clip_num}
+    {save_clips_cmd} {slot}
 
-   (Prefer a file manager instead? Rename the file in Downloads to
-   exactly "{filename}" and drag it into this folder:
-       {incoming_dir}
-   Do NOT type that folder path by itself into a terminal - it's a
-   destination, not a command.)
+(Prefer a file manager instead? Rename each downloaded file to exactly
+"{date}-{slot}-1.mp4", "-2.mp4", etc. (in the order you generated them)
+and drag them into: {incoming_dir}
+Do NOT type that folder path by itself into a terminal - it's a
+destination, not a command.)
 """
 
 VIDEO_BLOCK = """
 ============================================================
 {slot} VIDEO: {dish_name} ({region})
 ============================================================
-{steps}"""
+{steps}
+{save_all}"""
 
 REFERENCE_BLOCK = """
 --- {slot}: {dish_name} ({region}) ---
@@ -121,16 +124,19 @@ HASHTAGS: {hashtags}
 # never required to complete the steps.
 BRIEF_TEMPLATE = """SPICE GARDEN - {date}
 {separator}
-This is always the latest brief. To see it any time, run this ONE
-command from anywhere in a terminal:
-  {show_brief_cmd}
+All commands below assume you're in a terminal INSIDE your project
+folder (cd there first if needed). Start every day with ONE command
+(pulls the latest + shows this brief):
+  {daily_cmd}
+(Or just re-view this file without pulling: {show_brief_cmd})
 {n_videos_label}, {n_total_clips} clips total. Do them in order, video
 by video.
 {separator}
 {videos_steps}
 {separator}
-That's it - once all the clips above exist, the scheduled runs pick up
-each video automatically and build it. Nothing else to do.
+That's it. Once all the clips for a video are saved and pushed
+(./push_clips.sh), the scheduled runs pick it up automatically, build
+it, and wait for you at ./review.sh - then ./approve.sh to publish.
 {separator}
 {rejected_note}
 REFERENCE ONLY (not needed to complete the steps above)
@@ -186,17 +192,25 @@ def write_request(script: dict, date: str, slot: str, script_path: str) -> Path:
 
 
 def _slot_steps(script: dict, date: str, slot: str) -> str:
-    save_clip_cmd = f'"{ROOT_DIR / "save_clip.sh"}"'
     steps = "".join(
         STEP_SECTION.format(
             clip_num=i, n_clips=HERO_CLIPS_PER_SHORT, key_visual_moment=moment,
-            slot=slot, filename=f"{date}-{slot}-{i}.mp4", duration=HERO_CLIP_DURATIONS_SEC[i - 1],
-            incoming_dir=str(CLIP_POOL_INCOMING_DIR), save_clip_cmd=save_clip_cmd,
+            slot=slot, duration=HERO_CLIP_DURATIONS_SEC[i - 1],
         )
         for i, moment in enumerate(_get_key_visual_moments(script), start=1)
     )
+    # Relative paths/commands only - this brief may be GENERATED on a
+    # GitHub Actions runner (an ephemeral machine with its own unrelated
+    # absolute paths like /home/runner/work/...), but is always READ on
+    # your own machine after a git pull. An absolute path baked in here
+    # would point at a path that doesn't exist on your computer at all.
+    save_all = SAVE_ALL_SECTION.format(
+        n_clips=HERO_CLIPS_PER_SHORT, slot=slot, date=date,
+        save_clips_cmd="./save_clips.sh",
+        incoming_dir="clip-pool/incoming/ (inside your project folder)",
+    )
     return VIDEO_BLOCK.format(slot=slot, dish_name=script.get("dish_name", "unknown"),
-                               region=script.get("region", "Indian"), steps=steps)
+                               region=script.get("region", "Indian"), steps=steps, save_all=save_all)
 
 
 def _slot_reference(script: dict, slot: str) -> str:
@@ -235,7 +249,8 @@ def write_combined_brief(date: str, approved_slots: dict, rejected_slots: dict =
 
     brief_text = BRIEF_TEMPLATE.format(
         date=date, separator="=" * 60,
-        show_brief_cmd=f'"{ROOT_DIR / "show_brief.sh"}"',
+        daily_cmd="./daily.sh",
+        show_brief_cmd="./show_brief.sh",
         n_videos_label=f"There {'is' if n_videos == 1 else 'are'} {n_videos} video{'s' if n_videos != 1 else ''} today"
                        f" ({', '.join(slot for slot, _ in slots)})" if slots else "No videos passed review today",
         n_total_clips=n_total_clips,

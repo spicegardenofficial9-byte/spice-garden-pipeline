@@ -1,8 +1,15 @@
 edge-tts>=6.1.0
-faster-whisper>=1.0.0
 Pillow>=10.0.0
 google-api-python-client>=2.100.0
 google-auth>=2.23.0
 google-auth-oauthlib>=1.1.0
 google-genai>=1.0.0
 python-dotenv>=1.0.0
+
+# faster-whisper is intentionally NOT installed by default anymore -
+# captions are no longer part of the automated pipeline (burned-in
+# whisper captions looked clumsy; YouTube auto-generates its own for
+# Shorts). It pulls in ctranslate2, a heavy dependency that was adding
+# real install time to every single CI run for a stage nothing calls.
+# Only needed if you want to run scripts/stage4_captions.py standalone:
+#   pip install faster-whisper>=1.0.0
