@@ -35,7 +35,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common.config import (
     CREDITS_PER_VEO_CLIP, HERO_CLIPS_PER_SHORT, REPORT_FILENAME,
-    REVIEW_PENDING_DIR, VEO_MODEL_NAME, run_output_dir,
+    REVIEW_PENDING_DIR, ROOT_DIR, VEO_MODEL_NAME, run_output_dir,
 )
 from common.cost_logger import log_cost
 from common.io_utils import load_json, new_run_id, save_json
@@ -151,10 +151,18 @@ def run_stage_bc(clip_info: dict = None) -> dict:
     review_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy(output_dir / "final.mp4", review_dir / "final.mp4")
     shutil.copy(script_path, review_dir / "script.json")
+    # Store paths RELATIVE to the repo root, not absolute. review_meta.json is
+    # committed and later read by approve_upload.py, which often runs on a
+    # DIFFERENT machine (the CI runner) where the repo lives at a different
+    # absolute path. Absolute paths from the build machine would silently fail
+    # to match there, so the consumed clips/pending would never get cleaned up.
+    def _rel(p):
+        return str(Path(p).resolve().relative_to(ROOT_DIR))
+
     save_json(review_dir / "review_meta.json", {
         "run_id": run_id, "date": date, "slot": slot,
-        "clip_paths": [str(p) for p in clip_paths],
-        "pending_dir": str(clip_info["pending_dir"]),
+        "clip_paths": [_rel(p) for p in clip_paths],
+        "pending_dir": _rel(clip_info["pending_dir"]),
     })
 
     report.finish("ready_for_review")

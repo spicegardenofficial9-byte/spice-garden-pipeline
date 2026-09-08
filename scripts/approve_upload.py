@@ -28,7 +28,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common.config import IST_OFFSET_MINUTES, REVIEW_PENDING_DIR, SLOT_PUBLISH_SCHEDULE
+from common.config import IST_OFFSET_MINUTES, REVIEW_PENDING_DIR, ROOT_DIR, SLOT_PUBLISH_SCHEDULE
 from common.io_utils import load_json
 
 import stage7_upload as stage7
@@ -74,10 +74,17 @@ def approve_upload(run_id: str, privacy_status: str = None, publish_at: str = No
     result = stage7.upload_video(str(review_dir), run_id, privacy_status, publish_at)
     logger.info("Published: %s (%s)", result["url"], when)
 
-    # Only clean up once the upload actually succeeded.
+    # Only clean up once the upload actually succeeded. Paths in review_meta
+    # are stored RELATIVE to the repo root (resolve them against ROOT_DIR so
+    # cleanup works even when approve runs on a different machine than the
+    # build); tolerate older entries that stored absolute paths.
+    def _resolve(p):
+        path = Path(p)
+        return path if path.is_absolute() else ROOT_DIR / path
+
     for clip_path_str in meta["clip_paths"]:
-        Path(clip_path_str).unlink(missing_ok=True)
-    shutil.rmtree(meta["pending_dir"], ignore_errors=True)
+        _resolve(clip_path_str).unlink(missing_ok=True)
+    shutil.rmtree(_resolve(meta["pending_dir"]), ignore_errors=True)
     shutil.rmtree(review_dir, ignore_errors=True)
     logger.info(
         "Cleaned up clip-pool inputs for %s-%s and removed the review-pending entry.",
