@@ -76,15 +76,20 @@ def _upload_video(youtube, video_path: str, body: dict) -> dict:
     return response
 
 
-def upload_video(output_dir: str, run_id: str, privacy_status: str = None) -> dict:
+def upload_video(output_dir: str, run_id: str, privacy_status: str = None,
+                 publish_at: str = None) -> dict:
     out_dir = Path(output_dir)
     script = load_json(out_dir / "script.json")
     video_path = out_dir / "final.mp4"
 
-    # Default PUBLIC on approval, per explicit user decision - the human
-    # review + the deliberate approve step are the gate. Override with the
-    # YOUTUBE_PRIVACY_STATUS env var (or --privacy-status) for unlisted/private.
-    privacy_status = privacy_status or get_env("YOUTUBE_PRIVACY_STATUS", "public")
+    # Scheduled publish: if publish_at (RFC3339) is given, the video MUST be
+    # uploaded private and YouTube auto-publishes it (publishAt) at that time.
+    # Otherwise publish immediately at privacy_status (PUBLIC by default, per
+    # explicit user decision - the human review + approve step are the gate).
+    if publish_at:
+        privacy_status = "private"
+    else:
+        privacy_status = privacy_status or get_env("YOUTUBE_PRIVACY_STATUS", "public")
 
     dish_name = script.get("dish_name", "")
     region = script.get("region", "")
@@ -125,6 +130,9 @@ def upload_video(output_dir: str, run_id: str, privacy_status: str = None) -> di
             "containsSyntheticMedia": True,
         },
     }
+    if publish_at:
+        # YouTube auto-publishes the (private) video to public at this instant.
+        body["status"]["publishAt"] = publish_at
 
     youtube = _build_youtube_client()
     response = _upload_video(youtube, str(video_path), body)
@@ -136,6 +144,7 @@ def upload_video(output_dir: str, run_id: str, privacy_status: str = None) -> di
         "url": f"https://youtube.com/shorts/{video_id}",
         "uploaded_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "privacy_status": privacy_status,
+        "scheduled_publish_at": publish_at,
         "self_declared_ai_content": True,
     }
     save_json(out_dir / "upload_result.json", result)

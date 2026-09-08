@@ -123,6 +123,15 @@ SEGMENTS_MAX = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MAX  # 6
 VIDEOS_PER_DAY = 3
 DAILY_SLOTS = ["V1", "V2", "V3"]
 
+# Daily publish schedule per slot, in IST (Asia/Kolkata, UTC+5:30), per
+# explicit user decision. "immediate" = publish PUBLIC as soon as it's
+# approved; an "HH:MM" = upload it private and let YouTube auto-publish it
+# (publishAt) at that time today, or the next day if that time has already
+# passed. So each day: video 1 goes live on approval, video 2 at 12:30 PM,
+# video 3 at 5:30 PM.
+IST_OFFSET_MINUTES = 5 * 60 + 30
+SLOT_PUBLISH_SCHEDULE = {"V1": "immediate", "V2": "12:30", "V3": "17:30"}
+
 VEO_MODEL_NAME = "omni-1.1-flash"  # current hero-clip model (360p/10s, 7 credits)
 
 # Image generation: FINAL correction, after three rounds of getting this
