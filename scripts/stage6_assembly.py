@@ -160,7 +160,7 @@ def _build_subscribe_segment(anim_path: Path, out_path: Path) -> float:
         audio_map = "1:a"
     cmd += [
         "-filter_complex", filter_complex, "-map", "[v]", "-map", audio_map,
-        "-r", str(VIDEO_FPS), "-c:v", "libx264", "-pix_fmt", "yuv420p",
+        "-r", str(VIDEO_FPS), "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-t", str(dur), str(out_path),
     ]
     _run(cmd)
@@ -185,7 +185,7 @@ def _build_still_segment(image_path: Path, duration: float, out_path: Path) -> f
         "-loop", "1", "-t", str(duration), "-i", str(image_path),
         "-f", "lavfi", "-t", str(duration), "-i", "anullsrc=r=44100:cl=stereo",
         "-vf", kb, "-map", "0:v", "-map", "1:a",
-        "-r", str(VIDEO_FPS), "-c:v", "libx264", "-pix_fmt", "yuv420p",
+        "-r", str(VIDEO_FPS), "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-t", str(duration), str(out_path),
     ])
     return round(duration, 3)
@@ -220,7 +220,7 @@ def _build_clip_segment(video_path: Path, duration: float, out_path: Path) -> fl
     cmd += [
         "-filter_complex", filter_complex,
         "-map", "[v]", "-map", audio_map,
-        "-r", str(VIDEO_FPS), "-c:v", "libx264", "-pix_fmt", "yuv420p",
+        "-r", str(VIDEO_FPS), "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-t", str(dur), str(out_path),
     ]
     _run(cmd)
@@ -264,7 +264,7 @@ def _crossfade(segment_paths: list, durations: list, out_path: Path) -> float:
         "ffmpeg", "-y", *inputs,
         "-filter_complex", filter_complex,
         "-map", prev_v, "-map", prev_a,
-        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac",
+        "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "aac",
         str(out_path),
     ])
     return round(cum, 3)
@@ -323,7 +323,7 @@ def _finalize(combined: Path, total_duration: float, out_path: Path):
         cmd += ["-filter_complex", ";".join(parts)]
     cmd += [
         "-map", last_v, "-map", audio_map,
-        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac",
+        "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "aac",
         "-t", str(total_duration), "-movflags", "+faststart", str(out_path),
     ]
     _run(cmd)
