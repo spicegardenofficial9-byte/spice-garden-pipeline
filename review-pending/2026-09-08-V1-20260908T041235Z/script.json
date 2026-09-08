@@ -1,0 +1,97 @@
+{
+  "run_id": "2026-09-08-V1-authored",
+  "dish_name": "Aloo Paratha",
+  "region": "Punjabi",
+  "ingredients": [
+    "potatoes",
+    "wheat flour",
+    "water",
+    "salt",
+    "green chilies",
+    "ginger",
+    "coriander leaves",
+    "red chili powder",
+    "cumin",
+    "carom seeds (ajwain)",
+    "ghee",
+    "white butter"
+  ],
+  "title": "Grandma's Aloo Paratha, made from scratch 🥔🔥 #shorts",
+  "dish_fact": "In Punjab, a ghee-laden aloo paratha with a knob of fresh white butter and a glass of lassi is the classic farmer's breakfast - built to fuel a long morning in the fields.",
+  "subscribe_cta_text": "More village recipes?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Early village morning: the young woman in a simple cotton salwar kameez crouches in a small kitchen garden and pulls two fresh potatoes straight out of the dark soil, knocking the earth off them against her palm, soft golden dawn light and dew on the leaves, Studio Ghibli style",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Close-up on a brass plate: peeled boiled potatoes are mashed by hand with a wooden masher into a fluffy mound, then finely chopped green chilli, grated ginger, red chilli powder, cumin, crushed ajwain and a fistful of fresh coriander are scattered over and folded through, steam still rising",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Flour-dusted hands flatten a soft ball of wheat dough into a small disc, spoon a heap of the spiced potato into the centre, then gather and pinch the edges up over the filling to seal it into a stuffed ball, dusting it with dry flour, warm close-up",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Top-down: a wooden rolling pin gently rolls the stuffed dough ball out into a round paratha on a floured board, the pale filling faintly showing through, little puffs of flour rising with each pass",
+      "start_sec": 30.0,
+      "end_sec": 39.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "The paratha laid onto a screaming-hot cast-iron tawa; it blisters and puffs, brown toasty spots bloom across the surface, and a spoon smears glistening ghee around the edges which sizzles loudly as she flips it, steam and aroma rising",
+      "start_sec": 39.0,
+      "end_sec": 48.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "The finished golden paratha torn open by hand on a steel plate, flaky layers steaming, a cube of fresh white butter set on top slowly melting into the crust, a small bowl of yogurt beside it - the happy reveal, warm morning light",
+      "start_sec": 48.0,
+      "end_sec": 55.0
+    }
+  ],
+  "estimated_duration_sec": 55.0,
+  "hashtags": [
+    "#shorts",
+    "#alooparatha",
+    "#punjabifood",
+    "#indianbreakfast",
+    "#villagecooking",
+    "#homemade",
+    "#asmrcooking",
+    "#streetfood",
+    "#recipe",
+    "#foodie"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-08T00:00:00Z",
+  "model": "authored-by-claude",
+  "description": "Aloo Paratha — made the traditional Punjabi village way. 🌿\nIn Punjab, a ghee-laden aloo paratha with a knob of fresh white butter and a glass of lassi is the classic farmer's breakfast - built to fuel a long morning in the fields.\nMade with potatoes, wheat flour, water, salt, green chilies, ginger and love.\n\n#shorts #indianfood #alooparatha #punjabi #recipe #homecooking #cooking #asmr #villagecooking #streetfood #foodie #viral\n\nSubscribe for a new recipe story every day!",
+  "youtube_tags": [
+    "shorts",
+    "indianfood",
+    "alooparatha",
+    "punjabi",
+    "recipe",
+    "homecooking",
+    "cooking",
+    "asmr",
+    "villagecooking",
+    "streetfood",
+    "foodie",
+    "viral"
+  ]
+}

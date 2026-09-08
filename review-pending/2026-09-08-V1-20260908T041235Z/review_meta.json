@@ -1,0 +1,14 @@
+{
+  "run_id": "2026-09-08-V1-20260908T041235Z",
+  "date": "2026-09-08",
+  "slot": "V1",
+  "clip_paths": [
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-08-V1-1.mp4",
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-08-V1-2.mp4",
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-08-V1-3.mp4",
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-08-V1-4.mp4",
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-08-V1-5.mp4",
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-08-V1-6.mp4"
+  ],
+  "pending_dir": "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/pending/2026-09-08-V1"
+}

@@ -98,3 +98,6 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-07T14:45:42Z,2026-09-07-AM-20260907T144542Z,stage5_visual_generation,pollinations,pollinations-flux,0,assets,0.000000,stills summary - see per-asset rows above
 2026-09-07T14:45:42Z,2026-09-07-AM-20260907T144542Z,run_stage_bc,manual-flow,veo-3.1-lite,28,flow_credits_assumed,0.000000,"4 hero clips manually generated in Flow, consumed from clip-pool (2026-09-07-AM-1.mp4, 2026-09-07-AM-2.mp4, 2026-09-07-AM-3.mp4, 2026-09-07-AM-4.mp4)"
 2026-09-07T14:50:10Z,2026-09-07-AM-20260907T144542Z,stage7_upload,youtube-data-api,,1,upload,0.000000,bvD7QBp8Kaw
+2026-09-08T04:12:35Z,2026-09-08-V1-20260908T041235Z,stage5_visual_generation,pollinations,pollinations-flux,0,assets,0.000000,stills summary - see per-asset rows above
+2026-09-08T04:12:35Z,2026-09-08-V1-20260908T041235Z,run_stage_bc,manual-flow,omni-1.1-flash,42,flow_credits_assumed,0.000000,"6 hero clips manually generated in Flow, consumed from clip-pool (2026-09-08-V1-1.mp4, 2026-09-08-V1-2.mp4, 2026-09-08-V1-3.mp4, 2026-09-08-V1-4.mp4, 2026-09-08-V1-5.mp4, 2026-09-08-V1-6.mp4)"
+2026-09-08T04:16:16Z,2026-09-08-V1-20260908T041235Z,generate_metadata,none,fallback,1,metadata_call,0.000000,title+description via fallback
