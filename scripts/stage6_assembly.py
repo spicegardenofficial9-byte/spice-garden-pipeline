@@ -172,7 +172,7 @@ def _build_subscribe_segment(anim_path: Path, out_path: Path) -> float:
 # of exactly `duration` - no on-screen text)
 # --------------------------------------------------------------------------
 
-def _build_still_segment(image_path: Path, duration: float, out_path: Path):
+def _build_still_segment(image_path: Path, duration: float, out_path: Path) -> float:
     num_frames = max(1, round(duration * VIDEO_FPS))
     kb = (
         f"scale={VIDEO_WIDTH*2}:{VIDEO_HEIGHT*2}:force_original_aspect_ratio=increase,"
@@ -188,34 +188,43 @@ def _build_still_segment(image_path: Path, duration: float, out_path: Path):
         "-r", str(VIDEO_FPS), "-c:v", "libx264", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-t", str(duration), str(out_path),
     ])
+    return round(duration, 3)
 
 
-def _build_clip_segment(video_path: Path, duration: float, out_path: Path):
-    """Hero clip: loop-safe head-lag trim, scale/colour/sharpen, native audio
-    (or silence). The clip is looped so a pacing-adjusted duration slightly
-    longer than the trimmed source repeats the motion rather than freezing."""
-    has_audio = _ffprobe_has_audio(video_path)
+def _build_clip_segment(video_path: Path, duration: float, out_path: Path) -> float:
+    """Hero clip: trim the head lag, scale/colour/sharpen, keep native audio
+    (or add silence). The segment is CAPPED at the clip's real usable length
+    (source duration minus the lag trim) - we never loop or freeze to stretch
+    it, which also avoids an ffmpeg -stream_loop hang seen on some clips.
+    Returns the actual segment duration used (so the crossfade stays in sync).
+    """
     lag = CLIP_LAG_TRIM_SEC
+    src_dur = _ffprobe_duration(video_path)
+    usable = max(0.5, src_dur - lag) if src_dur > 0 else duration
+    dur = round(min(duration, usable), 3)
+
+    has_audio = _ffprobe_has_audio(video_path)
     vf = f"[0:v]trim=start={lag},setpts=PTS-STARTPTS,{_CLIP_VF}[v]"
-    cmd = ["ffmpeg", "-y", "-stream_loop", "-1", "-i", str(video_path)]
+    cmd = ["ffmpeg", "-y", "-i", str(video_path)]
     if has_audio:
         filter_complex = (
             f"{vf};"
-            f"[0:a]atrim=start={lag},asetpts=PTS-STARTPTS,apad,"
+            f"[0:a]atrim=start={lag},asetpts=PTS-STARTPTS,"
             f"aformat=sample_rates=44100:channel_layouts=stereo[a]"
         )
         audio_map = "[a]"
     else:
-        cmd += ["-f", "lavfi", "-t", str(duration), "-i", "anullsrc=r=44100:cl=stereo"]
+        cmd += ["-f", "lavfi", "-t", str(dur), "-i", "anullsrc=r=44100:cl=stereo"]
         filter_complex = vf
         audio_map = "1:a"
     cmd += [
         "-filter_complex", filter_complex,
         "-map", "[v]", "-map", audio_map,
         "-r", str(VIDEO_FPS), "-c:v", "libx264", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-t", str(duration), str(out_path),
+        "-c:a", "aac", "-t", str(dur), str(out_path),
     ]
     _run(cmd)
+    return dur
 
 
 # --------------------------------------------------------------------------
@@ -330,17 +339,20 @@ def assemble(output_dir: str, run_id: str) -> dict:
     beats = visuals_meta["beats"]
 
     target = script.get("estimated_duration_sec") or beats[-1]["end_sec"] or TARGET_DURATION_SEC
-    durations = _pacing_durations(beats, float(target))
+    requested = _pacing_durations(beats, float(target))
 
-    segment_paths = []
-    for beat, dur in zip(beats, durations):
+    # Collect the ACTUAL duration of each built segment (a clip may be capped
+    # at its real usable length), so the crossfade offsets stay in sync.
+    segment_paths, durations = [], []
+    for beat, dur in zip(beats, requested):
         seg_path = work_dir / f"seg_{beat['beat_id']}.mp4"
         asset_path = out_dir / beat["path"]
         if beat["type"] == "image":
-            _build_still_segment(asset_path, dur, seg_path)
+            actual = _build_still_segment(asset_path, dur, seg_path)
         else:
-            _build_clip_segment(asset_path, dur, seg_path)
+            actual = _build_clip_segment(asset_path, dur, seg_path)
         segment_paths.append(seg_path)
+        durations.append(actual)
 
     # Append the pre-made subscribe animation (with its own bell sound) as the
     # final segment, crossfaded in - used at the END of every video. If the
