@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-09-08-V2-authored",
+  "dish_name": "Masala Chai",
+  "region": "North Indian",
+  "ingredients": ["water", "milk", "black tea leaves", "ginger", "green cardamom", "cloves", "black peppercorns", "cinnamon", "sugar", "tulsi leaves"],
+  "title": "The perfect cutting chai, village style ☕️🔥 #shorts",
+  "dish_fact": "The Indian habit of 'pulling' chai - pouring it in a long stream between two pots - isn't a trick: it cools and aerates the tea, blending the milk and spices into that signature frothy top.",
+  "subscribe_cta_text": "Chai lovers, subscribe!",
+  "segments": [
+    {"id": 1, "type": "video", "moment_description": "Misty village morning: the young woman snaps a thumb of fresh ginger and pinches a few tulsi leaves from a clay pot in her little garden, dew dripping, soft blue morning light, Studio Ghibli style", "start_sec": 0.0, "end_sec": 10.0},
+    {"id": 2, "type": "video", "moment_description": "Water comes to a rolling boil in a small blackened brass pot over a glowing clay wood stove; a stone crushes the ginger on a board and green cardamom pods, cloves and a few peppercorns are cracked and dropped in, the water tinting and fragrant steam curling up, close-up", "start_sec": 10.0, "end_sec": 20.0},
+    {"id": 3, "type": "video", "moment_description": "A spoon of loose black tea and a spoon of sugar are stirred into the bubbling spiced water; it darkens to a deep amber and rises in a rolling, foamy boil, close macro of the churning surface", "start_sec": 20.0, "end_sec": 30.0},
+    {"id": 4, "type": "video", "moment_description": "A steady stream of fresh milk is poured from a steel tumbler into the dark tea; it blooms pale then surges up into a big creamy froth threatening to boil over as she lifts the pot, warm firelight glow", "start_sec": 30.0, "end_sec": 39.0},
+    {"id": 5, "type": "video", "moment_description": "The chai is 'pulled': lifted high and poured in a long thin frothy ribbon from one pot down into another held low, back and forth, aerating it, steam trailing the stream against the dark kitchen", "start_sec": 39.0, "end_sec": 48.0},
+    {"id": 6, "type": "video", "moment_description": "The finished chai poured through a small strainer into a rustic clay kulhad until a creamy froth caps the rim, steam rising, a couple of rusk biscuits resting on the saucer beside it - the cozy reveal", "start_sec": 48.0, "end_sec": 55.0}
+  ],
+  "estimated_duration_sec": 55.0,
+  "hashtags": ["#shorts", "#masalachai", "#chai", "#indiantea", "#villagecooking", "#asmr", "#cuttingchai", "#homemade", "#streetfood", "#foodie"],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-08T00:00:00Z",
+  "model": "authored-by-claude"
+}

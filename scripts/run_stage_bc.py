@@ -35,12 +35,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common.config import (
     CREDITS_PER_VEO_CLIP, HERO_CLIPS_PER_SHORT, REPORT_FILENAME,
-    REVIEW_PENDING_DIR, run_output_dir,
+    REVIEW_PENDING_DIR, VEO_MODEL_NAME, run_output_dir,
 )
 from common.cost_logger import log_cost
-from common.io_utils import new_run_id, save_json
-from stageA_clip_pool_watcher import find_pending_clip
+from common.io_utils import load_json, new_run_id, save_json
+from stageA_clip_pool_watcher import find_all_pending_clips, find_pending_clip
 
+import generate_metadata
 import stage5_visual_generation as stage5
 import stage6_assembly as stage6
 
@@ -103,7 +104,7 @@ def run_stage_bc(clip_info: dict = None) -> dict:
         stage5.generate_visuals(str(script_path), str(output_dir), run_id, hero_clip_paths=[str(p) for p in clip_paths])
         total_credits = CREDITS_PER_VEO_CLIP * HERO_CLIPS_PER_SHORT
         log_cost(
-            run_id=run_id, stage="run_stage_bc", provider="manual-flow", model="veo-3.1-lite",
+            run_id=run_id, stage="run_stage_bc", provider="manual-flow", model=VEO_MODEL_NAME,
             units=total_credits, unit_type="flow_credits_assumed", cost_usd=0.0,
             notes=f"{len(clip_paths)} hero clips manually generated in Flow, consumed from clip-pool "
                   f"({', '.join(p.name for p in clip_paths)})",
@@ -129,6 +130,20 @@ def run_stage_bc(clip_info: dict = None) -> dict:
         report.finish("stage_b_failed")
         return report.data
 
+    # Gemini writes ONLY the title + description (traction copy) from the
+    # Claude-authored script. Fail-soft: a baseline is used if Gemini is down,
+    # so publishing is never blocked by this step.
+    try:
+        script = load_json(script_path)
+        meta = generate_metadata.generate_metadata(script, run_id)
+        script["title"] = meta["title"]
+        script["description"] = meta["description"]
+        script["youtube_tags"] = meta["tags"]
+        save_json(script_path, script)
+        report.step_ok("metadata", {"title": meta["title"], "source": meta["source"]})
+    except Exception as exc:  # noqa: BLE001 - never block a built video on copy
+        logger.warning("Metadata step failed (non-fatal): %s", exc)
+
     # Hand off to review - copy just what's needed (final.mp4, script.json)
     # plus bookkeeping for approve_upload.py to clean up clip-pool later.
     # clip-pool itself is left untouched until upload is actually approved.
@@ -151,12 +166,51 @@ def run_stage_bc(clip_info: dict = None) -> dict:
     return report.data
 
 
+def _already_awaiting_review(date: str, slot: str) -> bool:
+    """True if a review-pending entry for this date-slot already exists (built
+    on an earlier run, not yet approved) - so we don't rebuild duplicates."""
+    if not REVIEW_PENDING_DIR.exists():
+        return False
+    return any(p.is_dir() and p.name.startswith(f"{date}-{slot}-")
+               for p in REVIEW_PENDING_DIR.iterdir())
+
+
+def build_all() -> dict:
+    """Build EVERY fulfilled clip-pool request this run (up to VIDEOS_PER_DAY),
+    skipping any already waiting in review. Lets one run turn all three of a
+    day's videos into review videos once their clips are dropped."""
+    pending = find_all_pending_clips()
+    if not pending:
+        logger.info("No fulfilled clip-pool requests - nothing to build this run.")
+        return {"built": [], "skipped": [], "final_status": "no_pending_clip"}
+
+    built, skipped, failures = [], [], []
+    for clip_info in pending:
+        date, slot = clip_info["date"], clip_info["slot"]
+        if _already_awaiting_review(date, slot):
+            logger.info("%s-%s already has a review video waiting - skipping rebuild.", date, slot)
+            skipped.append(f"{date}-{slot}")
+            continue
+        result = run_stage_bc(clip_info)
+        built.append(result)
+        if result.get("final_status") != "ready_for_review":
+            failures.append(result.get("run_id"))
+
+    n_ok = sum(1 for r in built if r.get("final_status") == "ready_for_review")
+    logger.info("=== build_all: %d built, %d skipped, %d failed ===", n_ok, len(skipped), len(failures))
+    return {
+        "built": built, "skipped": skipped,
+        "final_status": "stage_b_failed" if failures else "ready_for_review" if (n_ok or skipped) else "no_pending_clip",
+    }
+
+
 def main():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-    parser = argparse.ArgumentParser(description="Stage B: automated editing, stops before upload for review")
-    parser.parse_args()
+    parser = argparse.ArgumentParser(description="Stage B: automated editing (all ready videos), stops before upload for review")
+    parser.add_argument("--one", action="store_true", help="Build only the oldest ready request (legacy single-build)")
+    args = parser.parse_args()
 
-    result = run_stage_bc()
+    result = run_stage_bc() if args.one else build_all()
     if result.get("final_status") not in ("ready_for_review", "no_pending_clip"):
         sys.exit(1)
 

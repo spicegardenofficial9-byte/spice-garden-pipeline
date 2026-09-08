@@ -88,26 +88,32 @@ def upload_video(output_dir: str, run_id: str, privacy_status: str = None) -> di
 
     dish_name = script.get("dish_name", "")
     region = script.get("region", "")
-    ingredients_line = ", ".join(script.get("ingredients", []))
-    # No voiceover in this format - build the description from the dish's
-    # region + interesting fact and the ingredient list instead.
-    intro = " ".join(p for p in (
-        f"{dish_name} ({region})." if dish_name or region else "",
-        script.get("dish_fact", ""),
-    ) if p)
-    description_parts = [intro]
-    if ingredients_line:
-        description_parts.append(f"Ingredients: {ingredients_line}")
-    description_parts.append(" ".join(script.get("hashtags", [])))
+
+    # Title + description come from the metadata step (Gemini writes traction
+    # copy at build time; a solid baseline is used if Gemini was down). Fall
+    # back to building something reasonable if an older script lacks them.
+    title = script.get("title") or (dish_name or "Spice Garden Shorts")
+    description = script.get("description")
+    if not description:
+        ingredients_line = ", ".join(script.get("ingredients", []))
+        intro = " ".join(p for p in (
+            f"{dish_name} ({region})." if dish_name or region else "",
+            script.get("dish_fact", ""),
+        ) if p)
+        parts = [intro]
+        if ingredients_line:
+            parts.append(f"Ingredients: {ingredients_line}")
+        parts.append(" ".join(script.get("hashtags", [])))
+        description = "\n\n".join(p for p in parts if p)
 
     required_tags = [t for t in (dish_name, region, "Indian cooking", "shorts") if t]
-    hashtag_tags = [h.lstrip("#") for h in script.get("hashtags", [])]
-    tags = list(dict.fromkeys(required_tags + hashtag_tags))  # dedupe, preserve order
+    extra_tags = script.get("youtube_tags") or [h.lstrip("#") for h in script.get("hashtags", [])]
+    tags = list(dict.fromkeys(required_tags + list(extra_tags)))  # dedupe, preserve order
 
     body = {
         "snippet": {
-            "title": script.get("title", dish_name or "Spice Garden Shorts"),
-            "description": "\n\n".join(p for p in description_parts if p),
+            "title": title[:100],
+            "description": description,
             "tags": tags,
             "categoryId": "26",  # Howto & Style
         },

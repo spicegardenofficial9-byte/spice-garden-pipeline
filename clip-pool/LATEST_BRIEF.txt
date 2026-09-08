@@ -1,71 +1,259 @@
-SPICE GARDEN - 2026-09-07
+SPICE GARDEN - 2026-09-08
 ============================================================
 All commands below assume you're in a terminal INSIDE your project
 folder (cd there first if needed). Start every day with ONE command
 (pulls the latest + shows this brief):
   ./daily.sh
 (Or just re-view this file without pulling: ./show_brief.sh)
-There is 1 video today (AM), 4 clips total. Do them in order, video
+There are 3 videos today (V1, V2, V3), 18 clips total. Do them in order, video
 by video.
 ============================================================
 
 ============================================================
-AM VIDEO: Masala Dosa (South Indian)
+V1 VIDEO: Aloo Paratha (Punjabi)
 ============================================================
 
-CLIP 1 of 4 (AM, up to 10s)
+CLIP 1 of 6 (V1, up to 10s)
 ------------------------------------------------------------
 Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-Extreme macro on a heavy black iron kadai: dark mustard seeds tumble into a shallow pool of shimmering hot ghee and burst into a dancing crackle, then a fistful of fresh curry leaves is scattered in and spits violently in the fat; a beat later finely chopped onion, slit green chillies and grated ginger cascade in and hiss loudly, turning glassy and golden as a wooden spatula folds them through, fragrant steam curling upward in warm raking morning light
+Early village morning: the young woman in a simple cotton salwar kameez crouches in a small kitchen garden and pulls two fresh potatoes straight out of the dark soil, knocking the earth off them against her palm, soft golden dawn light and dew on the leaves, Studio Ghibli style
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
 
-CLIP 2 of 4 (AM, up to 10s)
+CLIP 2 of 6 (V1, up to 10s)
 ------------------------------------------------------------
 Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-Soft boiled potato chunks are tipped from a brass bowl into the tempered aromatics; a hand presses and folds them with a wooden masher, a pinch of bright turmeric rains over the top and stains everything gold, a small splash of water is added and it all sizzles as the spatula stirs it into a glossy, steaming spiced potato mash, tight close-up of the potatoes breaking apart
+Close-up on a brass plate: peeled boiled potatoes are mashed by hand with a wooden masher into a fluffy mound, then finely chopped green chilli, grated ginger, red chilli powder, cumin, crushed ajwain and a fistful of fresh coriander are scattered over and folded through, steam still rising
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
 
-CLIP 3 of 4 (AM, up to 10s)
+CLIP 3 of 6 (V1, up to 10s)
 ------------------------------------------------------------
 Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-Straight-down on a screaming-hot flat tawa: a steel ladle pours a pool of pale fermented batter at the centre, then in one confident continuous spiral from the inside outward spreads it paper-thin with the ladle's base into a wide even circle; the surface instantly blisters into hundreds of tiny bubbles, the lacy edges set and begin to lift, and a spoon drizzles ghee around the rim that sizzles and browns it to crisp golden lace
+Flour-dusted hands flatten a soft ball of wheat dough into a small disc, spoon a heap of the spiced potato into the centre, then gather and pinch the edges up over the filling to seal it into a stuffed ball, dusting it with dry flour, warm close-up
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
 
-CLIP 4 of 4 (AM, up to 10s)
+CLIP 4 of 6 (V1, up to 10s)
 ------------------------------------------------------------
 Copy everything between the lines below and paste it into Flow as the
 prompt (attach the Spice Garden character reference image in Flow's UI,
 and set this clip's duration to 10 seconds before generating):
 --------------------- COPY BELOW THIS LINE ------------------
-A spoon lays a neat line of the golden potato masala down the centre of the crackly dosa; a flat spatula slides under one crisp edge and folds the dosa over the filling, pressing so it audibly crackles, then both hands lift the long folded dosa off the tawa and set it down onto a fresh green banana leaf, a thin ribbon of steam rising off its glassy golden surface
+Top-down: a wooden rolling pin gently rolls the stuffed dough ball out into a round paratha on a floured board, the pale filling faintly showing through, little puffs of flour rising with each pass
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 5 of 6 (V1, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The paratha laid onto a screaming-hot cast-iron tawa; it blisters and puffs, brown toasty spots bloom across the surface, and a spoon smears glistening ghee around the edges which sizzles loudly as she flips it, steam and aroma rising
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 6 of 6 (V1, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The finished golden paratha torn open by hand on a steel plate, flaky layers steaming, a cube of fresh white butter set on top slowly melting into the crust, a small bowl of yogurt beside it - the happy reveal, warm morning light
 --------------------- COPY ABOVE THIS LINE ------------------
 Download it when done - don't save it anywhere yet, just leave it in
 Downloads.
 
 
-Once ALL 4 clips above are generated and downloaded, run this
-ONE command - no cd, no venv activation. It grabs all 4 of your
+Once ALL 6 clips above are generated and downloaded, run this
+ONE command - no cd, no venv activation. It grabs all 6 of your
 most recent downloads and files them correctly, in order:
 
-    ./save_clips.sh AM
+    ./save_clips.sh V1
 
 (Prefer a file manager instead? Rename each downloaded file to exactly
-"2026-09-07-AM-1.mp4", "-2.mp4", etc. (in the order you generated them)
+"2026-09-08-V1-1.mp4", "-2.mp4", etc. (in the order you generated them)
+and drag them into: clip-pool/incoming/ (inside your project folder)
+Do NOT type that folder path by itself into a terminal - it's a
+destination, not a command.)
+
+============================================================
+V2 VIDEO: Masala Chai (North Indian)
+============================================================
+
+CLIP 1 of 6 (V2, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+Misty village morning: the young woman snaps a thumb of fresh ginger and pinches a few tulsi leaves from a clay pot in her little garden, dew dripping, soft blue morning light, Studio Ghibli style
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 2 of 6 (V2, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+Water comes to a rolling boil in a small blackened brass pot over a glowing clay wood stove; a stone crushes the ginger on a board and green cardamom pods, cloves and a few peppercorns are cracked and dropped in, the water tinting and fragrant steam curling up, close-up
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 3 of 6 (V2, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+A spoon of loose black tea and a spoon of sugar are stirred into the bubbling spiced water; it darkens to a deep amber and rises in a rolling, foamy boil, close macro of the churning surface
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 4 of 6 (V2, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+A steady stream of fresh milk is poured from a steel tumbler into the dark tea; it blooms pale then surges up into a big creamy froth threatening to boil over as she lifts the pot, warm firelight glow
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 5 of 6 (V2, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The chai is 'pulled': lifted high and poured in a long thin frothy ribbon from one pot down into another held low, back and forth, aerating it, steam trailing the stream against the dark kitchen
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 6 of 6 (V2, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The finished chai poured through a small strainer into a rustic clay kulhad until a creamy froth caps the rim, steam rising, a couple of rusk biscuits resting on the saucer beside it - the cozy reveal
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+
+Once ALL 6 clips above are generated and downloaded, run this
+ONE command - no cd, no venv activation. It grabs all 6 of your
+most recent downloads and files them correctly, in order:
+
+    ./save_clips.sh V2
+
+(Prefer a file manager instead? Rename each downloaded file to exactly
+"2026-09-08-V2-1.mp4", "-2.mp4", etc. (in the order you generated them)
+and drag them into: clip-pool/incoming/ (inside your project folder)
+Do NOT type that folder path by itself into a terminal - it's a
+destination, not a command.)
+
+============================================================
+V3 VIDEO: Pani Puri (Indian Street Food)
+============================================================
+
+CLIP 1 of 6 (V3, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+Bright village kitchen garden morning: the young woman gathers a big handful of fresh mint and coriander and snaps off a green chilli, shaking the water from the leaves, dew and sunlight, Studio Ghibli style
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 2 of 6 (V3, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The mint, coriander, green chilli and a knob of ginger are ground on a heavy stone sil-batta, a hand rocking the stone back and forth until it becomes a glossy, vivid green paste, close-up of the fragrant crush
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 3 of 6 (V3, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The green paste is whisked into a big bowl of cold water with a spoon of tamarind pulp, black salt, roasted cumin and chaat masala; the water swirls into a cloudy spicy-green pani, then a few ice cubes are dropped in with a splash
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 4 of 6 (V3, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+In a separate bowl, boiled potato cubes and soft chickpeas are mashed roughly and tossed with black salt and chaat masala into a spiced filling, a tight close-up of the spoon folding it together
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 5 of 6 (V3, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+A thumb cracks a neat hole in the top of a crisp round puri shell and tucks in a spoon of the potato-chickpea masala, the shell shattering slightly at the edges, macro shot
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+CLIP 6 of 6 (V3, up to 10s)
+------------------------------------------------------------
+Copy everything between the lines below and paste it into Flow as the
+prompt (attach the Spice Garden character reference image in Flow's UI,
+and set this clip's duration to 10 seconds before generating):
+--------------------- COPY BELOW THIS LINE ------------------
+The filled puri is dunked deep into the green pani, lifted out dripping and overflowing, and set onto a leaf plate lined with more ready puris - the mouthwatering reveal, cold droplets falling
+--------------------- COPY ABOVE THIS LINE ------------------
+Download it when done - don't save it anywhere yet, just leave it in
+Downloads.
+
+
+Once ALL 6 clips above are generated and downloaded, run this
+ONE command - no cd, no venv activation. It grabs all 6 of your
+most recent downloads and files them correctly, in order:
+
+    ./save_clips.sh V3
+
+(Prefer a file manager instead? Rename each downloaded file to exactly
+"2026-09-08-V3-1.mp4", "-2.mp4", etc. (in the order you generated them)
 and drag them into: clip-pool/incoming/ (inside your project folder)
 Do NOT type that folder path by itself into a terminal - it's a
 destination, not a command.)
@@ -79,39 +267,103 @@ it, and wait for you at ./review.sh - then ./approve.sh to publish.
 REFERENCE ONLY (not needed to complete the steps above)
 ============================================================
 
---- AM: Masala Dosa (South Indian) ---
-TITLE: The Secret to Perfect Masala Dosa 🔥 #shorts
+--- V1: Aloo Paratha (Punjabi) ---
+TITLE: Grandma's Aloo Paratha, made from scratch 🥔🔥 #shorts
 
 INGREDIENTS:
-  - rice
-  - urad dal
-  - fenugreek seeds
+  - potatoes
+  - wheat flour
   - water
   - salt
-  - potatoes
-  - onion
   - green chilies
   - ginger
-  - mustard seeds
-  - curry leaves
-  - turmeric
+  - coriander leaves
+  - red chili powder
+  - cumin
+  - carom seeds (ajwain)
   - ghee
-  - coconut
-  - coriander
+  - white butter
 
-DISH FACT (shown as on-screen context, not narration):
-The dosa's signature tang and lightness come from wild fermentation - the rice-and-urad-dal batter is left overnight so natural lactic bacteria leaven it, no yeast and no baking soda.
+DISH FACT (context for the title/description - NOT shown on screen):
+In Punjab, a ghee-laden aloo paratha with a knob of fresh white butter and a glass of lassi is the classic farmer's breakfast - built to fuel a long morning in the fields.
 
-SEGMENT TIMELINE (6 segments, ~50.0s total; no voiceover
+STORY / CLIP TIMELINE (6 clips, ~55.0s total; no voiceover
 and NO on-screen text - visuals + natural sound only):
-  [  0.0s -   6.0s] STILL     - A covered earthen clay pot of dosa batter resting overnight on a rustic wooden shelf in a dim, warm village kitchen; the batter has risen and its surface is dotted with tiny fermentation bubbles, a soft shaft of dawn light falling across it, Studio Ghibli style, hushed and still
-  [  6.0s -  16.0s] HERO CLIP - Extreme macro on a heavy black iron kadai: dark mustard seeds tumble into a shallow pool of shimmering hot ghee and burst into a dancing crackle, then a fistful of fresh curry leaves is scattered in and spits violently in the fat; a beat later finely chopped onion, slit green chillies and grated ginger cascade in and hiss loudly, turning glassy and golden as a wooden spatula folds them through, fragrant steam curling upward in warm raking morning light
-  [ 16.0s -  26.0s] HERO CLIP - Soft boiled potato chunks are tipped from a brass bowl into the tempered aromatics; a hand presses and folds them with a wooden masher, a pinch of bright turmeric rains over the top and stains everything gold, a small splash of water is added and it all sizzles as the spatula stirs it into a glossy, steaming spiced potato mash, tight close-up of the potatoes breaking apart
-  [ 26.0s -  36.0s] HERO CLIP - Straight-down on a screaming-hot flat tawa: a steel ladle pours a pool of pale fermented batter at the centre, then in one confident continuous spiral from the inside outward spreads it paper-thin with the ladle's base into a wide even circle; the surface instantly blisters into hundreds of tiny bubbles, the lacy edges set and begin to lift, and a spoon drizzles ghee around the rim that sizzles and browns it to crisp golden lace
-  [ 36.0s -  45.0s] HERO CLIP - A spoon lays a neat line of the golden potato masala down the centre of the crackly dosa; a flat spatula slides under one crisp edge and folds the dosa over the filling, pressing so it audibly crackles, then both hands lift the long folded dosa off the tawa and set it down onto a fresh green banana leaf, a thin ribbon of steam rising off its glassy golden surface
-  [ 45.0s -  50.0s] STILL     - Overhead hero shot of the finished masala dosa on a banana leaf with a small bowl of white coconut chutney and a steaming bowl of sambar, scattered with fresh coriander, rich and appetising in soft morning light, Studio Ghibli style
+  [  0.0s -  10.0s] HERO CLIP - Early village morning: the young woman in a simple cotton salwar kameez crouches in a small kitchen garden and pulls two fresh potatoes straight out of the dark soil, knocking the earth off them against her palm, soft golden dawn light and dew on the leaves, Studio Ghibli style
+  [ 10.0s -  20.0s] HERO CLIP - Close-up on a brass plate: peeled boiled potatoes are mashed by hand with a wooden masher into a fluffy mound, then finely chopped green chilli, grated ginger, red chilli powder, cumin, crushed ajwain and a fistful of fresh coriander are scattered over and folded through, steam still rising
+  [ 20.0s -  30.0s] HERO CLIP - Flour-dusted hands flatten a soft ball of wheat dough into a small disc, spoon a heap of the spiced potato into the centre, then gather and pinch the edges up over the filling to seal it into a stuffed ball, dusting it with dry flour, warm close-up
+  [ 30.0s -  39.0s] HERO CLIP - Top-down: a wooden rolling pin gently rolls the stuffed dough ball out into a round paratha on a floured board, the pale filling faintly showing through, little puffs of flour rising with each pass
+  [ 39.0s -  48.0s] HERO CLIP - The paratha laid onto a screaming-hot cast-iron tawa; it blisters and puffs, brown toasty spots bloom across the surface, and a spoon smears glistening ghee around the edges which sizzles loudly as she flips it, steam and aroma rising
+  [ 48.0s -  55.0s] HERO CLIP - The finished golden paratha torn open by hand on a steel plate, flaky layers steaming, a cube of fresh white butter set on top slowly melting into the crust, a small bowl of yogurt beside it - the happy reveal, warm morning light
 
-SUBSCRIBE END-CARD COPY: More dosa secrets?
+(Title + description are written automatically by Gemini at build time.
+The subscribe animation with its bell sound is appended to every ending.)
 
-HASHTAGS: #shorts #indiancooking #spicegarden #dosa #masaladosa
+HASHTAGS: #shorts #alooparatha #punjabifood #indianbreakfast #villagecooking #homemade #asmrcooking #streetfood #recipe #foodie
+
+--- V2: Masala Chai (North Indian) ---
+TITLE: The perfect cutting chai, village style ☕️🔥 #shorts
+
+INGREDIENTS:
+  - water
+  - milk
+  - black tea leaves
+  - ginger
+  - green cardamom
+  - cloves
+  - black peppercorns
+  - cinnamon
+  - sugar
+  - tulsi leaves
+
+DISH FACT (context for the title/description - NOT shown on screen):
+The Indian habit of 'pulling' chai - pouring it in a long stream between two pots - isn't a trick: it cools and aerates the tea, blending the milk and spices into that signature frothy top.
+
+STORY / CLIP TIMELINE (6 clips, ~55.0s total; no voiceover
+and NO on-screen text - visuals + natural sound only):
+  [  0.0s -  10.0s] HERO CLIP - Misty village morning: the young woman snaps a thumb of fresh ginger and pinches a few tulsi leaves from a clay pot in her little garden, dew dripping, soft blue morning light, Studio Ghibli style
+  [ 10.0s -  20.0s] HERO CLIP - Water comes to a rolling boil in a small blackened brass pot over a glowing clay wood stove; a stone crushes the ginger on a board and green cardamom pods, cloves and a few peppercorns are cracked and dropped in, the water tinting and fragrant steam curling up, close-up
+  [ 20.0s -  30.0s] HERO CLIP - A spoon of loose black tea and a spoon of sugar are stirred into the bubbling spiced water; it darkens to a deep amber and rises in a rolling, foamy boil, close macro of the churning surface
+  [ 30.0s -  39.0s] HERO CLIP - A steady stream of fresh milk is poured from a steel tumbler into the dark tea; it blooms pale then surges up into a big creamy froth threatening to boil over as she lifts the pot, warm firelight glow
+  [ 39.0s -  48.0s] HERO CLIP - The chai is 'pulled': lifted high and poured in a long thin frothy ribbon from one pot down into another held low, back and forth, aerating it, steam trailing the stream against the dark kitchen
+  [ 48.0s -  55.0s] HERO CLIP - The finished chai poured through a small strainer into a rustic clay kulhad until a creamy froth caps the rim, steam rising, a couple of rusk biscuits resting on the saucer beside it - the cozy reveal
+
+(Title + description are written automatically by Gemini at build time.
+The subscribe animation with its bell sound is appended to every ending.)
+
+HASHTAGS: #shorts #masalachai #chai #indiantea #villagecooking #asmr #cuttingchai #homemade #streetfood #foodie
+
+--- V3: Pani Puri (Indian Street Food) ---
+TITLE: Spicy pani puri from scratch 🌿💦 #shorts
+
+INGREDIENTS:
+  - mint leaves
+  - coriander leaves
+  - green chilies
+  - ginger
+  - tamarind
+  - black salt
+  - roasted cumin
+  - chaat masala
+  - water
+  - potatoes
+  - chickpeas
+  - puri shells
+
+DISH FACT (context for the title/description - NOT shown on screen):
+Pani puri goes by a different name in almost every Indian city - golgappa in Delhi, puchka in Kolkata, gup chup in the east - but the shatter-crisp shell and the cold spiced water are loved everywhere.
+
+STORY / CLIP TIMELINE (6 clips, ~55.0s total; no voiceover
+and NO on-screen text - visuals + natural sound only):
+  [  0.0s -  10.0s] HERO CLIP - Bright village kitchen garden morning: the young woman gathers a big handful of fresh mint and coriander and snaps off a green chilli, shaking the water from the leaves, dew and sunlight, Studio Ghibli style
+  [ 10.0s -  20.0s] HERO CLIP - The mint, coriander, green chilli and a knob of ginger are ground on a heavy stone sil-batta, a hand rocking the stone back and forth until it becomes a glossy, vivid green paste, close-up of the fragrant crush
+  [ 20.0s -  30.0s] HERO CLIP - The green paste is whisked into a big bowl of cold water with a spoon of tamarind pulp, black salt, roasted cumin and chaat masala; the water swirls into a cloudy spicy-green pani, then a few ice cubes are dropped in with a splash
+  [ 30.0s -  39.0s] HERO CLIP - In a separate bowl, boiled potato cubes and soft chickpeas are mashed roughly and tossed with black salt and chaat masala into a spiced filling, a tight close-up of the spoon folding it together
+  [ 39.0s -  48.0s] HERO CLIP - A thumb cracks a neat hole in the top of a crisp round puri shell and tucks in a spoon of the potato-chickpea masala, the shell shattering slightly at the edges, macro shot
+  [ 48.0s -  55.0s] HERO CLIP - The filled puri is dunked deep into the green pani, lifted out dripping and overflowing, and set onto a leaf plate lined with more ready puris - the mouthwatering reveal, cold droplets falling
+
+(Title + description are written automatically by Gemini at build time.
+The subscribe animation with its bell sound is appended to every ending.)
+
+HASHTAGS: #shorts #panipuri #golgappa #streetfood #indianstreetfood #chaat #villagecooking #asmr #foodie #viral
 

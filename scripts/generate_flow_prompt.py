@@ -35,8 +35,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common.config import (
-    CLIP_POOL_PENDING_DIR, HERO_CLIP_DURATIONS_SEC, HERO_CLIPS_PER_SHORT,
-    LATEST_BRIEF_PATH, VISUAL_STYLE_PREFIX,
+    CLIP_POOL_PENDING_DIR, DAILY_SLOTS, HERO_CLIP_DURATIONS_SEC,
+    HERO_CLIPS_PER_SHORT, LATEST_BRIEF_PATH, VISUAL_STYLE_PREFIX,
 )
 from common.io_utils import load_json
 
@@ -44,19 +44,22 @@ logger = logging.getLogger(__name__)
 
 FLOW_PROMPT_HEADER = """Dish: {dish_name} ({region})
 
-This video needs {n_clips} separate hero clips - generate each one
-independently in Flow and save under its own filename below. Each clip
-has its OWN duration cap, not a shared one - see per-clip below.
+This video tells a short VILLAGE STORY in {n_clips} clips - not just cooking
+steps, but a little narrative (the same young woman across a cozy Indian
+village: gathering/harvesting -> preparing -> cooking -> the happy reveal).
+Generate each clip below independently and save under its own filename; played
+in order they should feel like one continuous story.
 
 Common requirements for every clip:
-- Attach the Spice Garden character reference image for consistency
-  (image-to-video / reference-frame mode, not text description alone) -
-  the same character must appear across all clips.
+- Keep the SAME character, kitchen and village consistent across all {n_clips}
+  clips (attach your character reference image / reference-frame mode if your
+  tool supports it, not text alone).
 - Aspect ratio: 9:16 vertical. Generate at your model's setting (e.g. Omni
   1.1 Flash 360p / 10s); assembly upscales to 1080x1920 and trims the first
-  ~0.5s of lag off each clip, so lead with the real motion.
-- NO text, captions, letters, logos or watermarks in frame - this video is
-  fully text-free.
+  ~0.5s of lag off each clip, so lead with the real motion/action.
+- NO text, captions, letters, logos or watermarks in frame - fully text-free.
+- Natural sound is kept (sizzle, pour, chop), so favour moments with
+  satisfying sound.
 - Style: {style} - vary only the action/setting described per clip below.
 """
 
@@ -113,14 +116,15 @@ TITLE: {title}
 INGREDIENTS:
 {ingredients}
 
-DISH FACT (shown as on-screen context, not narration):
+DISH FACT (context for the title/description - NOT shown on screen):
 {dish_fact}
 
-SEGMENT TIMELINE ({n_segments} segments, ~{duration}s total; no voiceover
+STORY / CLIP TIMELINE ({n_segments} clips, ~{duration}s total; no voiceover
 and NO on-screen text - visuals + natural sound only):
 {segments}
 
-SUBSCRIBE END-CARD COPY: {subscribe_cta_text}
+(Title + description are written automatically by Gemini at build time.
+The subscribe animation with its bell sound is appended to every ending.)
 
 HASHTAGS: {hashtags}
 """
@@ -178,8 +182,8 @@ def write_request(script: dict, date: str, slot: str, script_path: str) -> Path:
     """Writes the per-slot pending files (script.json + flow_prompt.txt)
     that Stage A/B/C consume later. Returns the pending_dir."""
     slot = slot.upper()
-    if slot not in ("AM", "PM"):
-        raise ValueError(f"slot must be AM or PM, got {slot!r}")
+    if slot not in DAILY_SLOTS:
+        raise ValueError(f"slot must be one of {DAILY_SLOTS}, got {slot!r}")
 
     prompt_text = FLOW_PROMPT_HEADER.format(
         dish_name=script.get("dish_name", "unknown dish"),
@@ -285,12 +289,25 @@ def generate_flow_prompt(script_path: str, date: str, slot: str) -> Path:
     return pending_dir
 
 
+def generate_batch(date: str, script_paths_by_slot: dict) -> Path:
+    """Write pending requests for several slots (e.g. the day's three videos)
+    and ONE combined brief covering them all. script_paths_by_slot maps
+    slot -> path to that video's authored script.json, in display order."""
+    approved = {}
+    for slot, script_path in script_paths_by_slot.items():
+        slot = slot.upper()
+        script = load_json(script_path)
+        write_request(script, date, slot, script_path)
+        approved[slot] = script
+    return write_combined_brief(date, approved)
+
+
 def main():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     parser = argparse.ArgumentParser(description="Generate Flow prompts for a script's hero clips")
-    parser.add_argument("--script", required=True, help="Path to an approved script.json")
+    parser.add_argument("--script", required=True, help="Path to an authored script.json")
     parser.add_argument("--date", required=True, help="YYYY-MM-DD")
-    parser.add_argument("--slot", required=True, choices=["AM", "PM", "am", "pm"])
+    parser.add_argument("--slot", required=True, help=f"one of {DAILY_SLOTS}")
     args = parser.parse_args()
 
     generate_flow_prompt(args.script, args.date, args.slot)

@@ -3,39 +3,37 @@
 A small, personal automation project that generates short-form vertical
 videos end-to-end and publishes them on a schedule using GitHub Actions.
 
-The format is a clean **~50-second, no-narration, no-on-screen-text**
-vertical video, modelled on a Studio-Ghibli-style cooking short: four
-native-audio hero clips (~10s each) plus 1-2 supporting stills, told as
-one continuous farm-to-plate story with a consistent character and only
-the clips' natural sound. A pre-made ~4-second subscribe animation (with its
-own bell sound, dropped at assets/branding/subscribe.mp4) is appended to every
-ending. No voiceover, no titles, no ingredient labels, no captions - the only
-branding text lives inside that supplied subscribe animation.
+The format is a clean **~55-second, no-narration, no-on-screen-text**
+vertical video, modelled on a Studio-Ghibli-style cooking short: **six
+native-audio hero clips (~10s each), no stills**, told as one continuous
+**village story** with a consistent character (gather → prep → cook →
+reveal) and only the clips' natural sound. A pre-made ~4-second subscribe
+animation (with its own bell sound, at assets/branding/subscribe.mp4) is
+appended to every ending. No voiceover, no titles, no ingredient labels,
+no captions. **Three videos are produced per day** (three dishes), and the
+clips for all three are generated in one sitting.
+
+Who writes what: the **script (the dish, the village story, and the six
+clip prompts) is authored by Claude on demand** and committed under
+clip-pool/pending/. **Gemini's only job is the YouTube title + description**
+(traction copy), written automatically at build time.
 
 It's built as a chain of independent stages rather than one monolithic
 script, so each part can be run and debugged on its own:
 
-1. **Script generation** - produces the structured content for the ~50s
-   video: 5-6 "moment" segments (each a hero clip or a still, with a
-   detailed visual description) forming one continuous story, plus
-   metadata used only for the YouTube listing (dish name + region, the
-   full ingredient list, an interesting dish fact) and a per-video
-   subscribe CTA line. No narration and no on-screen copy are written -
-   the visuals and natural sound carry the video.
-2. **Review gate** - an automated pass/fail check on the generated
-   script before any further (potentially paid) work happens. Designed
-   to fail closed: anything ambiguous is treated as a rejection. Checks
-   ingredient completeness, moment specificity, and dish-fact soundness.
-3. **Voiceover** - retired from the automated chain (this format has no
-   narration). The Edge-TTS stage is kept only for standalone use.
-4. **Captions** - speech-to-text timing (local, no API key). Not part of
-   the automated video pipeline anymore (see below) - still runnable
-   standalone if ever needed again.
-5. **Visual generation** - produces the supporting stills (Pollinations)
-   from each "image" segment's description, and maps the manually-made
-   hero clips onto the "video" segments. The short video clips for the
-   moments that most need motion aren't API-generated - see
-   "Human-in-the-loop" below.
+1. **Script (authored by Claude)** - the dish, a six-clip village story
+   (each clip a detailed, sound-friendly moment), plus metadata used only
+   for the YouTube listing (region, ingredient list, an interesting fact).
+   No narration and no on-screen copy - visuals and natural sound carry it.
+2. **Metadata (Gemini)** - writes a traction-optimised title + description +
+   tags from the authored script, at build time. Fail-soft: a solid
+   baseline is used if Gemini is unavailable, so publishing is never blocked.
+3. **Voiceover** - retired (this format has no narration). Edge-TTS kept for
+   standalone use only.
+4. **Captions** - retired from the pipeline (YouTube auto-captions Shorts).
+5. **Visual generation** - maps the six manually-generated hero clips onto
+   the video's six segments. No Pollinations stills anymore (they rendered
+   Indian dishes unreliably) - every segment is a real clip.
 6. **Assembly** - normalises and colour-grades every segment, adds a
    Ken-Burns push on stills, trims each hero clip's laggy head and mildly
    sharpens the upscale, keeps each hero clip's native audio, joins

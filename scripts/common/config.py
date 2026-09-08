@@ -23,10 +23,10 @@ VIDEO_FPS = 30
 # provided. The ONLY on-screen text is the short animated subscribe card in
 # the final seconds. Length target is ~50s: four ~10s hero clips (with their
 # laggy heads trimmed) plus 1-2 stills.
-TARGET_DURATION_SEC = 50
-MIN_DURATION_SEC = 45
-MAX_DURATION_SEC = 55
-DURATION_CHECK_SLACK_SEC = 3  # review-gate tolerance around the ~50s target
+TARGET_DURATION_SEC = 55
+MIN_DURATION_SEC = 48
+MAX_DURATION_SEC = 62
+DURATION_CHECK_SLACK_SEC = 4  # review-gate tolerance around the ~55s target
 
 BRANDING_LOGO_PATH = ASSETS_DIR / "branding" / "logo.png"
 MUSIC_DIR = ASSETS_DIR / "music"
@@ -44,7 +44,9 @@ MUSIC_DIR = ASSETS_DIR / "music"
 CLIP_POOL_DIR = ROOT_DIR / "clip-pool"
 CLIP_POOL_INCOMING_DIR = CLIP_POOL_DIR / "incoming"
 CLIP_POOL_PENDING_DIR = CLIP_POOL_DIR / "pending"
-CLIP_FILENAME_PATTERN = r"^(\d{4}-\d{2}-\d{2})-(AM|PM)-(\d+)\.mp4$"
+# Slot is a generic label (V1/V2/V3 now; AM/PM historically) - kept broad so
+# the watcher accepts whatever DAILY_SLOTS uses without a pattern change.
+CLIP_FILENAME_PATTERN = r"^(\d{4}-\d{2}-\d{2})-([A-Za-z0-9]+)-(\d+)\.mp4$"
 REPORT_FILENAME = "report.json"
 
 # Fixed, never-changing path to the most recently written brief - so
@@ -96,23 +98,30 @@ MONTHLY_FLOW_CREDIT_BUDGET = 1000
 # has its own cap (uniform 10s here, kept as a list so a future non-uniform
 # structure is a one-line change); HERO_CLIPS_PER_SHORT is derived from the
 # list length so the two can never drift apart - change the list, not count.
-HERO_CLIP_DURATIONS_SEC = [10, 10, 10, 10]
+HERO_CLIP_DURATIONS_SEC = [10, 10, 10, 10, 10, 10]
 HERO_CLIPS_PER_SHORT = len(HERO_CLIP_DURATIONS_SEC)
 VEO_CLIP_DURATION_SEC = max(HERO_CLIP_DURATIONS_SEC)  # generic "up to Xs" cap, for messaging only
 # CREDITS_PER_VEO_CLIP is a flat per-clip assumption (7 credits per Omni 1.1
-# Flash 360p/10s generation, per the user's account). 4 clips x 7 credits x
-# 2 videos/day = 56 credits/day -> 1,000/month supports ~17 sustained days.
+# Flash 360p/10s generation, per the user's account). Current structure is
+# 6 clips x 3 videos/day = 18 clips/day x 7 = 126 credits/day -> a 1,000
+# monthly allowance sustains ~8 days. (More story per video costs more
+# credits; adjust HERO_CLIP_DURATIONS_SEC length or VIDEOS_PER_DAY to trade.)
 #
-# Supporting stills per video. The segment timeline is 5-6 entries total, of
-# which exactly HERO_CLIPS_PER_SHORT (4) are hero clips; the remaining 1-2
-# are free Pollinations stills used for slower story beats (e.g. an
-# over-time step like fermenting/resting, or the finished-dish hero shot) so
-# the whole ~50s isn't 4 clips held at their absolute max. These stills are
-# still visuals-only - there is NO ingredient-list card or any other text.
-STILLS_PER_SHORT_MIN = 1
-STILLS_PER_SHORT_MAX = 2
-SEGMENTS_MIN = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MIN  # 5
+# NO supporting stills. Per explicit user decision this is the PERMANENT
+# default: every segment is a hero clip, because the free Pollinations
+# stills render Indian dishes unreliably (they produced bad frames on a real
+# run). So STILLS_* are 0 and every video is all-motion (clips + subscribe
+# animation), which is also closest to the reference the user liked.
+STILLS_PER_SHORT_MIN = 0
+STILLS_PER_SHORT_MAX = 0
+SEGMENTS_MIN = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MIN  # 6
 SEGMENTS_MAX = HERO_CLIPS_PER_SHORT + STILLS_PER_SHORT_MAX  # 6
+
+# Three videos per day now (up from AM+PM), generated as one batch so all
+# 18 clips can be produced in a single Omni sitting. Slots are just labels
+# (not times) since the three are made together.
+VIDEOS_PER_DAY = 3
+DAILY_SLOTS = ["V1", "V2", "V3"]
 
 VEO_MODEL_NAME = "omni-1.1-flash"  # current hero-clip model (360p/10s, 7 credits)
 
@@ -215,8 +224,11 @@ TRANSITION_DURATION_SEC = 0.25
 # tracks the energy of the moment: quicker cuts on prep/ingredient shots,
 # a longer hold on the final plated dish. Applied in Stage 6 based on a
 # segment's position/role, not baked into the script's timings.
-PACING_QUICK_MULTIPLIER = 0.9   # ingredient / prep moments
-PACING_HOLD_MULTIPLIER = 1.25   # final plated-dish moment
+# Gentle pacing curve. Kept mild now that every segment is a ~10s hero clip:
+# a large hold multiplier would stretch the last clip well past its source
+# length and force a visible loop, so the skew is small.
+PACING_QUICK_MULTIPLIER = 0.95  # earlier / setup beats, cut a touch quicker
+PACING_HOLD_MULTIPLIER = 1.1    # final reveal beat, held a touch longer
 
 # Colour normalisation applied identically to every segment (stills AND
 # clips) so the illustrated stills and the (upscaled) hero clips don't jar

@@ -33,13 +33,13 @@ from common.config import (
 logger = logging.getLogger(__name__)
 
 
-def find_pending_clip():
-    """Returns {"clip_paths", "script_path", "pending_dir", "date", "slot"}
-    for the oldest fully-fulfilled clip-pool request, or None if none
-    are complete yet. clip_paths is ordered 1..HERO_CLIPS_PER_SHORT.
+def find_all_pending_clips():
+    """Returns a list of {"clip_paths", "script_path", "pending_dir", "date",
+    "slot"} for EVERY fully-fulfilled clip-pool request, oldest-complete first.
+    Empty list if none are complete. clip_paths is ordered 1..HERO_CLIPS_PER_SHORT.
     """
     if not CLIP_POOL_INCOMING_DIR.exists():
-        return None
+        return []
 
     groups = defaultdict(dict)  # (date, slot) -> {clip_num: path}
     for clip_path in CLIP_POOL_INCOMING_DIR.glob("*.mp4"):
@@ -80,13 +80,17 @@ def find_pending_clip():
             "_sort_key": latest_mtime,
         })
 
-    if not candidates:
-        return None
-
     candidates.sort(key=lambda c: c["_sort_key"])
-    result = candidates[0]
-    del result["_sort_key"]
-    return result
+    for c in candidates:
+        del c["_sort_key"]
+    return candidates
+
+
+def find_pending_clip():
+    """The oldest fully-fulfilled clip-pool request, or None. Kept for the
+    single-build (`--one`) path and standalone use."""
+    all_pending = find_all_pending_clips()
+    return all_pending[0] if all_pending else None
 
 
 def main():
