@@ -120,3 +120,10 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-11T12:40:10Z,2026-09-07-PM-20260911T124003Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
 2026-09-11T12:40:10Z,2026-09-07-PM-20260911T124003Z,run_stage_bc,manual-flow,veo-3.1-lite,30,flow_credits_assumed,0.000000,"3 hero clips manually generated in Flow, consumed from clip-pool (2026-09-07-PM-1.mp4, 2026-09-07-PM-2.mp4, 2026-09-07-PM-3.mp4)"
 2026-09-11T12:40:11Z,2026-09-07-PM-20260911T124003Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS
+2026-09-12T12:38:04Z,2026-09-07-PM-20260912T123804Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-12T12:38:06Z,2026-09-07-PM-20260912T123804Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-12T12:38:08Z,2026-09-07-PM-20260912T123804Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-12T12:38:10Z,2026-09-07-PM-20260912T123804Z,stage5_visual_generation,pollinations,flux,1,image_generation,0.000000,"still - free, no API key"
+2026-09-12T12:38:10Z,2026-09-07-PM-20260912T123804Z,stage5_visual_generation,pollinations,pollinations-flux,4,assets,0.000000,stills summary - see per-asset rows above
+2026-09-12T12:38:10Z,2026-09-07-PM-20260912T123804Z,run_stage_bc,manual-flow,veo-3.1-lite,30,flow_credits_assumed,0.000000,"3 hero clips manually generated in Flow, consumed from clip-pool (2026-09-07-PM-1.mp4, 2026-09-07-PM-2.mp4, 2026-09-07-PM-3.mp4)"
+2026-09-12T12:38:11Z,2026-09-07-PM-20260912T123804Z,stage3_voiceover,edge-tts,en-IN-NeerjaNeural,81,characters,0.000000,free/local TTS

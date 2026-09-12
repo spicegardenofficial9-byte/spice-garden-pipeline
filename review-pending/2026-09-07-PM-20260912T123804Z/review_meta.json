@@ -1,0 +1,11 @@
+{
+  "run_id": "2026-09-07-PM-20260912T123804Z",
+  "date": "2026-09-07",
+  "slot": "PM",
+  "clip_paths": [
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-07-PM-1.mp4",
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-07-PM-2.mp4",
+    "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/incoming/2026-09-07-PM-3.mp4"
+  ],
+  "pending_dir": "/home/runner/work/spice-garden-pipeline/spice-garden-pipeline/clip-pool/pending/2026-09-07-PM"
+}
