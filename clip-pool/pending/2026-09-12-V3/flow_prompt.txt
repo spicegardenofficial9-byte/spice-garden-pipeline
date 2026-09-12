@@ -1,0 +1,61 @@
+Dish: Aloo Tikki (North Indian Street Food)
+
+This video tells a short VILLAGE STORY in 6 clips - not just cooking
+steps, but a little narrative (the same young woman across a cozy Indian
+village: gathering/harvesting -> preparing -> cooking -> the happy reveal).
+Generate each clip below independently and save under its own filename; played
+in order they should feel like one continuous story.
+
+Common requirements for every clip:
+- Keep the SAME character, kitchen and village consistent across all 6
+  clips (attach your character reference image / reference-frame mode if your
+  tool supports it, not text alone).
+- Aspect ratio: 9:16 vertical. Generate at your model's setting (e.g. Omni
+  1.1 Flash 360p / 10s); assembly upscales to 1080x1920 and trims the first
+  ~0.5s of lag off each clip, so lead with the real motion/action.
+- NO text, captions, letters, logos or watermarks in frame - fully text-free.
+- Natural sound is kept (sizzle, pour, chop), so favour moments with
+  satisfying sound.
+- Style: Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework - vary only the action/setting described per clip below.
+
+--- Clip 1 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+Cozy village morning: the young woman lifts a basket of earthy potatoes from the garden, brushing off the soil, soft golden sunlight and green leaves around her, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V3-1.mp4
+
+--- Clip 2 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+Steamed potatoes are peeled and mashed smooth in a big bowl by hand, then she mixes in chopped green chilli, grated ginger, fresh coriander, cumin and garam masala, a warm close-up of the spiced mash
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V3-2.mp4
+
+--- Clip 3 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+Her palms scoop the mash and pat it into neat round patties, dusting each lightly with cornflour and smoothing the edges, a tidy row of raw tikkis lined up on a plate
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V3-3.mp4
+
+--- Clip 4 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+The patties shallow-fry on a hot iron griddle in shimmering ghee, a deep golden-brown crust forming with tiny bubbles, a spatula flips one to reveal the crisp side, sizzling
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V3-4.mp4
+
+--- Clip 5 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+A crisp tikki is set on a leaf plate and topped with dark tamarind chutney, bright green chutney and a spoon of whisked yogurt drizzling over it, glossy and colourful
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V3-5.mp4
+
+--- Clip 6 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+A final shower of chaat masala, ruby pomegranate seeds, crunchy sev and coriander goes on top, then a fork breaks one tikki open to show the soft steaming potato inside - the irresistible reveal
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V3-6.mp4

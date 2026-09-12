@@ -1,0 +1,61 @@
+Dish: Pav Bhaji (Mumbai Street Food)
+
+This video tells a short VILLAGE STORY in 6 clips - not just cooking
+steps, but a little narrative (the same young woman across a cozy Indian
+village: gathering/harvesting -> preparing -> cooking -> the happy reveal).
+Generate each clip below independently and save under its own filename; played
+in order they should feel like one continuous story.
+
+Common requirements for every clip:
+- Keep the SAME character, kitchen and village consistent across all 6
+  clips (attach your character reference image / reference-frame mode if your
+  tool supports it, not text alone).
+- Aspect ratio: 9:16 vertical. Generate at your model's setting (e.g. Omni
+  1.1 Flash 360p / 10s); assembly upscales to 1080x1920 and trims the first
+  ~0.5s of lag off each clip, so lead with the real motion/action.
+- NO text, captions, letters, logos or watermarks in frame - fully text-free.
+- Natural sound is kept (sizzle, pour, chop), so favour moments with
+  satisfying sound.
+- Style: Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework - vary only the action/setting described per clip below.
+
+--- Clip 1 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+Bright village kitchen-garden morning: the young woman fills a basket with potatoes, a small cauliflower, ripe red tomatoes, a green capsicum and a handful of peas, dew and warm sunlight on the vegetables, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V1-1.mp4
+
+--- Clip 2 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+On a wooden board she quickly dices onions, tomatoes and capsicum into tiny pieces and crushes ginger, garlic and green chilli, a satisfying rhythmic close-up of the chopping knife
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V1-2.mp4
+
+--- Clip 3 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+Boiled potatoes, cauliflower florets and peas steam in a pot; her hand mashes them roughly with a potato masher into a soft chunky mash, steam rising in the cozy kitchen light
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V1-3.mp4
+
+--- Clip 4 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+A big flat black iron tawa over the fire: a thick slab of butter melts and foams, then the chopped onions, ginger-garlic and tomatoes sizzle with a heaped spoon of deep-red pav bhaji masala, turning into a glossy dark-red gravy, steam and bubbles
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V1-4.mp4
+
+--- Clip 5 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+The potato-vegetable mash is folded into the red masala on the tawa and mashed together, a fresh knob of butter melting and swirling on top, a shower of chopped coriander, close-up of the bubbling bhaji
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V1-5.mp4
+
+--- Clip 6 of 6 (up to 10s) ---
+Prompt (paste into Flow):
+Two soft pav buns are split and toasted golden in butter on the side of the tawa, then everything is plated on a leaf plate - buttery bhaji topped with raw onion, a lemon wedge and coriander, the pav beside it, the mouthwatering reveal
+
+Once generated, download and save as:
+  clip-pool/incoming/2026-09-12-V1-6.mp4
