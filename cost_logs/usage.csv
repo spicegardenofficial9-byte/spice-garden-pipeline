@@ -122,3 +122,6 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-13T11:53:30Z,2026-09-13-V3-20260913T115330Z,run_stage_bc,manual-flow,omni-1.1-flash,42,flow_credits_assumed,0.000000,"6 hero clips manually generated in Flow, consumed from clip-pool (2026-09-13-V3-1.mp4, 2026-09-13-V3-2.mp4, 2026-09-13-V3-3.mp4, 2026-09-13-V3-4.mp4, 2026-09-13-V3-5.mp4, 2026-09-13-V3-6.mp4)"
 2026-09-13T11:55:21Z,2026-09-13-V3-20260913T115330Z,generate_metadata,none,fallback,1,metadata_call,0.000000,title+description via fallback
 2026-09-13T12:27:03Z,2026-09-13-V3-20260913T115330Z,stage7_upload,youtube-data-api,,1,upload,0.000000,9x7G5MGWk7M
+2026-09-13T12:39:39Z,2026-09-13-V4-20260913T123939Z,stage5_visual_generation,pollinations,pollinations-flux,0,assets,0.000000,stills summary - see per-asset rows above
+2026-09-13T12:39:39Z,2026-09-13-V4-20260913T123939Z,run_stage_bc,manual-flow,omni-1.1-flash,42,flow_credits_assumed,0.000000,"8 hero clips manually generated in Flow, consumed from clip-pool (2026-09-13-V4-1.mp4, 2026-09-13-V4-2.mp4, 2026-09-13-V4-3.mp4, 2026-09-13-V4-4.mp4, 2026-09-13-V4-5.mp4, 2026-09-13-V4-6.mp4, 2026-09-13-V4-7.mp4, 2026-09-13-V4-8.mp4)"
+2026-09-13T12:42:10Z,2026-09-13-V4-20260913T123939Z,generate_metadata,none,fallback,1,metadata_call,0.000000,title+description via fallback

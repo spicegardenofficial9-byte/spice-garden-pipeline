@@ -24,6 +24,11 @@ on:
           - public
           - unlisted
           - private
+      publish_at:
+        description: "Override: schedule at this exact time (RFC3339 UTC, e.g. 2026-09-13T13:04:00Z). Uploads private and auto-publishes then. Takes precedence over privacy_status. Leave blank to use privacy_status / the slot schedule."
+        required: false
+        default: ""
+        type: string
 
 jobs:
   approve-and-upload:
@@ -54,11 +59,14 @@ jobs:
           # "unlisted" or "private") if you ever want a softer default.
           YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'public' }}
           PRIVACY_OVERRIDE: ${{ inputs.privacy_status }}
+          PUBLISH_AT: ${{ inputs.publish_at }}
         run: |
-          if [ "${PRIVACY_OVERRIDE:-schedule}" = "schedule" ] || [ -z "${PRIVACY_OVERRIDE}" ]; then
-            python scripts/approve_upload.py --run-id "${{ inputs.run_id }}"
-          else
+          if [ -n "${PUBLISH_AT}" ]; then
+            python scripts/approve_upload.py --run-id "${{ inputs.run_id }}" --publish-at "${PUBLISH_AT}"
+          elif [ "${PRIVACY_OVERRIDE:-schedule}" != "schedule" ] && [ -n "${PRIVACY_OVERRIDE}" ]; then
             python scripts/approve_upload.py --run-id "${{ inputs.run_id }}" --privacy-status "${PRIVACY_OVERRIDE}"
+          else
+            python scripts/approve_upload.py --run-id "${{ inputs.run_id }}"
           fi
 
       - name: Commit clip-pool/review-pending cleanup
