@@ -1,0 +1,104 @@
+{
+  "run_id": "2026-09-13-V3-authored",
+  "dish_name": "Tandoori Chicken",
+  "region": "North Indian (Punjab)",
+  "ingredients": [
+    "chicken",
+    "thick yogurt",
+    "Kashmiri red chilli powder",
+    "ginger-garlic paste",
+    "garam masala",
+    "lemon",
+    "mustard oil",
+    "salt",
+    "onion",
+    "green mint chutney",
+    "butter",
+    "ghee"
+  ],
+  "title": "Smoky Tandoori Chicken in a clay tandoor 🔥🍗 #shorts",
+  "dish_fact": "Tandoori chicken as we know it was invented in the 1940s at Moti Mahal in Peshawar/Delhi - marinated in spiced yogurt and blasted in a searing clay tandoor, it's the dish that made the tandoor famous worldwide.",
+  "subscribe_cta_text": "More tandoori?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Warm golden morning in a Punjab village surrounded by swaying wheat fields and a mud-brick house; a young woman in a bright salwar kameez walks across the earthen courtyard carrying a clay bowl of thick fresh yogurt and a basket of red spices, soft sunlight and dust drifting in the air, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework, warm cinematic lighting",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Close-up of a large clay bowl in the sunny courtyard; her hand whisks thick white yogurt together with a spoonful of deep-red Kashmiri chilli powder, ginger-garlic paste, garam masala and a squeeze of lemon until it becomes a smooth vivid-red marinade, rich and glossy, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Tight close-up as she deeply scores pieces of chicken with a knife and coats them thickly in the vivid red yogurt marinade, massaging it into every cut with her fingers, the chicken turning a deep rich red, rustic wooden board, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Dusk in the village courtyard; a tall earthen clay tandoor oven glows from within with orange embers and coals, sparks drifting up and smoke rising into the deep blue evening sky, the young woman's face warmly lit by the fire as she fans the flames, dramatic and cozy, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework, cinematic firelight",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Long metal skewers threaded with the red marinated chicken are lowered into the glowing smoky tandoor; the edges char and blister, flames lick upward, and she brushes the pieces with golden ghee that drips and sizzles onto the coals, dramatic fire glow and swirling smoke, satisfying close-up, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework",
+      "start_sec": 40.0,
+      "end_sec": 48.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Night in the courtyard under warm string lights; smoky charred deep-red tandoori chicken is arranged on a platter with raw onion rings and green mint chutney, a wedge of lemon squeezed over the top with smoke still rising, then the family gathers around the table reaching in happily, the joyful feast reveal, Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn animation cel, flat cel-shaded colors, visible ink linework, warm cinematic lighting",
+      "start_sec": 48.0,
+      "end_sec": 55.0
+    }
+  ],
+  "estimated_duration_sec": 55.0,
+  "hashtags": [
+    "#tandoorichicken",
+    "#tandoori",
+    "#chickenrecipe",
+    "#northindianfood",
+    "#punjabifood",
+    "#indianfood",
+    "#shorts",
+    "#ytshorts",
+    "#streetfood",
+    "#cooking",
+    "#foodie",
+    "#nonveg",
+    "#viral"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-13T00:00:00Z",
+  "model": "authored-by-claude",
+  "description": "Village-style Tandoori Chicken cooked in a real clay tandoor 🔥🍗 — chicken marinated in thick spiced yogurt, charred over glowing coals, brushed with ghee, and served smoky with onions and mint chutney.\n\nLeg piece or breast piece — which one are you grabbing first? 👇 Comment!\n\n🌿 Marinated in yogurt, Kashmiri red chilli, ginger-garlic, garam masala and lemon — that classic deep-red tandoori colour, all natural.\n\nDid you know? Tandoori chicken as we know it was created in the 1940s at Moti Mahal — spiced-yogurt marinade blasted in a searing clay tandoor is the dish that made the tandoor famous around the world.\n\n🔔 Subscribe for a new Indian recipe story every single day!\n\n#tandoorichicken #tandoori #chickenrecipe #northindianfood #punjabifood #indianfood #shorts #ytshorts #streetfood #cooking #foodie #nonveg #viral",
+  "youtube_tags": [
+    "tandoori chicken",
+    "tandoori chicken recipe",
+    "how to make tandoori chicken",
+    "clay tandoor chicken",
+    "north indian food",
+    "punjabi food",
+    "indian food",
+    "chicken recipe",
+    "tandoori chicken banane ka tarika",
+    "restaurant style tandoori chicken",
+    "smoky chicken",
+    "indian non veg recipe",
+    "youtube shorts",
+    "street food",
+    "dinner recipe",
+    "chicken tandoori"
+  ]
+}

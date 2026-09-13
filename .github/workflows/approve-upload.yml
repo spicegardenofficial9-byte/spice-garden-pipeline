@@ -14,6 +14,16 @@ on:
         description: "run_id to publish (see review-pending/<run_id>/), as printed by run_stage_bc.py"
         required: true
         type: string
+      privacy_status:
+        description: "Override: publish IMMEDIATELY at this privacy instead of the slot's daily schedule. Leave as 'schedule' to use the per-slot publishAt (V1 immediate, V2 12:30, V3 17:30 IST)."
+        required: false
+        default: "schedule"
+        type: choice
+        options:
+          - schedule
+          - public
+          - unlisted
+          - private
 
 jobs:
   approve-and-upload:
@@ -43,7 +53,13 @@ jobs:
           # setting a repo variable named YOUTUBE_PRIVACY_STATUS (e.g. to
           # "unlisted" or "private") if you ever want a softer default.
           YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'public' }}
-        run: python scripts/approve_upload.py --run-id "${{ inputs.run_id }}"
+          PRIVACY_OVERRIDE: ${{ inputs.privacy_status }}
+        run: |
+          if [ "${PRIVACY_OVERRIDE:-schedule}" = "schedule" ] || [ -z "${PRIVACY_OVERRIDE}" ]; then
+            python scripts/approve_upload.py --run-id "${{ inputs.run_id }}"
+          else
+            python scripts/approve_upload.py --run-id "${{ inputs.run_id }}" --privacy-status "${PRIVACY_OVERRIDE}"
+          fi
 
       - name: Commit clip-pool/review-pending cleanup
         if: always()
