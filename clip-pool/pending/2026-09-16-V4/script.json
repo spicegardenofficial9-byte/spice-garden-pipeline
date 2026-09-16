@@ -1,0 +1,69 @@
+{
+  "run_id": "2026-09-16-V4-authored",
+  "dish_name": "Appam",
+  "region": "Kerala",
+  "ingredients": [
+    "raw rice",
+    "coconut",
+    "cooked rice",
+    "yeast",
+    "sugar",
+    "salt",
+    "coconut milk"
+  ],
+  "title": "Appam placeholder",
+  "dish_fact": "",
+  "subscribe_cta_text": "More Kerala food?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Walking through the Kerala village",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Preparing the rice batter to ferment",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Blending the coconut into the batter",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Preparing the traditional meal",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Cooking appam in the pan over fire",
+      "start_sec": 40.0,
+      "end_sec": 48.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Eating appams together on the veranda",
+      "start_sec": 48.0,
+      "end_sec": 55.0
+    }
+  ],
+  "estimated_duration_sec": 55.0,
+  "hashtags": [
+    "#shorts",
+    "#appam"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-16T00:00:00Z",
+  "model": "authored-by-claude"
+}

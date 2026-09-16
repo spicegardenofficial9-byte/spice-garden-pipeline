@@ -1,0 +1,98 @@
+{
+  "run_id": "2026-09-16-V4-authored",
+  "dish_name": "Appam",
+  "region": "Kerala",
+  "ingredients": [
+    "raw rice",
+    "coconut",
+    "cooked rice",
+    "yeast",
+    "sugar",
+    "salt",
+    "coconut milk"
+  ],
+  "title": "Lacy Kerala Appam from scratch 🥥🔥 #shorts",
+  "dish_fact": "",
+  "subscribe_cta_text": "More Kerala food?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Walking through the Kerala village",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Preparing the rice batter to ferment",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Blending the coconut into the batter",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Preparing the traditional meal",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Cooking appam in the pan over fire",
+      "start_sec": 40.0,
+      "end_sec": 48.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Eating appams together on the veranda",
+      "start_sec": 48.0,
+      "end_sec": 55.0
+    }
+  ],
+  "estimated_duration_sec": 55.0,
+  "hashtags": [
+    "#appam",
+    "#appamrecipe",
+    "#keralafood",
+    "#southindianfood",
+    "#keralarecipe",
+    "#indianfood",
+    "#shorts",
+    "#ytshorts",
+    "#breakfast",
+    "#vegetarian",
+    "#foodie",
+    "#viral"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-16T00:00:00Z",
+  "model": "authored-by-claude",
+  "description": "Appam — Kerala's soft, lacy rice-and-coconut pancake, made from scratch 🥥🔥 Crisp golden edges, a fluffy spongy middle, cooked over fire in a traditional appachatti.\n\nAppam with veg stew or egg curry — what's your combo? 👇 Comment below!\n\n🌿 Made with fermented rice batter and fresh coconut — naturally light, soft and gluten-free.\n\nDid you know? Appam gets its signature soft centre and lacy crisp rim from a naturally fermented rice-and-coconut batter swirled in a small round pan — a Kerala breakfast classic.\n\n🔔 Subscribe for a new Indian recipe story every single day!\n\n#appam #appamrecipe #keralafood #southindianfood #keralarecipe #indianfood #shorts #ytshorts #breakfast #vegetarian #foodie #viral",
+  "youtube_tags": [
+    "appam",
+    "appam recipe",
+    "how to make appam",
+    "kerala appam",
+    "palappam",
+    "kerala food",
+    "south indian food",
+    "kerala breakfast",
+    "appam with coconut",
+    "fermented rice pancake",
+    "south indian breakfast",
+    "kerala recipe",
+    "indian food",
+    "youtube shorts",
+    "vegetarian recipe",
+    "appachatti"
+  ]
+}
