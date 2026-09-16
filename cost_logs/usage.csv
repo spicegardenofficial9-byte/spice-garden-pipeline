@@ -129,3 +129,4 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-16T08:43:20Z,2026-09-16-V1-20260916T084320Z,stage5_visual_generation,pollinations,pollinations-flux,0,assets,0.000000,stills summary - see per-asset rows above
 2026-09-16T08:43:20Z,2026-09-16-V1-20260916T084320Z,run_stage_bc,manual-flow,omni-1.1-flash,42,flow_credits_assumed,0.000000,"6 hero clips manually generated in Flow, consumed from clip-pool (2026-09-16-V1-1.mp4, 2026-09-16-V1-2.mp4, 2026-09-16-V1-3.mp4, 2026-09-16-V1-4.mp4, 2026-09-16-V1-5.mp4, 2026-09-16-V1-6.mp4)"
 2026-09-16T08:44:30Z,2026-09-16-V1-20260916T084320Z,generate_metadata,none,fallback,1,metadata_call,0.000000,title+description via fallback
+2026-09-16T09:15:52Z,2026-09-16-V1-20260916T084320Z,stage7_upload,youtube-data-api,,1,upload,0.000000,0i0WFUNKsRE
