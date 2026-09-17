@@ -1,0 +1,103 @@
+{
+  "run_id": "2026-09-17-V3-authored",
+  "dish_name": "Chicken Cheese Balls",
+  "region": "Indian Street Food",
+  "ingredients": [
+    "minced chicken",
+    "mozzarella cheese",
+    "onion",
+    "green chilli",
+    "ginger",
+    "garlic",
+    "coriander",
+    "breadcrumbs",
+    "egg",
+    "oil",
+    "salt",
+    "pepper"
+  ],
+  "title": "Cheesy Chicken Cheese Balls 🧀🔥 crispy snack from scratch #shorts",
+  "dish_fact": "",
+  "subscribe_cta_text": "More snacks?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Returning to the courtyard to cook",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Mixing the chicken and cheese ingredients",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Rolling the seasoned chicken into balls",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Coating the balls in breadcrumbs",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Deep-frying the chicken cheese balls golden",
+      "start_sec": 40.0,
+      "end_sec": 50.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Eating the crispy cheese balls outdoors",
+      "start_sec": 50.0,
+      "end_sec": 60.0
+    }
+  ],
+  "estimated_duration_sec": 60.0,
+  "hashtags": [
+    "#chickencheeseballs",
+    "#cheeseballs",
+    "#chickensnack",
+    "#nonveg",
+    "#indiansnacks",
+    "#streetfood",
+    "#shorts",
+    "#ytshorts",
+    "#cheesepull",
+    "#partysnack",
+    "#foodie",
+    "#viral"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-17T00:00:00Z",
+  "model": "authored-by-claude",
+  "description": "Chicken Cheese Balls 🧀🔥 — juicy spiced chicken wrapped around gooey melting cheese, crumb-coated and fried till golden and crunchy. That cheese pull is everything.\n\nWould you dip these in ketchup or mayo? 👇 Tell me below!\n\n🌿 Made with minced chicken, mozzarella, onion, green chilli and herbs, coated in crisp breadcrumbs — the ultimate party snack.\n\nDid you know? The trick to a perfect cheese pull is freezing the cheese-stuffed balls before frying, so the coating crisps up before the cheese leaks out.\n\n🔔 Subscribe for a new Indian recipe story every single day!\n\n#chickencheeseballs #cheeseballs #chickensnack #nonveg #indiansnacks #streetfood #shorts #ytshorts #cheesepull #partysnack #foodie #viral",
+  "youtube_tags": [
+    "chicken cheese balls",
+    "cheese balls",
+    "chicken cheese balls recipe",
+    "cheese balls recipe",
+    "chicken snack",
+    "cheesy chicken",
+    "party snack",
+    "non veg snack",
+    "indian snacks",
+    "crispy chicken balls",
+    "cheese pull",
+    "evening snack",
+    "youtube shorts",
+    "street food",
+    "snacks recipe",
+    "fried cheese balls"
+  ]
+}
