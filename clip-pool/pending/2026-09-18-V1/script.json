@@ -1,0 +1,73 @@
+{
+  "run_id": "2026-09-18-V1-authored",
+  "dish_name": "Cheese Burst Masala Dosa",
+  "region": "South Indian",
+  "ingredients": [
+    "dosa batter",
+    "potatoes",
+    "onion",
+    "mustard seeds",
+    "curry leaves",
+    "turmeric",
+    "green chilli",
+    "mozzarella cheese",
+    "butter",
+    "coconut chutney",
+    "sambar"
+  ],
+  "title": "Cheese Burst Masala Dosa placeholder",
+  "dish_fact": "",
+  "subscribe_cta_text": "More dosa?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Walking into the outdoor village kitchen",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Preparing the dosa batter and potato masala",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Spreading the dosa and layering cheese on the tawa",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "The cheese-burst dosa melting and crisping",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Serving the masala dosa on a banana leaf",
+      "start_sec": 40.0,
+      "end_sec": 50.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Sharing and eating the crispy cheese masala dosa",
+      "start_sec": 50.0,
+      "end_sec": 60.0
+    }
+  ],
+  "estimated_duration_sec": 60.0,
+  "hashtags": [
+    "#shorts",
+    "#dosa"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-18T00:00:00Z",
+  "model": "authored-by-claude"
+}
