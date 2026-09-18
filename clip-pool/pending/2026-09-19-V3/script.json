@@ -1,0 +1,67 @@
+{
+  "run_id": "2026-09-19-V3-authored",
+  "dish_name": "Greek Yogurt",
+  "region": "Healthy Food",
+  "ingredients": [
+    "milk",
+    "yogurt culture",
+    "honey",
+    "berries",
+    "granola",
+    "nuts"
+  ],
+  "title": "Greek Yogurt placeholder",
+  "dish_fact": "",
+  "subscribe_cta_text": "More healthy recipes?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Getting ready to make yogurt at home",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Straining the yogurt thick and creamy",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Mixing the homemade Greek yogurt",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Preparing the yogurt bowl",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Layering yogurt with fruit and granola",
+      "start_sec": 40.0,
+      "end_sec": 50.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Sharing the creamy Greek yogurt parfait",
+      "start_sec": 50.0,
+      "end_sec": 60.0
+    }
+  ],
+  "estimated_duration_sec": 60.0,
+  "hashtags": [
+    "#shorts"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-19T00:00:00Z",
+  "model": "authored-by-claude"
+}

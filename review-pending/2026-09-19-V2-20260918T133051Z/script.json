@@ -1,0 +1,99 @@
+{
+  "run_id": "2026-09-19-V2-authored",
+  "dish_name": "High Protein Bowl",
+  "region": "Healthy Food",
+  "ingredients": [
+    "greek yogurt",
+    "chickpeas",
+    "paneer",
+    "quinoa",
+    "fresh vegetables",
+    "greens",
+    "seeds",
+    "olive oil"
+  ],
+  "title": "High-Protein Bowl 🥗💪 healthy & filling from scratch #shorts",
+  "dish_fact": "",
+  "subscribe_cta_text": "More healthy recipes?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Prepping fresh ingredients together",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Chopping the fresh salad vegetables",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Building the colorful veg base",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Adding the protein-rich yogurt",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Assembling the high-protein bowl",
+      "start_sec": 40.0,
+      "end_sec": 50.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Sharing the finished protein bowl",
+      "start_sec": 50.0,
+      "end_sec": 60.0
+    }
+  ],
+  "estimated_duration_sec": 60.0,
+  "hashtags": [
+    "#highprotein",
+    "#proteinbowl",
+    "#healthyfood",
+    "#mealprep",
+    "#healthyrecipes",
+    "#fitfood",
+    "#shorts",
+    "#ytshorts",
+    "#healthylifestyle",
+    "#vegetarian",
+    "#foodie",
+    "#viral"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-19T00:00:00Z",
+  "model": "authored-by-claude",
+  "description": "High-Protein Bowl 🥗💪 — a fresh, colourful bowl packed with protein and crunch. Loaded, balanced and ready in minutes — the meal-prep bowl that actually keeps you full.\n\nWhat's your go-to protein — paneer, chickpeas or eggs? 👇 Comment!\n\n🌿 Built with greek yogurt, chickpeas, paneer, quinoa and fresh veggies — high protein, high fibre, all natural.\n\nDid you know? Pairing a plant protein (like chickpeas) with dairy (like greek yogurt) gives you a complete-protein bowl — all nine essential amino acids in one meal.\n\n🔔 Subscribe for a new recipe every single day!\n\n#highprotein #proteinbowl #healthyfood #mealprep #healthyrecipes #fitfood #shorts #ytshorts #healthylifestyle #vegetarian #foodie #viral",
+  "youtube_tags": [
+    "high protein bowl",
+    "protein bowl",
+    "healthy bowl",
+    "high protein meal",
+    "healthy food",
+    "meal prep bowl",
+    "protein bowl recipe",
+    "healthy lunch",
+    "fitness food",
+    "weight loss meal",
+    "vegetarian protein",
+    "buddha bowl",
+    "youtube shorts",
+    "healthy recipe",
+    "protein rich food",
+    "gym diet"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "run_id": "2026-09-19-V1-authored",
+  "dish_name": "Fusion Ice Cream",
+  "region": "Healthy Dessert",
+  "ingredients": [
+    "fruit",
+    "frozen banana",
+    "berries",
+    "yogurt",
+    "honey",
+    "milk",
+    "nuts"
+  ],
+  "title": "Fusion Ice Cream placeholder",
+  "dish_fact": "",
+  "subscribe_cta_text": "More healthy recipes?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "Bringing fresh fruit to the kitchen",
+      "start_sec": 0.0,
+      "end_sec": 10.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Chopping and preparing the fruit",
+      "start_sec": 10.0,
+      "end_sec": 20.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "Blending the frozen fruit into creamy ice cream",
+      "start_sec": 20.0,
+      "end_sec": 30.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "Preparing the fusion dessert",
+      "start_sec": 30.0,
+      "end_sec": 40.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Scooping and plating the fusion ice cream",
+      "start_sec": 40.0,
+      "end_sec": 50.0
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "moment_description": "Enjoying the healthy fusion ice cream together",
+      "start_sec": 50.0,
+      "end_sec": 60.0
+    }
+  ],
+  "estimated_duration_sec": 60.0,
+  "hashtags": [
+    "#shorts"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-19T00:00:00Z",
+  "model": "authored-by-claude"
+}
