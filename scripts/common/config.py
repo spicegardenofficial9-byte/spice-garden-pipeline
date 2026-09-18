@@ -130,7 +130,7 @@ DAILY_SLOTS = ["V1", "V2", "V3"]
 # passed. So each day: video 1 goes live on approval, video 2 at 12:30 PM,
 # video 3 at 5:30 PM.
 IST_OFFSET_MINUTES = 5 * 60 + 30
-SLOT_PUBLISH_SCHEDULE = {"V1": "11:00", "V2": "15:00", "V3": "20:00"}
+SLOT_PUBLISH_SCHEDULE = {"V1": "09:00", "V2": "11:00", "V3": "17:00"}
 
 VEO_MODEL_NAME = "omni-1.1-flash"  # current hero-clip model (360p/10s, 7 credits)
 
