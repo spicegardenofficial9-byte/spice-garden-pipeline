@@ -174,3 +174,4 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-18T13:34:51Z,2026-09-19-V1-20260918T132934Z,stage7_upload,youtube-data-api,,1,upload,0.000000,ka0OCTAKMBA
 2026-09-18T13:36:35Z,2026-09-19-V2-20260918T133051Z,stage7_upload,youtube-data-api,,1,upload,0.000000,0KKytOzr_DI
 2026-09-18T13:38:19Z,2026-09-19-V3-20260918T133200Z,stage7_upload,youtube-data-api,,1,upload,0.000000,-XHajuLo2es
+2026-09-18T13:50:22Z,2026-09-19-V1-20260918T132934Z,stage7_upload,youtube-data-api,,1,upload,0.000000,ZpkKRP8UYNo
