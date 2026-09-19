@@ -69,10 +69,10 @@ until all of its clips have arrived. If nothing is waiting yet, a
 scheduled run just checks, finds nothing, and exits cleanly rather than
 failing - it tries again next scheduled run.
 
-AM and PM scripts/requests are generated together in one batch (see
-`run_batch()` in [run_pipeline.py](scripts/run_pipeline.py)) so all
-clips for both videos can be produced in a single Flow sitting - see
-the combined brief at `clip-pool/LATEST_BRIEF.txt` (or run
+All three daily scripts/requests (AM, MID, PM) are generated together in
+one batch (see `run_batch()` in [run_pipeline.py](scripts/run_pipeline.py))
+so all clips for every video can be produced in a single Flow sitting -
+see the combined brief at `clip-pool/LATEST_BRIEF.txt` (or run
 `show_brief.sh`).
 
 ## Running a stage locally
@@ -88,7 +88,7 @@ today's scripts (and request clips for them), and separately check
 whether any earlier request has been fulfilled yet:
 
 ```bash
-python scripts/run_pipeline.py --batch --date 2026-09-07   # request half (both AM+PM)
+python scripts/run_pipeline.py --batch --date 2026-09-07   # request half (AM+MID+PM)
 python scripts/run_stage_bc.py                              # build half - stops before upload
 python scripts/approve_upload.py --run-id <run_id>           # separate, manual: actually publish
 ```
@@ -96,8 +96,8 @@ python scripts/approve_upload.py --run-id <run_id>           # separate, manual:
 ## Automation
 
 `.github/workflows/pipeline.yml` runs the request+build halves on a
-twice-daily schedule via GitHub Actions and can also be triggered
-manually - it never uploads. `.github/workflows/approve-upload.yml` is
+thrice-daily schedule (9am, 1pm and 5pm IST) via GitHub Actions and can
+also be triggered manually - it never uploads. `.github/workflows/approve-upload.yml` is
 a separate, manual-only workflow (or run `approve_upload.py` locally)
 for the explicit "publish this one" action. Secrets (API keys, OAuth
 tokens) are configured as GitHub Actions Secrets and are never

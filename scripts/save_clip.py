@@ -6,15 +6,16 @@ Finds whatever .mp4 you most recently downloaded to ~/Downloads and
 moves+renames it straight into clip-pool/incoming/ under the correct
 name for the given slot's pending request (clip-pool/pending/<date>-<slot>/
 - if more than one request happens to be pending for that slot, e.g. a
-retry, the most recently created one is used). AM and PM requests are
-now generated together (see run_pipeline.py's run_batch()), so the slot
-argument disambiguates which of the two this clip belongs to.
+retry, the most recently created one is used). All of the day's slot
+requests (AM, MID, PM) are generated together (see run_pipeline.py's
+run_batch()), so the slot argument disambiguates which one this clip
+belongs to.
 
 Usage (from the project root, with the venv active):
-    python scripts/save_clip.py AM 1   # right after generating AM's hero clip 1 in Flow
-    python scripts/save_clip.py AM 2   # right after generating AM's hero clip 2 in Flow
-    python scripts/save_clip.py PM 1   # right after generating PM's hero clip 1 in Flow
-    python scripts/save_clip.py PM 2   # right after generating PM's hero clip 2 in Flow
+    python scripts/save_clip.py AM 1    # right after generating AM's hero clip 1 in Flow
+    python scripts/save_clip.py AM 2    # right after generating AM's hero clip 2 in Flow
+    python scripts/save_clip.py MID 1   # right after generating MID's hero clip 1 in Flow
+    python scripts/save_clip.py PM 1    # right after generating PM's hero clip 1 in Flow
 """
 import argparse
 import glob
@@ -25,7 +26,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common.config import CLIP_POOL_INCOMING_DIR, CLIP_POOL_PENDING_DIR, HERO_CLIPS_PER_SHORT
+from common.config import CLIP_POOL_INCOMING_DIR, CLIP_POOL_PENDING_DIR, HERO_CLIPS_PER_SHORT, SLOTS
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +76,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Move the most recently downloaded .mp4 into clip-pool/incoming/ for the given slot's pending request"
     )
-    parser.add_argument("slot", choices=["AM", "PM", "am", "pm"], help="Which video this clip belongs to")
+    parser.add_argument("slot", choices=[*SLOTS, *(s.lower() for s in SLOTS)], help="Which video this clip belongs to")
     parser.add_argument("clip_num", type=int, help="Which hero clip this is (1, 2, ...)")
     args = parser.parse_args()
     save_clip(args.slot.upper(), args.clip_num)

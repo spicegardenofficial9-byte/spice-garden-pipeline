@@ -14,11 +14,12 @@ API), attaches the character reference image in Flow's UI, generates
 each clip (up to VEO_CLIP_DURATION_SEC seconds), downloads it, and
 saves it with the one-command ./save_clip.sh wrapper.
 
-Per explicit user request, AM and PM requests are generated TOGETHER in
-one run (see run_pipeline.py's run_batch()) so the human can do all
-HERO_CLIPS_PER_SHORT * 2 clips (4, by default) in a single Flow sitting
-instead of two separate sessions per day. write_combined_brief() below
-merges however many slots got approved into ONE document.
+Per explicit user request, all of the day's slot requests (AM, MID and
+PM) are generated TOGETHER in one run (see run_pipeline.py's run_batch())
+so the human can do all HERO_CLIPS_PER_SHORT * len(SLOTS) clips (6, by
+default) in a single Flow sitting instead of separate sessions per day.
+write_combined_brief() below merges however many slots got approved into
+ONE document.
 
 Output (clip-pool/pending/<date>-<slot>/), once per approved slot:
     script.json      - copy of the approved script (raw JSON, for the pipeline)
@@ -36,7 +37,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common.config import (
     CLIP_POOL_PENDING_DIR, HERO_CLIP_DURATIONS_SEC, HERO_CLIPS_PER_SHORT,
-    LATEST_BRIEF_PATH, VISUAL_STYLE_PREFIX,
+    LATEST_BRIEF_PATH, SLOTS, VISUAL_STYLE_PREFIX,
 )
 from common.io_utils import load_json
 
@@ -168,8 +169,8 @@ def write_request(script: dict, date: str, slot: str, script_path: str) -> Path:
     """Writes the per-slot pending files (script.json + flow_prompt.txt)
     that Stage A/B/C consume later. Returns the pending_dir."""
     slot = slot.upper()
-    if slot not in ("AM", "PM"):
-        raise ValueError(f"slot must be AM or PM, got {slot!r}")
+    if slot not in SLOTS:
+        raise ValueError(f"slot must be one of {', '.join(SLOTS)}, got {slot!r}")
 
     prompt_text = FLOW_PROMPT_HEADER.format(
         dish_name=script.get("dish_name", "unknown dish"),
@@ -279,7 +280,7 @@ def main():
     parser = argparse.ArgumentParser(description="Generate Flow prompts for a script's hero clips")
     parser.add_argument("--script", required=True, help="Path to an approved script.json")
     parser.add_argument("--date", required=True, help="YYYY-MM-DD")
-    parser.add_argument("--slot", required=True, choices=["AM", "PM", "am", "pm"])
+    parser.add_argument("--slot", required=True, choices=[*SLOTS, *(s.lower() for s in SLOTS)])
     args = parser.parse_args()
 
     generate_flow_prompt(args.script, args.date, args.slot)

@@ -9,6 +9,7 @@ in), and assigns them as clip 1, 2, 3... in that order.
 
 Usage:
     python scripts/save_clips_batch.py AM
+    python scripts/save_clips_batch.py MID
     python scripts/save_clips_batch.py PM
 """
 import argparse
@@ -20,7 +21,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common.config import CLIP_POOL_INCOMING_DIR, HERO_CLIPS_PER_SHORT
+from common.config import CLIP_POOL_INCOMING_DIR, HERO_CLIPS_PER_SHORT, SLOTS
 from save_clip import _find_current_request
 
 logger = logging.getLogger(__name__)
@@ -57,7 +58,7 @@ def save_clips_batch(slot: str):
 def main():
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     parser = argparse.ArgumentParser(description="Save all of a slot's clips from Downloads in one command")
-    parser.add_argument("slot", choices=["AM", "PM", "am", "pm"])
+    parser.add_argument("slot", choices=[*SLOTS, *(s.lower() for s in SLOTS)])
     args = parser.parse_args()
     save_clips_batch(args.slot.upper())
 

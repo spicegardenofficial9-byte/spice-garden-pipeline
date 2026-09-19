@@ -1,18 +1,19 @@
 name: Spice Garden Shorts Pipeline
 
-# Two schedules per day, 9am and 6pm IST (UTC+5:30):
-#   9:00 IST  = 3:30 UTC  -> AM trigger
-#   18:00 IST = 12:30 UTC -> PM trigger
+# Three schedules per day, 9am, 1pm and 5pm IST (UTC+5:30):
+#   9:00 IST  = 3:30 UTC  -> AM trigger  (generates all scripts, then fulfills)
+#   13:00 IST = 7:30 UTC  -> MID trigger (fulfills only, no new scripts)
+#   17:00 IST = 11:30 UTC -> PM trigger  (fulfills only, no new scripts)
 #
-# Per explicit user request, AM and PM scripts are generated TOGETHER on
-# the morning trigger (run_pipeline.py --batch) so the human can generate
-# all hero clips for both videos in a single Flow sitting instead of two
-# separate sessions - see generate_flow_prompt.py's write_combined_brief().
-# The PM trigger does NOT generate a new script; both triggers run Stage
-# A->B (run_stage_bc.py) to check whether ANY previously-requested clip
-# has been dropped into clip-pool/incoming/ by now and, if so, build it.
-# This may fulfill a request from many hours earlier, not necessarily
-# from today's batch.
+# Per explicit user request, all three days' scripts (AM, MID, PM) are
+# generated TOGETHER on the morning trigger (run_pipeline.py --batch) so
+# the human can generate all hero clips for every video in a single Flow
+# sitting instead of separate sessions - see generate_flow_prompt.py's
+# write_combined_brief(). The MID and PM triggers do NOT generate new
+# scripts; all three triggers run Stage A->B (run_stage_bc.py) to check
+# whether ANY previously-requested clip has been dropped into
+# clip-pool/incoming/ by now and, if so, build it. This may fulfill a
+# request from many hours earlier, not necessarily from today's batch.
 #
 # This workflow NEVER uploads to YouTube - it only builds a video and
 # stops (review-pending/<run_id>/final.mp4), per explicit user decision
@@ -20,8 +21,9 @@ name: Spice Garden Shorts Pipeline
 # separate, deliberate action - see approve-upload.yml.
 on:
   schedule:
-    - cron: "30 3 * * *"   # 9:00 AM IST - generates both AM+PM scripts, then fulfills
-    - cron: "30 12 * * *"  # 6:00 PM IST - fulfills only, no new scripts
+    - cron: "30 3 * * *"   # 9:00 AM IST - generates all AM+MID+PM scripts, then fulfills
+    - cron: "30 7 * * *"   # 1:00 PM IST - fulfills only, no new scripts
+    - cron: "30 11 * * *"  # 5:00 PM IST - fulfills only, no new scripts
   workflow_dispatch:
     inputs:
       generate:
@@ -55,7 +57,8 @@ jobs:
         run: |
           if [ "${{ github.event.schedule }}" = "30 3 * * *" ]; then
             GENERATE=true
-          elif [ "${{ github.event.schedule }}" = "30 12 * * *" ]; then
+          elif [ -n "${{ github.event.schedule }}" ]; then
+            # Any other scheduled trigger (MID / PM) only fulfills.
             GENERATE=false
           else
             GENERATE="${{ github.event.inputs.generate }}"
@@ -65,7 +68,7 @@ jobs:
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           echo "Resolved generate=$GENERATE date=$DATE"
 
-      - name: "Step 1: generate today's AM+PM script batch + combined Flow brief"
+      - name: "Step 1: generate today's AM+MID+PM script batch + combined Flow brief"
         if: steps.ctx.outputs.generate == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

@@ -21,6 +21,15 @@ DURATION_CHECK_SLACK_SEC = 5  # review-gate tolerance around the 30-40s target
 BRANDING_LOGO_PATH = ASSETS_DIR / "branding" / "logo.png"
 MUSIC_DIR = ASSETS_DIR / "music"
 
+# The three daily video slots, in the order they run. Each scheduled day
+# produces one short per slot: AM (9am IST), MID (1pm IST) and PM (5pm
+# IST). All three scripts are generated together on the morning trigger
+# (see run_pipeline.py's run_batch()); the two later triggers only fulfill
+# whatever hero clips have been dropped into the clip pool by then. This is
+# the single source of truth for the slot set - anything that iterates over
+# or validates slots should reference SLOTS rather than hard-coding names.
+SLOTS = ("AM", "MID", "PM")
+
 # Clip-pool: the human-in-the-loop handoff point. Hero clips are generated
 # manually in Google Flow (using the Google AI Pro subscription's Flow
 # credits - never via a paid API call) and dropped into CLIP_POOL_INCOMING_DIR
@@ -34,7 +43,7 @@ MUSIC_DIR = ASSETS_DIR / "music"
 CLIP_POOL_DIR = ROOT_DIR / "clip-pool"
 CLIP_POOL_INCOMING_DIR = CLIP_POOL_DIR / "incoming"
 CLIP_POOL_PENDING_DIR = CLIP_POOL_DIR / "pending"
-CLIP_FILENAME_PATTERN = r"^(\d{4}-\d{2}-\d{2})-(AM|PM)-(\d+)\.mp4$"
+CLIP_FILENAME_PATTERN = r"^(\d{4}-\d{2}-\d{2})-(" + "|".join(SLOTS) + r")-(\d+)\.mp4$"
 REPORT_FILENAME = "report.json"
 
 # Fixed, never-changing path to the most recently written brief - so

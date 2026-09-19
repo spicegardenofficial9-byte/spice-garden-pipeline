@@ -10,13 +10,13 @@ is the second half, consuming whatever clip-pool request happens to be
 fulfilled by the time a run executes (which may be a request from many
 hours or a full day earlier, not necessarily this one).
 
-run_batch() generates BOTH the AM and PM scripts together in one call -
-per explicit user request, so the human can generate all
-HERO_CLIPS_PER_SHORT * 2 (4, by default) hero clips in a single Flow
-sitting instead of two separate sessions spread across the day. The
-workflow's morning cron trigger calls this once; run_stage_bc.py still
-runs on both the AM and PM triggers to consume whichever request has
-been fulfilled by then.
+run_batch() generates ALL of the day's scripts together in one call (one
+per slot in SLOTS - AM, MID and PM) - per explicit user request, so the
+human can generate every HERO_CLIPS_PER_SHORT * len(SLOTS) (6, by
+default) hero clip in a single Flow sitting instead of separate sessions
+spread across the day. The workflow's morning cron trigger calls this
+once; run_stage_bc.py still runs on all three daily triggers to consume
+whichever request has been fulfilled by then.
 
 A rejected script is not treated as a failure worth stopping the
 workflow over - it just means no Flow prompt gets written this cycle
@@ -31,7 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cleanup_old_runs import cleanup_old_runs
-from common.config import run_output_dir
+from common.config import run_output_dir, SLOTS
 from common.io_utils import load_json, new_run_id
 from generate_flow_prompt import generate_flow_prompt, write_combined_brief, write_request
 
@@ -89,18 +89,18 @@ def run(topic_brief: str = None, date: str = None, slot: str = None) -> dict:
 
 
 def run_batch(topic_briefs: dict = None, date: str = None) -> dict:
-    """Generates AM and PM scripts together and writes ONE combined brief
-    covering whichever of them passed review. topic_briefs, if given, is
-    {"AM": path_or_None, "PM": path_or_None}.
+    """Generates every slot's script together and writes ONE combined brief
+    covering whichever of them passed review. topic_briefs, if given, maps
+    each slot name in SLOTS to a brief path (or None).
     """
     date = date or dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
     topic_briefs = topic_briefs or {}
     cleanup_old_runs()
 
-    logger.info("=== Batch request-generation starting for %s (AM + PM) ===", date)
+    logger.info("=== Batch request-generation starting for %s (%s) ===", date, " + ".join(SLOTS))
     approved_scripts = {}
     rejected = {}
-    for slot in ("AM", "PM"):
+    for slot in SLOTS:
         result = _generate_and_review(topic_briefs.get(slot), slot)
         if result["approved"]:
             script = load_json(result["script_path"])
@@ -112,8 +112,8 @@ def run_batch(topic_briefs: dict = None, date: str = None) -> dict:
 
     brief_path = write_combined_brief(date, approved_scripts, rejected)
     logger.info(
-        "=== Batch complete: %d/2 slots approved (%s) - brief at %s ===",
-        len(approved_scripts), ", ".join(approved_scripts) or "none", brief_path,
+        "=== Batch complete: %d/%d slots approved (%s) - brief at %s ===",
+        len(approved_scripts), len(SLOTS), ", ".join(approved_scripts) or "none", brief_path,
     )
     return {"approved_slots": list(approved_scripts), "rejected_slots": rejected, "brief_path": str(brief_path)}
 
@@ -123,8 +123,10 @@ def main():
     parser = argparse.ArgumentParser(description="Stage 1+2: generate today's script(s) and Flow prompt request(s)")
     parser.add_argument("--topic-brief", default=None, help="Path to a topic brief JSON (single-slot mode only)")
     parser.add_argument("--date", default=None, help="YYYY-MM-DD, defaults to today (UTC)")
-    parser.add_argument("--slot", default="AM", choices=["AM", "PM", "am", "pm"], help="Single-slot mode only")
-    parser.add_argument("--batch", action="store_true", help="Generate AM and PM together into one combined brief")
+    parser.add_argument("--slot", default="AM",
+                        choices=[*SLOTS, *(s.lower() for s in SLOTS)], help="Single-slot mode only")
+    parser.add_argument("--batch", action="store_true",
+                        help="Generate every slot's script together into one combined brief")
     args = parser.parse_args()
 
     if args.batch:

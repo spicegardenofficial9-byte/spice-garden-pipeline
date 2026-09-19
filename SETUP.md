@@ -38,13 +38,13 @@ credits, $0 incremental cost), and handed to the pipeline through a
 **clip pool**:
 
 1. Each scheduled batch run (`run_pipeline.py --batch`) writes a combined
-   brief covering both AM and PM videos to `clip-pool/LATEST_BRIEF.txt`
-   for whichever scripts pass review - `<date>-<slot>` is e.g.
-   `2026-09-07-AM`.
+   brief covering all three daily videos (AM, MID, PM) to
+   `clip-pool/LATEST_BRIEF.txt` for whichever scripts pass review -
+   `<date>-<slot>` is e.g. `2026-09-07-AM`.
 2. A human runs `show_brief.sh`, pastes each clip's prompt into Flow in
    turn along with the character reference image, generates each clip
    (durations vary per clip - see `HERO_CLIP_DURATIONS_SEC`), downloads
-   it, and runs `save_clip.sh <AM|PM> <clip_num>` to save it as
+   it, and runs `save_clip.sh <AM|MID|PM> <clip_num>` to save it as
    `clip-pool/incoming/<date>-<slot>-<n>.mp4`.
 3. **These files must be `git add`ed, committed, and pushed** - GitHub
    Actions runners don't see your local filesystem, only what's in the
@@ -251,8 +251,8 @@ cp scripts/fixtures/sample_script.json output/test1/script.json
 ## Testing the clip-pool handoff (Stages A/B, then review, then upload)
 
 ```bash
-# Generate today's AM+PM script batch + combined Flow brief
-# (writes clip-pool/pending/<date>-AM/ and .../<date>-PM/,
+# Generate today's AM+MID+PM script batch + combined Flow brief
+# (writes clip-pool/pending/<date>-AM/, .../<date>-MID/, .../<date>-PM/,
 # and clip-pool/LATEST_BRIEF.txt)
 python scripts/run_pipeline.py --batch --date 2026-09-07
 
@@ -291,16 +291,16 @@ consumed clip-pool entries and the review-pending entry.
 ## What each scheduled run actually does
 
 There is no single "run everything" script, both because the hero clip
-handoff spans two points in time (AM+PM scripts are generated together
-but fulfilled independently) and because uploading is a deliberate,
-separate, human-approved step:
+handoff spans several points in time (AM+MID+PM scripts are generated
+together but fulfilled independently) and because uploading is a
+deliberate, separate, human-approved step:
 
 ```bash
-# Morning trigger only: generate + review BOTH today's scripts (AM and
-# PM) in one batch, write one combined Flow brief
+# Morning trigger only: generate + review ALL of today's scripts (AM,
+# MID and PM) in one batch, write one combined Flow brief
 python scripts/run_pipeline.py --batch --date $(date +%Y-%m-%d)
 
-# Both triggers: check whether ANY previously-requested clip is ready,
+# Every trigger: check whether ANY previously-requested clip is ready,
 # and if so, build it (stills -> voiceover -> assembly) and STOP -
 # never uploads
 python scripts/run_stage_bc.py
@@ -311,9 +311,9 @@ python scripts/approve_upload.py --run-id <run_id>
 ```
 
 This is exactly what `.github/workflows/pipeline.yml` runs: the batch
-generation step only on the AM trigger, `run_stage_bc.py` on both. It
-usually does nothing (exits cleanly, logs "no pending clip") until
-you've dropped clips in - that's expected, not a failure.
+generation step only on the AM (morning) trigger, `run_stage_bc.py` on
+all three. It usually does nothing (exits cleanly, logs "no pending
+clip") until you've dropped clips in - that's expected, not a failure.
 
 ## Cost/usage tracking
 
