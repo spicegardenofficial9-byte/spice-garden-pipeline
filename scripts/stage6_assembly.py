@@ -51,6 +51,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common.config import (
+    COLD_OPEN_ENABLED, COLD_OPEN_DURATION_SEC, COLD_OPEN_CLIP_INDEX,
     BRANDING_LOGO_PATH, BRANDING_LOGO_WIDTH_PX, BRANDING_MARGIN_PX,
     CLIP_LAG_TRIM_SEC, COLOR_NORMALIZE_FILTER, MUSIC_DIR,
     PACING_HOLD_MULTIPLIER, PACING_QUICK_MULTIPLIER,
@@ -353,6 +354,23 @@ def assemble(output_dir: str, run_id: str) -> dict:
             actual = _build_clip_segment(asset_path, dur, seg_path)
         segment_paths.append(seg_path)
         durations.append(actual)
+
+    # COLD-OPEN HOOK (reach): prepend a short punchy cut of the "payoff" hero
+    # clip (the reveal) so the very first frame is the most appetizing moment,
+    # not a calm establishing shot - this is what stops the scroll in the
+    # critical first ~2 seconds. The full story still plays right after.
+    if COLD_OPEN_ENABLED:
+        video_beats = [b for b in beats if b.get("type") == "video"]
+        if video_beats:
+            try:
+                payoff = video_beats[COLD_OPEN_CLIP_INDEX]
+            except IndexError:
+                payoff = video_beats[-1]
+            hook_seg = work_dir / "seg_coldopen.mp4"
+            hook_dur = _build_clip_segment(out_dir / payoff["path"], COLD_OPEN_DURATION_SEC, hook_seg)
+            segment_paths.insert(0, hook_seg)
+            durations.insert(0, hook_dur)
+            logger.info("Cold-open hook prepended (%.2fs) from payoff clip beat %s", hook_dur, payoff.get("beat_id"))
 
     # Append the pre-made subscribe animation (with its own bell sound) as the
     # final segment, crossfaded in - used at the END of every video. If the

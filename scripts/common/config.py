@@ -270,9 +270,23 @@ CLIP_LAG_TRIM_SEC = 0.5
 # capped at SUBSCRIBE_CTA_DURATION_SEC, crossfaded in as the final segment,
 # and keeps its own audio (the bell sound). If the asset is absent the video
 # simply ends on the final dish shot (with a warning) - no drawn fallback.
-SUBSCRIBE_CTA_DURATION_SEC = 4.0
+# Tightened to 2.0s (was 4.0s) as a REACH change: the full-screen end card is
+# dead air right where the video should loop back to frame 1, and loops are a
+# top Shorts ranking signal. A short bell nudge keeps the branding without
+# killing the loop. Set higher to restore the longer card.
+SUBSCRIBE_CTA_DURATION_SEC = 2.0
 SUBSCRIBE_ANIMATION_PATH = ASSETS_DIR / "branding" / "subscribe.mp4"
 DEFAULT_SUBSCRIBE_CTA_TEXT = "Subscribe for more"  # suggested line for the animation
+
+# Cold-open hook (REACH change): prepend a short, punchy cut of the "payoff"
+# hero clip (the reveal/final dish) to the very FRONT of the video, so the
+# first frame is the most appetizing moment. Shorts reach is decided mostly by
+# whether viewers stay past the first ~2 seconds; opening on a calm
+# establishing shot is the #1 cause of early swipe-away. The story then plays
+# in full after the hook, and ends on the same reveal - so it bookends/loops.
+COLD_OPEN_ENABLED = True
+COLD_OPEN_DURATION_SEC = 1.5
+COLD_OPEN_CLIP_INDEX = -1  # which hero clip to pull the hook from (-1 = last/reveal)
 
 # Google Veo stamps a "Made with Veo" / SynthID watermark fixed in the
 # BOTTOM-RIGHT corner of every hero clip. It is a policy requirement that
