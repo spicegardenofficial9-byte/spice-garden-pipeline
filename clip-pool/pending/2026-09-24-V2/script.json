@@ -1,0 +1,54 @@
+{
+  "run_id": "2026-09-24-V2-authored",
+  "dish_name": "A 90s Village Love Story",
+  "region": "1990s India",
+  "ingredients": [],
+  "title": "90s love story placeholder",
+  "dish_fact": "",
+  "subscribe_cta_text": "More 90s nostalgia?",
+  "segments": [
+    {
+      "id": 1,
+      "type": "video",
+      "moment_description": "The couple riding a bicycle together along the riverside",
+      "start_sec": 0.0,
+      "end_sec": 8.0
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "moment_description": "Walking side by side with the bicycle, talking and smiling",
+      "start_sec": 8.0,
+      "end_sec": 16.0
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "moment_description": "A playful moment at the village hand pump, splashing water",
+      "start_sec": 16.0,
+      "end_sec": 24.0
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "moment_description": "A quiet tender moment sitting together by the pond",
+      "start_sec": 24.0,
+      "end_sec": 32.0
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "moment_description": "Sheltering close together from the sudden monsoon rain - the romantic peak",
+      "start_sec": 32.0,
+      "end_sec": 40.0
+    }
+  ],
+  "estimated_duration_sec": 40.0,
+  "hashtags": [
+    "#shorts",
+    "#90s"
+  ],
+  "ai_disclosure_required": true,
+  "generated_at": "2026-09-24T00:00:00Z",
+  "model": "authored-by-claude"
+}
