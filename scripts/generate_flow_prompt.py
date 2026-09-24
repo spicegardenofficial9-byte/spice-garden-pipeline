@@ -44,14 +44,16 @@ logger = logging.getLogger(__name__)
 
 FLOW_PROMPT_HEADER = """Dish: {dish_name} ({region})
 
-This video tells a short VILLAGE STORY in {n_clips} clips - not just cooking
-steps, but a little narrative (the same young woman across a cozy Indian
-village: gathering/harvesting -> preparing -> cooking -> the happy reveal).
-Generate each clip below independently and save under its own filename; played
-in order they should feel like one continuous story.
+This video is a quick 1990s-NOSTALGIA SLICE-OF-LIFE in {n_clips} clips - the
+'90s Indian lifestyle is the main world (retro props and scenery: old TV /
+cassette player, rotary phone, steel tiffins, scooter, courtyard, monsoon
+light), with the cooking woven in as the story's payoff, NOT the whole video.
+Lead with action and satisfying sound; keep it punchy. Generate each clip
+below independently and save under its own filename; in order they should
+feel like one continuous nostalgic story, ending on the food reveal.
 
 Common requirements for every clip:
-- Keep the SAME character, kitchen and village consistent across all {n_clips}
+- Keep the SAME character and 1990s home/setting consistent across all {n_clips}
   clips (attach your character reference image / reference-frame mode if your
   tool supports it, not text alone).
 - Aspect ratio: 9:16 vertical. Generate at your model's setting (e.g. Omni

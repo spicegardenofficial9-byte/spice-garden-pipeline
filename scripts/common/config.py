@@ -169,9 +169,15 @@ POLLINATIONS_REQUEST_DELAY_SEC = 2  # light courtesy delay, not a documented har
 # better (bold flat colors, softer illustrated edges, clearly less
 # photographic) - so this is a PREFIX, not a suffix, and deliberately
 # more explicit than a first attempt would guess.
+# Creative direction (standing, per user): the world is 1990s Indian
+# nostalgia LIFESTYLE - not just cooking. Retro '90s scenery, props and mood
+# (old TV/cassette player, rotary phone, steel tiffins, scooter, courtyard,
+# monsoon light) carry a quick slice-of-life STORY, with the cooking woven in
+# as the payoff rather than the whole video. Kept punchy: 5 clips of ~7s each.
 VISUAL_STYLE_PREFIX = (
     "Studio Ghibli anime screenshot, Hayao Miyazaki style, 2D hand-drawn "
-    "animation cel, flat cel-shaded colors, visible ink linework: "
+    "animation cel, flat cel-shaded colors, visible ink linework, nostalgic "
+    "1990s Indian lifestyle setting with retro period props and warm nostalgic mood: "
 )
 
 GEMINI_TEXT_MODEL = os.environ.get("GEMINI_TEXT_MODEL", "gemini-3.6-flash")
