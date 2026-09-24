@@ -55,7 +55,8 @@ from common.config import (
     BRANDING_LOGO_PATH, BRANDING_LOGO_WIDTH_PX, BRANDING_MARGIN_PX,
     CLIP_LAG_TRIM_SEC, COLOR_NORMALIZE_FILTER, MUSIC_DIR,
     PACING_HOLD_MULTIPLIER, PACING_QUICK_MULTIPLIER,
-    SUBSCRIBE_ANIMATION_PATH, SUBSCRIBE_CTA_DURATION_SEC, TARGET_DURATION_SEC,
+    SUBSCRIBE_ANIMATION_PATH, SUBSCRIBE_CTA_DURATION_SEC, SUBSCRIBE_ENABLED,
+    TARGET_DURATION_SEC,
     TRANSITION_DURATION_SEC, UPSCALE_SHARPEN_FILTER, VIDEO_FPS, VIDEO_HEIGHT,
     VIDEO_WIDTH, WATERMARK_RESERVED_H_PX, WATERMARK_RESERVED_W_PX,
     get_env, run_output_dir,
@@ -377,13 +378,15 @@ def assemble(output_dir: str, run_id: str) -> dict:
     # asset isn't there yet, the video just ends on the final dish shot.
     subscribe_used = False
     subscribe_dur = 0.0
-    if SUBSCRIBE_ANIMATION_PATH.exists():
+    if SUBSCRIBE_ENABLED and SUBSCRIBE_ANIMATION_PATH.exists():
         sub_seg = work_dir / "seg_subscribe.mp4"
         subscribe_dur = _build_subscribe_segment(SUBSCRIBE_ANIMATION_PATH, sub_seg)
         segment_paths.append(sub_seg)
         durations.append(subscribe_dur)
         subscribe_used = True
         logger.info("Subscribe animation appended (%.2fs) from %s", subscribe_dur, SUBSCRIBE_ANIMATION_PATH)
+    elif not SUBSCRIBE_ENABLED:
+        logger.info("Subscribe end-card disabled (SUBSCRIBE_ENABLED=False) - video ends on the final story shot.")
     else:
         logger.warning(
             "No subscribe animation at %s - the video will END on the final dish "

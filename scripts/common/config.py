@@ -284,13 +284,32 @@ SUBSCRIBE_CTA_DURATION_SEC = 2.0
 SUBSCRIBE_ANIMATION_PATH = ASSETS_DIR / "branding" / "subscribe.mp4"
 DEFAULT_SUBSCRIBE_CTA_TEXT = "Subscribe for more"  # suggested line for the animation
 
+
+def _env_bool(name: str, default: bool) -> bool:
+    """Read a truthy/falsey env override; falls back to `default` when unset."""
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in ("1", "true", "yes", "on")
+
+
+# Subscribe end-card toggle. Turned OFF by default (user preference: "quick and
+# effective shorts only" - the end card is dead air that hurts the loop). The
+# assembler only appends the card when this is True AND the asset exists.
+# Override per-run with the SUBSCRIBE_ENABLED env var (1/true to restore it).
+SUBSCRIBE_ENABLED = _env_bool("SUBSCRIBE_ENABLED", False)
+
 # Cold-open hook (REACH change): prepend a short, punchy cut of the "payoff"
 # hero clip (the reveal/final dish) to the very FRONT of the video, so the
 # first frame is the most appetizing moment. Shorts reach is decided mostly by
 # whether viewers stay past the first ~2 seconds; opening on a calm
 # establishing shot is the #1 cause of early swipe-away. The story then plays
 # in full after the hook, and ends on the same reveal - so it bookends/loops.
-COLD_OPEN_ENABLED = True
+# Enabled by default (great for cooking reveals), but override per-run with the
+# COLD_OPEN_ENABLED env var. For a chronological narrative (e.g. a lifestyle
+# story that must play strictly in time order), set COLD_OPEN_ENABLED=0 so the
+# climax isn't shown out of sequence at the top.
+COLD_OPEN_ENABLED = _env_bool("COLD_OPEN_ENABLED", True)
 COLD_OPEN_DURATION_SEC = 1.5
 COLD_OPEN_CLIP_INDEX = -1  # which hero clip to pull the hook from (-1 = last/reveal)
 
