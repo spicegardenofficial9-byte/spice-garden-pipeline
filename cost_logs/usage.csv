@@ -203,3 +203,4 @@ timestamp_utc,run_id,stage,provider,model,units,unit_type,cost_usd,notes
 2026-09-25T05:06:43Z,2026-09-25-V2-20260925T050643Z,run_stage_bc,manual-flow,omni-1.1-flash,42,flow_credits_assumed,0.000000,"5 hero clips manually generated in Flow, consumed from clip-pool (2026-09-25-V2-1.mp4, 2026-09-25-V2-2.mp4, 2026-09-25-V2-3.mp4, 2026-09-25-V2-4.mp4, 2026-09-25-V2-5.mp4)"
 2026-09-25T05:07:28Z,2026-09-25-V2-20260925T050643Z,generate_metadata,none,fallback,1,metadata_call,0.000000,title+description via fallback
 2026-09-25T05:10:49Z,2026-09-25-V2-20260925T050643Z,stage7_upload,youtube-data-api,,1,upload,0.000000,dVTkhiVqB2k
+2026-09-25T05:19:17Z,2026-09-24-V3-20260924T071925Z,stage7_upload,youtube-data-api,,1,upload,0.000000,2haj1JakA60
