@@ -1,0 +1,105 @@
+{
+  "dish_name": "Punjabi Aloo Paratha",
+  "region": "Punjabi",
+  "ingredients": [
+    "whole wheat flour",
+    "water",
+    "boiled potatoes",
+    "green chillies",
+    "ginger",
+    "fresh coriander leaves",
+    "red chilli powder",
+    "roasted cumin powder",
+    "amchur powder",
+    "salt",
+    "ghee",
+    "butter",
+    "curd",
+    "pickle"
+  ],
+  "title": "Foolproof Punjabi Aloo Paratha Recipe 🫓 #shorts",
+  "hook": "Stop tearing your Aloo Parathas!",
+  "voiceover_script": "Stop tearing your Aloo Parathas! Subscribe to Spice Garden for real home flavors!",
+  "segments": [
+    {
+      "id": 1,
+      "text": "Stop tearing your Aloo Parathas!",
+      "start_sec": 0.0,
+      "end_sec": 2.5
+    },
+    {
+      "id": 2,
+      "text": "Subscribe to Spice Garden for real home flavors!",
+      "start_sec": 32.5,
+      "end_sec": 35.0
+    }
+  ],
+  "key_visual_moments": [
+    "Mashing soft boiled potatoes in a stainless steel bowl with finely chopped green chillies, ginger, fresh coriander leaves, red chilli powder, roasted cumin powder, amchur powder, and salt.",
+    "Hands shaping a whole wheat dough ball into a cup, sealing a large potato stuffing ball inside, and rolling it out smoothly with a wooden rolling pin.",
+    "Searing the stuffed paratha on a hot cast-iron tawa, drizzling desi ghee around the edges, flipping it over, and watching it puff up with sizzling brown spots."
+  ],
+  "visual_beats": [
+    {
+      "id": 1,
+      "type": "image",
+      "prompt": "Hands gently pulling apart a steaming hot golden-brown Aloo Paratha, revealing the seasoned spicy potato filling bursting from inside as steam rises off the fresh flatbread.",
+      "start_sec": 0.0,
+      "end_sec": 2.5
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "prompt": "Macro close-up shot at a 45-degree angle. A pair of hands presses a stainless steel potato masher into boiled yellow potatoes inside a mixing bowl. Sprinkles of finely chopped green chillies, minced ginger, fresh coriander leaves, red chilli powder, roasted cumin powder, amchur powder, and salt are tossed in, then lightly mixed together with a wooden spoon into a smooth yellow-orange spiced mixture.",
+      "start_sec": 2.5,
+      "end_sec": 9.5
+    },
+    {
+      "id": 3,
+      "type": "image",
+      "prompt": "A smooth kneaded whole wheat flour dough ball sitting inside a brass bowl, covered resting under a damp white cloth on a wooden kitchen counter to let the dough rest.",
+      "start_sec": 9.5,
+      "end_sec": 12.5
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "prompt": "Top-down close-up shot. Hands flatten a portion of whole wheat dough into a shallow cup, place a ball of spiced potato filling in the center, and pinch the pleated dough edges tightly over the top to enclose it fully. The sealed ball is dusted with dry flour and rolled smoothly back and forth with a wooden rolling pin into a round flatbread.",
+      "start_sec": 12.5,
+      "end_sec": 21.5
+    },
+    {
+      "id": 5,
+      "type": "image",
+      "prompt": "A hand carefully placing the raw rolled stuffed paratha onto a smoking hot black cast-iron tawa griddle over a blue gas flame as gentle heat bubbles begin forming on the surface.",
+      "start_sec": 21.5,
+      "end_sec": 24.5
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "prompt": "Eye-level side shot. A steel spoon pours a line of golden molten ghee around the edges of the paratha on the hot tawa. A flat metal spatula flips the paratha, exposing a crisp golden-brown speckled crust that sizzles loudly, causing the stuffed flatbread to puff up in the center.",
+      "start_sec": 24.5,
+      "end_sec": 32.5
+    },
+    {
+      "id": 7,
+      "type": "image",
+      "prompt": "A large slice of white homemade butter melting over the center of a piping hot crispy Aloo Paratha, served on a traditional brass plate with bowls of thick curd and tangy mango pickle.",
+      "start_sec": 32.5,
+      "end_sec": 35.0
+    }
+  ],
+  "estimated_duration_sec": 35.0,
+  "hashtags": [
+    "#shorts",
+    "#AlooParatha",
+    "#IndianCooking",
+    "#PunjabiFood",
+    "#SpiceGarden"
+  ],
+  "model": "gemini-3.6-flash",
+  "generated_at": "2026-09-07T09:15:49Z",
+  "ai_disclosure_required": true,
+  "run_id": "20260907T091503Z"
+}
